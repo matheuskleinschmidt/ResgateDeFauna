@@ -119,7 +119,7 @@ Procedimentos de implementação e implantação para garantir uma transição s
 
 # Representação dos Requisitos:
 
-foto aqui
+![casodeuso](./casosdeuso.drawio.png)
 
 ## 3.2. Considerações de Design
 
