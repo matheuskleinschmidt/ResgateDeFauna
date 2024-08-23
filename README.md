@@ -133,6 +133,7 @@ Visão Inicial da Arquitetura: Descrição dos componentes principais e suas int
 | - Registro de novos usuários. |
 | - Login e logout. |
 | - Recuperação de senha. |
+|  |
 | **Componente de Gerenciamento de Resgates**  |
 | **Responsabilidade:** Gerenciar o ciclo de vida dos Resgates. |
 | **Funcionalidades:** |
@@ -141,12 +142,14 @@ Visão Inicial da Arquitetura: Descrição dos componentes principais e suas int
 | - Atribuição de registros de Resgates a técnicos e ou analistas. |
 | - Controle de status dos registros de Resgates (aberto, em andamento, resolvido, fechado). |
 | - Priorização e categorização de registros de Resgates. |
+|  |
 | **Componente de Catálogo de Espécies de Animais**  |
 | **Responsabilidade:** Gerenciar a lista de espécies de animais disponíveis para classificação. |
 | **Funcionalidades:** |
 | - Adição, edição e exclusão das espécies. |
 | - Categorização das espécies. |
 | - Pesquisa e filtragem das espécies. |
+|  |
 | **Componente de Notificações**  |
 | **Responsabilidade:** Gerenciar a comunicação com os usuários. |
 | **Funcionalidades:** |
@@ -158,6 +161,7 @@ Visão Inicial da Arquitetura: Descrição dos componentes principais e suas int
 | - Análise de comportamento dos animais. |
 | - Monitoramento da fauna local. |
 | - Geração de relatórios. |
+|  |
 | **Componente de Administração**  |
 | **Responsabilidade:** Ferramentas para os administradores gerenciarem a aplicação. |
 | **Funcionalidades:** |
