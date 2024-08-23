@@ -117,55 +117,94 @@ Procedimentos de implementação e implantação para garantir uma transição s
 | Mapa de onde foi feito os resgates.                                   |                                    |
 | Relatório mensal dos resgates feitos filtrado por espécie.            |                                    |
 
-# Representação dos Requisitos:  
+# Representação dos Requisitos:
 
 foto aqui
 
-## 3.2. Considerações de Design 
+## 3.2. Considerações de Design
 
-Visão Inicial da Arquitetura: Descrição dos componentes principais e suas interconexões. 
+Visão Inicial da Arquitetura: Descrição dos componentes principais e suas interconexões.
 
-| **Componentes** |
-|-----------------|
-| **Componente de Autenticação**  |
-| **Responsabilidade:** Gerenciar o login, registro de usuários, e controle de acesso. |
-| **Funcionalidades:** |
-| - Registro de novos usuários. |
-| - Login e logout. |
-| - Recuperação de senha. |
-|  |
-| **Componente de Gerenciamento de Resgates**  |
-| **Responsabilidade:** Gerenciar o ciclo de vida dos Resgates. |
-| **Funcionalidades:** |
-| - Criação de novos registros de Resgates. |
-| - Edição e atualização de registros de Resgates. |
-| - Atribuição de registros de Resgates a técnicos e ou analistas. |
-| - Controle de status dos registros de Resgates (aberto, em andamento, resolvido, fechado). |
-| - Priorização e categorização de registros de Resgates. |
-|  |
-| **Componente de Catálogo de Espécies de Animais**  |
+| **Componentes**                                                                                |
+| ---------------------------------------------------------------------------------------------- |
+| **Componente de Autenticação**                                                                 |
+| **Responsabilidade:** Gerenciar o login, registro de usuários, e controle de acesso.           |
+| **Funcionalidades:**                                                                           |
+| - Registro de novos usuários.                                                                  |
+| - Login e logout.                                                                              |
+| - Recuperação de senha.                                                                        |
+|                                                                                                |
+| **Componente de Gerenciamento de Resgates**                                                    |
+| **Responsabilidade:** Gerenciar o ciclo de vida dos Resgates.                                  |
+| **Funcionalidades:**                                                                           |
+| - Criação de novos registros de Resgates.                                                      |
+| - Edição e atualização de registros de Resgates.                                               |
+| - Atribuição de registros de Resgates a técnicos e ou analistas.                               |
+| - Controle de status dos registros de Resgates (aberto, em andamento, resolvido, fechado).     |
+| - Priorização e categorização de registros de Resgates.                                        |
+|                                                                                                |
+| **Componente de Catálogo de Espécies de Animais**                                              |
 | **Responsabilidade:** Gerenciar a lista de espécies de animais disponíveis para classificação. |
-| **Funcionalidades:** |
-| - Adição, edição e exclusão das espécies. |
-| - Categorização das espécies. |
-| - Pesquisa e filtragem das espécies. |
-|  |
-| **Componente de Notificações**  |
-| **Responsabilidade:** Gerenciar a comunicação com os usuários. |
-| **Funcionalidades:** |
-| - Envio de e-mails. |
-| - Gestão de preferências de notificação do usuário. |
-| **Componente de Relatórios e Análises**  |
-| **Responsabilidade:** Fornecer insights e relatórios sobre o desempenho dos resgates. |
-| **Funcionalidades:** |
-| - Análise de comportamento dos animais. |
-| - Monitoramento da fauna local. |
-| - Geração de relatórios. |
-|  |
-| **Componente de Administração**  |
-| **Responsabilidade:** Ferramentas para os administradores gerenciarem a aplicação. |
-| **Funcionalidades:** |
-| - Painel administrativo para gerenciar usuários, e demais componentes do sistema. |
-| - Controle de acesso administrativo. |
-| - Monitoramento de atividades. |
-| - Configuração e ajustes do sistema. |
+| **Funcionalidades:**                                                                           |
+| - Adição, edição e exclusão das espécies.                                                      |
+| - Categorização das espécies.                                                                  |
+| - Pesquisa e filtragem das espécies.                                                           |
+|                                                                                                |
+| **Componente de Notificações**                                                                 |
+| **Responsabilidade:** Gerenciar a comunicação com os usuários.                                 |
+| **Funcionalidades:**                                                                           |
+| - Envio de e-mails.                                                                            |
+| - Gestão de preferências de notificação do usuário.                                            |
+| **Componente de Relatórios e Análises**                                                        |
+| **Responsabilidade:** Fornecer insights e relatórios sobre o desempenho dos resgates.          |
+| **Funcionalidades:**                                                                           |
+| - Análise de comportamento dos animais.                                                        |
+| - Monitoramento da fauna local.                                                                |
+| - Geração de relatórios.                                                                       |
+|                                                                                                |
+| **Componente de Administração**                                                                |
+| **Responsabilidade:** Ferramentas para os administradores gerenciarem a aplicação.             |
+| **Funcionalidades:**                                                                           |
+| - Painel administrativo para gerenciar usuários, e demais componentes do sistema.              |
+| - Controle de acesso administrativo.                                                           |
+| - Monitoramento de atividades.                                                                 |
+| - Configuração e ajustes do sistema.                                                           |
+
+| **Interconexões**                                                                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| O **Componente de Notificações** pode ser acionado pelo **Componente de Gerenciamento de Resgates** para enviar uma notificação ao usuário quando o status do resgate mudar. |
+| O **Componente de Relatórios e Análises** pode acionar o **Componente de Gerenciamento de Resgates** para gerar diversos relatórios.                                         |
+| O **Componente de Administração** pode acionar o **Componente de Catálogo de Espécies de Animais** para fazer alguma alteração.                                              |
+
+## Padrões de Arquitetura: Indicação de padrões específicos utilizados.
+
+Devido ao tamanho do projeto e sua aplicabilidade ser bem específica foi tomado a decisão de se fazer o padrão monolítico para facilitar a manutenção geral do sistema e diminuir a complexidade de ter que lidar com diversos serviços e módulos separados. Para a melhor administração do código será usado monorepo, assim o CI/CD irá ser único e facilitar a implementação de novas funcionalidade e facilitar a correções de bugs mais agilmente.
+
+## Modelos C4: Detalhamento da arquitetura em níveis: Contexto, Contêineres, Componentes.
+
+fotos aqui
+
+# 3.3. Stack Tecnológica
+
+# Linguagens de Programação:
+
+Back-end: será utilizado Node.js pois sua curva de aprendizagem é pequena, a aplicação não deverá ser uma ordem de grandeza gigante, a experencia do aluno em desenvolvimento de aplicações em node de 2 anos, sua facilidade para a criação de aplicações web, ele será implementado junto ao repositório front-end, isso devido as novas atualizações do Next API Routes, que possibilita a criação de uma API dentro ao projeto, formando assim um monorepo.
+
+Front-end: será usado o Next.js, devido sua plataforma de implementação, Vercel, ter preços atrativos e ter uma facilidade de implementação acima da média. E devido a sua grande documentação e conteúdo de desenvolvimento, o que contribui bastante para que a tecnologia tenha mais adoção e por consequência mais robustez
+
+Frameworks e Bibliotecas: Frameworks e bibliotecas principais a serem utilizados.
+| **Frameworks** | **Bibliotecas** |
+|-------------------------|----------------------------------------|
+| **Next.js** | **Sequelize, Prisma, etc. (ORMs)** |
+| _Motivo:_ O uso do Next.js em um projeto que utiliza a biblioteca React traz diversos benefícios significativos. Primeiramente, o framework permite a renderização das páginas no lado do servidor (Server-side Rendering - SSR), o que melhora o desempenho e a experiência do usuário, especialmente em sites com conteúdo estático ou semi-estático. Essa característica também é extremamente útil para a otimização de mecanismos de busca (SEO). Além disso, o Next.js possui um sistema de roteamento file-based intuitivo e simplificado, evitando a complexidade de gerenciamento de rotas em aplicações React tradicionais. | _Motivo:_ Utilizar bibliotecas de ORM (Object-Relational Mapping) em um projeto traz diversos benefícios significativos. Em primeiro lugar, as bibliotecas de ORM abstraem a complexidade do acesso e manipulação direta de um banco de dados, permitindo que os desenvolvedores trabalhem com objetos e classes de maneira mais natural e intuitiva, em vez de terem que lidar diretamente com consultas SQL. Isso simplifica muito o processo de interação com o banco de dados, reduzindo a quantidade de código necessária e tornando o desenvolvimento mais rápido e eficiente. Além disso, as bibliotecas de ORM geralmente oferecem recursos avançados, como migrações de esquema, validação de dados, cache e otimização de consultas, que ajudam a garantir a integridade e o desempenho do banco de dados, mesmo em aplicações complexas. |
+| **React** | **Bibliotecas para manipular coordenadas geográficas** |
+| _Motivo:_ Um motivo geral para usar o React em um projeto é a sua eficiência na construção de interfaces de usuário interativas e responsivas. O React é uma biblioteca Javascript de código aberto que permite criar componentes reutilizáveis e construir interfaces de usuário de forma declarativa. | _Motivo:_ Facilitar a iteração com os possíveis mapas que serão integrados ao sistema. |
+| **Cypress** | **Auth.js** |
+| _Motivo:_ Framework de testes que permite criar testes unitários e de integração. | _Motivo:_ Autenticação que suporta vários provedores, facilitando a implementação de login seguro. |
+
+| **Utilitários**                                                                                                                                                                                     |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **ESLint**                                                                                                                                                                                          |
+| _Motivo:_ Permite estabelecer e impor padrões de código consistentes, detectar erros, melhorar a qualidade geral do código e automatizar a análise de código durante o processo de desenvolvimento. |
+| **Prettier**                                                                                                                                                                                        |
+| _Motivo:_ Formatador de código que ajuda a manter um estilo consistente, ajudando a manter o código limpo e legível.                                                                                |
