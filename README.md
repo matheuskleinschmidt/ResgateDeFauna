@@ -182,7 +182,7 @@ Devido ao tamanho do projeto e sua aplicabilidade ser bem específica foi tomado
 
 ## Modelos C4: Detalhamento da arquitetura em níveis: Contexto, Contêineres, Componentes.
 
-fotos aqui
+![C4](./c4.drawio.png)
 
 # 3.3. Stack Tecnológica
 
