@@ -115,3 +115,17 @@ Procedimentos de implementação e implantação para garantir uma transição s
 -Utilização de formatos de dados estruturados, como JSON, para armazenar e transmitir informações sobre os resgates de animais. 
 
 -Adoção de formatos de dados interoperáveis para facilitar a integração com outros sistemas da FUJAMA, se necessário. 
+
+# 3.1. Requisitos de Software 
+
+## Lista de Requisitos:  
+
+| Requisitos Funcionais (RF)                                  | Requisitos Não-Funcionais (RNF)                 |
+|-------------------------------------------------------------|-------------------------------------------------|
+| Gerenciar os registros provenientes dos resgates.           | Disponibilidade offline.                        |
+| Permitir que o usuário classifique o animal do resgate.     | Usabilidade em um celular simples.              |
+| Permitir usuário listar resgates com diversos filtros.      | Autenticação simples.                           |
+| Permitir o usuário de modificar os tipos de espécies pré-cadastrados. | Aplicação PWA.                                  |
+| Mapa de onde foi feito os resgates.                         |                                                 |
+| Relatório mensal dos resgates feitos filtrado por espécie.  |                                                 |
+
