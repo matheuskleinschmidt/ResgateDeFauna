@@ -2,6 +2,7 @@
 
 O projeto surgiu a partir da participação em um curso de resgate de serpentes, durante o qual um aluno teve a oportunidade de interagir com um Biólogo da FUJAMA (Fundação do Meio Ambiente de Jaraguá do Sul). Durante sua palestra, o biólogo mencionou que, ao realizar resgates de animais, preenchia manualmente uma folha de papel para registrar as informações, posteriormente transferindo-as para uma planilha de Excel. Ao identificar essa oportunidade de melhoria, o projeto visa oferecer suporte à instituição, reduzindo a necessidade de retrabalho e proporcionando maior facilidade em seu processo de registro e gestão de dados. 
 
+
 # Introdução 
 
 ## Contexto: 
@@ -16,11 +17,7 @@ A relevância do projeto para o campo da engenharia de software é evidente, poi
 
 O objetivo principal do projeto é desenvolver uma solução de software que automatize e otimize o processo de registro de dados relacionados aos resgates de animais realizados pela FUJAMA. Isso inclui a criação de um sistema que permita o registro eficiente das informações relevantes durante os resgates, eliminando a necessidade de preenchimento manual de formulários em papel e sua posterior transferência para planilhas de Excel. 
 
-  
-
 ## Além do objetivo principal, os objetivos secundários incluem: 
-
-  
 
 - Facilitar a coleta e o armazenamento de dados precisos e completos sobre os resgates de animais, incluindo informações como espécie, localização, condição, e outras observações relevantes. 
 
@@ -29,3 +26,43 @@ O objetivo principal do projeto é desenvolver uma solução de software que aut
 - Garantir a usabilidade e a acessibilidade do sistema, de modo que os usuários da FUJAMA possam adotá-lo facilmente em suas operações diárias, sem a necessidade de treinamento extensivo. 
 
 - Assegurar a segurança e a integridade dos dados, implementando medidas adequadas de proteção e backup para evitar perda ou violação de informações sensíveis. 
+
+
+# Descrição do Projeto 
+
+## Tema do Projeto:  
+
+O tema do projeto é o desenvolvimento de um sistema web para a FUJAMA (Fundação do Meio Ambiente de Jaraguá do Sul) que visa otimizar o processo de registro de dados relacionados aos resgates de animais. O produto a ser desenvolvido consistirá em uma aplicação web acessível através da internet, onde os funcionários e colaboradores da FUJAMA poderão registrar informações sobre cada resgate de forma rápida e eficiente. 
+
+  
+
+A aplicação web terá uma interface intuitiva e amigável, permitindo aos usuários preencherem campos específicos com detalhes sobre o resgate, como espécie do animal, localização, condição de saúde, data e hora do resgate, entre outros dados relevantes. Além disso, o sistema web incluirá funcionalidades para a análise e visualização dos dados coletados para facilitar a interpretação e utilização das informações. 
+
+  
+
+Por meio do desenvolvimento desta aplicação web, a FUJAMA poderá modernizar e agilizar seu processo de registro de resgates de animais, reduzindo a dependência de formulários em papel e planilhas manuais. Isso não apenas aumentará a eficiência operacional da instituição, mas também melhorará a qualidade e a precisão dos dados coletados, permitindo uma gestão mais eficaz dos recursos e a implementação de estratégias mais adequadas para a conservação da vida selvagem na região de Jaraguá do Sul. 
+ 
+[Link para a ficha](https://drive.google.com/file/d/1-acw-I-E7JE1rDgJuwsOPRSGw0Mi6z1J/view?usp=sharing)  
+
+## Problemas a Resolver:   
+
+Ineficiência no processo de registro de resgates de animais: Atualmente, a FUJAMA enfrenta dificuldades devido ao preenchimento manual de formulários em papel durante os resgates de animais. Isso resulta em um processo moroso e propenso a erros, além de exigir tempo adicional para a transferência desses dados para planilhas de Excel, o que aumenta o retrabalho e diminui a eficiência operacional. 
+
+ 
+
+Dificuldade de gestão e análise de dados: Com a atual abordagem manual, a FUJAMA enfrenta desafios na organização e análise dos dados coletados durante os resgates de animais. A falta de uma ferramenta adequada para gerenciar e visualizar essas informações dificulta a identificação de padrões, tendências e necessidades emergentes, prejudicando a capacidade da instituição de tomar decisões informadas e estratégicas. 
+
+ 
+
+Falta de integração e acessibilidade: A ausência de um sistema centralizado e acessível pela internet dificulta o compartilhamento e a colaboração entre os membros da equipe da FUJAMA. Isso pode resultar em informações desatualizadas ou incompletas, bem como dificuldade na comunicação entre os envolvidos nos resgates de animais. 
+
+##Limitações:  
+
+Embora o projeto busque resolver os principais problemas relacionados ao registro e gestão de resgates de animais pela FUJAMA, existem algumas limitações importantes a serem consideradas: 
+
+  
+-Infraestrutura física: O projeto não abordará questões relacionadas à infraestrutura física necessária para realizar os resgates de animais, como veículos, equipamentos de captura, e instalações para abrigo temporário ou tratamento veterinário dos animais resgatados. Estes são aspectos que não estão diretamente relacionados ao registro de dados, mas que são igualmente importantes para o sucesso das operações de resgate. 
+
+-Capacitação e treinamento: O projeto não incluirá iniciativas para treinamento ou capacitação de pessoal envolvido nos resgates de animais. Embora a eficiência do processo de registro de dados possa ser melhorada por meio de treinamento adequado, isso não será abordado diretamente pelo projeto. 
+
+-Atividades de conservação além dos resgates de animais: Embora o projeto se concentre nos resgates de animais, não abordará outras atividades de conservação da vida selvagem realizadas pela FUJAMA, como programas de educação ambiental, monitoramento de populações de animais, ou gestão de áreas protegidas. 
