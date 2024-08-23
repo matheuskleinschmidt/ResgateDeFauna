@@ -56,7 +56,7 @@ Dificuldade de gestão e análise de dados: Com a atual abordagem manual, a FUJA
 
 Falta de integração e acessibilidade: A ausência de um sistema centralizado e acessível pela internet dificulta o compartilhamento e a colaboração entre os membros da equipe da FUJAMA. Isso pode resultar em informações desatualizadas ou incompletas, bem como dificuldade na comunicação entre os envolvidos nos resgates de animais. 
 
-##Limitações:  
+## Limitações:  
 
 Embora o projeto busque resolver os principais problemas relacionados ao registro e gestão de resgates de animais pela FUJAMA, existem algumas limitações importantes a serem consideradas: 
 
@@ -65,4 +65,53 @@ Embora o projeto busque resolver os principais problemas relacionados ao registr
 
 -Capacitação e treinamento: O projeto não incluirá iniciativas para treinamento ou capacitação de pessoal envolvido nos resgates de animais. Embora a eficiência do processo de registro de dados possa ser melhorada por meio de treinamento adequado, isso não será abordado diretamente pelo projeto. 
 
--Atividades de conservação além dos resgates de animais: Embora o projeto se concentre nos resgates de animais, não abordará outras atividades de conservação da vida selvagem realizadas pela FUJAMA, como programas de educação ambiental, monitoramento de populações de animais, ou gestão de áreas protegidas. 
+-Atividades de conservação além dos resgates de animais: Embora o projeto se concentre nos resgates de animais, não abordará outras atividades de conservação da vida selvagem realizadas pela FUJAMA, como programas de educação ambiental, monitoramento de populações de animais, ou gestão de áreas protegidas.
+
+
+# Especificação Técnica 
+
+## 1. Requisitos de Software: 
+
+Desenvolvimento de uma aplicação web responsiva, acessível através de navegadores web convencionais. 
+
+Interface de usuário intuitiva e amigável para facilitar o registro de dados sobre os resgates de animais. 
+
+Funcionalidades de login e controle de acesso para garantir a segurança e a privacidade das informações. 
+
+Capacidade de registrar informações detalhadas sobre cada resgate, incluindo espécie do animal, localização, data e hora do resgate, condição do animal, entre outros. 
+
+Ferramentas de validação de dados para garantir a precisão e integridade das informações inseridas. 
+
+Funcionalidades de pesquisa e filtragem para facilitar o acesso e a recuperação de dados específicos. 
+
+Capacidade de exportar dados para outros formatos, como CSV ou PDF, para fins de relatório e análise. 
+
+## 2. Protocolos: 
+
+Utilização de protocolos de segurança padrão, como HTTPS, para garantir a proteção dos dados durante a transmissão. 
+
+Implementação de protocolos de autenticação e autorização para controlar o acesso aos dados do sistema. 
+
+Utilização de protocolos de comunicação compatíveis com os requisitos de integração com outros sistemas da FUJAMA, se necessário. 
+
+## 3. Algoritmos: 
+
+Algoritmos de validação de dados para garantir a consistência e integridade das informações inseridas pelos usuários. 
+
+Algoritmos de busca e filtragem eficientes para facilitar a recuperação de dados relevantes. 
+
+Algoritmos de geração de relatórios e análises para identificar padrões e tendências nos dados coletados. 
+
+## 4. Procedimentos: 
+
+Procedimentos de desenvolvimento de software baseados em metodologias ágeis, como Scrum ou Kanban, para garantir um processo de desenvolvimento iterativo e colaborativo. 
+
+Procedimentos de teste rigorosos, incluindo testes de unidade, integração e aceitação, para garantir a qualidade e confiabilidade do sistema. 
+
+Procedimentos de implementação e implantação para garantir uma transição suave para o novo sistema e minimizar o tempo de inatividade. 
+
+## 5. Formatos de Dados: 
+
+-Utilização de formatos de dados estruturados, como JSON, para armazenar e transmitir informações sobre os resgates de animais. 
+
+-Adoção de formatos de dados interoperáveis para facilitar a integração com outros sistemas da FUJAMA, se necessário. 
