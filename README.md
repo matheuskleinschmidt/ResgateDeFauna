@@ -119,7 +119,7 @@ Procedimentos de implementação e implantação para garantir uma transição s
 
 # Representação dos Requisitos:
 
-![casodeuso](./casosdeuso.drawio.png)
+![casodeuso](./doc/casosdeuso.drawio.png)
 
 ## 3.2. Considerações de Design
 
@@ -182,7 +182,7 @@ Devido ao tamanho do projeto e sua aplicabilidade ser bem específica foi tomado
 
 ## Modelos C4: Detalhamento da arquitetura em níveis: Contexto, Contêineres, Componentes.
 
-![C4](./c4.drawio.png)
+![C4](./doc/c4.drawio.png)
 
 # 3.3. Stack Tecnológica
 
