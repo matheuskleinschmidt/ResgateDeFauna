@@ -1,5 +1,6 @@
 const rescues = [
   {
+    "id": 1,
     "typeOfAnimal": 1,
     "species": "Arara-azul",
     "weight": 2.5,
@@ -27,6 +28,7 @@ const rescues = [
     }
   },
   {
+    "id": 2,
     "typeOfAnimal": 2,
     "species": "Tartaruga-verde",
     "weight": 150.0,
@@ -54,6 +56,7 @@ const rescues = [
     }
   },
   {
+    "id": 3,
     "typeOfAnimal": 3,
     "species": "Onça-pintada",
     "weight": 90.0,

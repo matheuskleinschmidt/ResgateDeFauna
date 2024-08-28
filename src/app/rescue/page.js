@@ -1,7 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableColumn,
+  TableRow,
+  TableCell,
+} from "@nextui-org/table";
 
 const RescuePage = () => {
   const [rescues, setRescues] = useState([]);
@@ -9,11 +17,11 @@ const RescuePage = () => {
   useEffect(() => {
     const fetchRescueData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/rescue');
-        console.log(response)
+        const response = await axios.get("http://localhost:3000/api/rescue");
+        console.log(response);
         setRescues(response.data);
       } catch (error) {
-        console.error('Erro ao fazer a requisição:', error);
+        console.error("Erro ao fazer a requisição:", error);
       }
     };
 
@@ -21,18 +29,25 @@ const RescuePage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Lista de Resgates</h1>
-      <ul>
-        {rescues.map((rescue, index) => (
-          <li key={index}>
-            <p><strong>Tipo de Animal:</strong> {rescue.typeOfAnimal}</p>
-            <p><strong>Espécie:</strong> {rescue.species}</p>
-            <p><strong>Peso:</strong> {rescue.weight} kg</p>
-            <p><strong>Data do Resgate:</strong> {new Date(rescue.date).toLocaleDateString()}</p>
-          </li>
-        ))}
-      </ul>
+    <div style={{ overflowX: "auto" }}>
+      <Table aria-label="Example table with dynamic content">
+        <TableHeader>
+          <TableColumn>Espécie</TableColumn>
+          <TableColumn>situação</TableColumn>
+          <TableColumn>Chamado via</TableColumn>
+          <TableColumn>Data</TableColumn>
+        </TableHeader>
+        <TableBody items={rescues}>
+          {(rescues) => (
+            <TableRow key={rescues.id}>
+              {<TableCell>{rescues.species}</TableCell>}
+              {<TableCell>{rescues.situation}</TableCell>}
+              {<TableCell>{rescues.calledVia}</TableCell>}
+              {<TableCell>{rescues.date}</TableCell>}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 };
