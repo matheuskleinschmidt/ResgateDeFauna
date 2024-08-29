@@ -38,12 +38,6 @@ const RescuePage = () => {
           <TableColumn>Data</TableColumn>
         </TableHeader>
         <TableBody items={rescues}>
-          <TableRow>
-            <TableCell>teste</TableCell>
-            <TableCell>teste</TableCell>
-            <TableCell>teste</TableCell>
-            <TableCell>teste</TableCell>
-          </TableRow>
           {(rescues) => (
             <TableRow key={rescues.id}>
               {<TableCell>{rescues.species}</TableCell>}
