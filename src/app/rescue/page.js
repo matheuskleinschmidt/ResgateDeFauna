@@ -30,13 +30,7 @@ const RescuePage = () => {
 
   return (
     <div style={{ overflowX: "auto" }}>
-      <Table isStriped="true" isCompact="true" css={{
-        '@media (max-width: 600px)': {
-          '& th:nth-child(3), & td:nth-child(3)': {
-            display: 'none',
-          },
-        },
-      }}>
+      <Table isStriped="true" isCompact="true">
         <TableHeader>
           <TableColumn>Espécie</TableColumn>
           <TableColumn>situação</TableColumn>
@@ -44,6 +38,10 @@ const RescuePage = () => {
           <TableColumn>Data</TableColumn>
         </TableHeader>
         <TableBody items={rescues}>
+         <TableCell>teste</TableCell>
+         <TableCell>teste</TableCell>
+         <TableCell>teste</TableCell>
+         <TableCell>teste</TableCell>
           {(rescues) => (
             <TableRow key={rescues.id}>
               {<TableCell>{rescues.species}</TableCell>}
