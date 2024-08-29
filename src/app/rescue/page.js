@@ -30,7 +30,13 @@ const RescuePage = () => {
 
   return (
     <div style={{ overflowX: "auto" }}>
-      <Table aria-label="Example table with dynamic content">
+      <Table isStriped="true" isCompact="true" css={{
+        '@media (max-width: 600px)': {
+          '& th:nth-child(3), & td:nth-child(3)': {
+            display: 'none',
+          },
+        },
+      }}>
         <TableHeader>
           <TableColumn>Espécie</TableColumn>
           <TableColumn>situação</TableColumn>
