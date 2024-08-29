@@ -17,13 +17,19 @@ const RescuePage = () => {
   useEffect(() => {
     const fetchRescueData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/rescue");
+        const baseUrl = window.location.origin;
+        
+        const apiUrl = `${baseUrl}/api/rescue`;
+        console.log(apiUrl);
+        const response = await axios.get(apiUrl);
+
         console.log(response);
         setRescues(response.data);
       } catch (error) {
         console.error("Erro ao fazer a requisição:", error);
       }
     };
+    
 
     fetchRescueData();
   }, []);
