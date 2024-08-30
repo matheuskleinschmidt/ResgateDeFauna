@@ -5,6 +5,11 @@ import Navbar from "./components/NavBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const metadata = {
+  manifest: "/manifest.json",  
+  title: "ACME",
+  description: "ACME - Animal Care Management Environment",
+};
 
 export default function RootLayout({ children }) {
   return (
