@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   manifest: "/manifest.json",  
-  title: "ACME",
-  description: "ACME - Animal Care Management Environment",
+  title: "Resgate de Fauna",
+  description: "Software para manejo de resgate de fauna",
 };
 
 export default function RootLayout({ children }) {
