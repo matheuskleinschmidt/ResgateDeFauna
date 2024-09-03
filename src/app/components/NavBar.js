@@ -16,7 +16,7 @@ import { AcmeLogo } from "./AcmeLogo.jsx";
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const menuItems = [{ label: "Resgates", href: "/rescue" }];
+  const menuItems = [{ label: "Resgates", href: "/rescue" },{ label: "Adicionar Resgate", href: "/addRescue" }];
 
   return (
     <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>

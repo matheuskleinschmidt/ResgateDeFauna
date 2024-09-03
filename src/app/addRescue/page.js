@@ -8,6 +8,7 @@ import { Input } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
 import { Select, SelectSection, SelectItem } from "@nextui-org/select";
 import { Button } from "@nextui-org/react";
+import useGeolocation from "../components/useGeolocation";
 
 const calledBy = [
   { key: "1", label: "Ouvidoria" },
@@ -111,6 +112,16 @@ export default function App() {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [filteredSpecies, setFilteredSpecies] = useState([]);
 
+  //const { control, handleSubmit, setValue } = useForm();
+  const { location, getLocation, error } = useGeolocation();
+
+  const handleGetLocation = () => {
+    getLocation();
+    if (location.latitude && location.longitude) {
+      setValue("location", `${location.latitude}, ${location.longitude}`);
+    }
+  };
+
   useEffect(() => {
     console.log("Selected group:", selectedGroup);
     if (selectedGroup) {
@@ -127,6 +138,7 @@ export default function App() {
     register,
     handleSubmit,
     watch,
+    setValue,
     control,
     formState: { errors },
   } = useForm();
@@ -172,6 +184,20 @@ export default function App() {
           />
         )}
       />
+
+      <Controller
+        name="location"
+        control={control}
+        render={({ field }) => (
+          <Input
+            {...field}
+            label="Localização"
+            placeholder="Clique no botão para preencher"
+          />
+        )}
+      />
+      {error && <p>Error: {error}</p>}
+      <Button onClick={handleGetLocation}>Obter Localização</Button>
 
       <Controller
         name="AnimalGroup"
@@ -315,7 +341,7 @@ export default function App() {
             label="O chamado é via?"
             className="w-full max-w-xs mb-4"
             value={field.value}
-            onChange={field.onChange} 
+            onChange={field.onChange}
           >
             {calledBy.map((calledBy) => (
               <SelectItem key={calledBy.key} value={calledBy.key}>
@@ -334,7 +360,7 @@ export default function App() {
             label="O procedimento foi via?"
             className="w-full max-w-xs mb-4"
             value={field.value}
-            onChange={field.onChange} 
+            onChange={field.onChange}
           >
             {procedureBy.map((procedureBy) => (
               <SelectItem key={procedureBy.key} value={procedureBy.key}>
@@ -353,7 +379,7 @@ export default function App() {
             label="Idade do animal?"
             className="w-full max-w-xs mb-4"
             value={field.value}
-            onChange={field.onChange} 
+            onChange={field.onChange}
           >
             {ages.map((ages) => (
               <SelectItem key={ages.key} value={ages.key}>
@@ -372,7 +398,7 @@ export default function App() {
             label="Situação do animal?"
             className="w-full max-w-xs mb-4"
             value={field.value}
-            onChange={field.onChange} 
+            onChange={field.onChange}
           >
             {situations.map((situations) => (
               <SelectItem key={situations.key} value={situations.key}>
@@ -391,7 +417,7 @@ export default function App() {
             label="Pós o resgate"
             className="w-full max-w-xs mb-4"
             value={field.value}
-            onChange={field.onChange} 
+            onChange={field.onChange}
           >
             {postRescue.map((postRescue) => (
               <SelectItem key={postRescue.key} value={postRescue.key}>
