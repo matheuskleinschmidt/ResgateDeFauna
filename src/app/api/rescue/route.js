@@ -27,10 +27,25 @@ export async function OPTIONS() {
 
 
 export async function POST(req) {
-  return new Response(JSON.stringify({ text: 'Hello' }), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  try {
+    const body = await req.json();
+    console.log('---------------------------------------------------------------------------------------------------------------------');
+    console.log('Request Body:', body);
+
+    return new Response(JSON.stringify(body), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (error) {
+    console.error('Error parsing request body:', error);
+    return new Response(JSON.stringify({ error: 'Invalid JSON' }), {
+      status: 400,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 }
+
