@@ -16,10 +16,13 @@ import { AcmeLogo } from "./AcmeLogo.jsx";
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const menuItems = [{ label: "Resgates", href: "/rescue" },{ label: "Adicionar Resgate", href: "/addRescue" }];
+  const menuItems = [
+    { label: "Resgates", href: "/rescue" },
+    { label: "Adicionar Resgate", href: "/addRescue" },
+  ];
 
   return (
-    <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+    <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} className="mb-4">
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -30,7 +33,7 @@ export default function App() {
         <NavbarBrand>
           <AcmeLogo />
           <Link color="foreground" href="/">
-            <p className="font-bold text-inherit">ACME</p>
+            <p className="font-bold text-inherit">Fujama</p>
           </Link>
         </NavbarBrand>
       </NavbarContent>
@@ -39,7 +42,7 @@ export default function App() {
         <NavbarBrand>
           <AcmeLogo />
           <Link color="foreground" href="/">
-            <p className="font-bold text-inherit">ACME</p>
+            <p className="font-bold text-inherit">Fujama</p>
           </Link>
         </NavbarBrand>
         <NavbarItem>

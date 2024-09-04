@@ -167,7 +167,6 @@ export default function App() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md"
     >
-    <h1>Adicionar resgate</h1>
       <Controller
         name="date"
         control={control}
@@ -455,7 +454,7 @@ export default function App() {
           />
         )}
       />
-      <Button type="submit" className="mt-4 w-full sm:max-w-xs">
+      <Button type="submit" className="mt-4 w-full sm:max-w-xs mb-4">
         Enviar
       </Button>
     </form>
