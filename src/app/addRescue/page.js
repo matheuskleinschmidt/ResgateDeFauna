@@ -112,13 +112,18 @@ export default function App() {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [filteredSpecies, setFilteredSpecies] = useState([]);
 
-  //const { control, handleSubmit, setValue } = useForm();
   const { location, getLocation, error } = useGeolocation();
 
-  const handleGetLocation = () => {
-    getLocation();
-    if (location.latitude && location.longitude) {
-      setValue("location", `${location.latitude}, ${location.longitude}`);
+  const handleGetLocation = async () => {
+    try {
+      const location = await getLocation();
+      if (location.latitude && location.longitude) {
+        setValue('location', `${location.latitude}, ${location.longitude}`);
+      }else {
+        console.error("Location not found");
+      }
+    } catch (error) {
+      console.error('Error getting location:', error);
     }
   };
 
@@ -143,17 +148,8 @@ export default function App() {
     formState: { errors },
   } = useForm();
 
-  console.log(watch("example")); // watch input value by passing the name of it
-  console.log(watch("exampleRequired"));
-
-  console.log(watch("Date"));
-  console.log(watch("weight"));
-  console.log(watch("height"));
-  console.log(watch("length"));
-  console.log(watch("width"));
 
   const onSubmit = async (data) => {
-    //console.log("Data to submit:", data);
     const baseUrl = window.location.origin;
 
     const apiUrl = `${baseUrl}/api/rescue`;
