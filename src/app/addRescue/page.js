@@ -167,6 +167,7 @@ export default function App() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md"
     >
+    <h1>Adicionar resgate</h1>
       <Controller
         name="date"
         control={control}
@@ -174,7 +175,7 @@ export default function App() {
         render={({ field }) => (
           <DatePicker
             label="Dia da ocorrência"
-            className="w-full max-w-[284px] mb-4"
+            className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
           />
@@ -187,13 +188,16 @@ export default function App() {
         render={({ field }) => (
           <Input
             {...field}
+            className="w-full max-w-xs mb-4"
             label="Localização"
             placeholder="Clique no botão para preencher"
           />
         )}
       />
       {error && <p>Error: {error}</p>}
-      <Button onClick={handleGetLocation}>Obter Localização</Button>
+      <Button 
+      className="w-full max-w-xs mb-4"
+      onClick={handleGetLocation}>Obter Localização</Button>
 
       <Controller
         name="AnimalGroup"
@@ -247,7 +251,7 @@ export default function App() {
           <Input
             inputMode="numeric"
             label="Peso do animal "
-            className="w-full max-w-[284px] mb-4"
+            className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
           />
@@ -263,7 +267,7 @@ export default function App() {
           <Input
             inputMode="numeric"
             label="Altura do animal"
-            className="w-full max-w-[284px] mb-4"
+            className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
           />
@@ -277,7 +281,7 @@ export default function App() {
           <Input
             inputMode="numeric"
             label="Comprimento do animal"
-            className="w-full max-w-[284px] mb-4"
+            className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
           />
@@ -291,7 +295,7 @@ export default function App() {
           <Input
             inputMode="numeric"
             label="Largura do animal"
-            className="w-full max-w-[284px] mb-4"
+            className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
           />
@@ -306,7 +310,7 @@ export default function App() {
           <Input
             inputMode="text"
             label="Endereço do resgate"
-            className="w-full max-w-[284px] mb-4"
+            className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
           />
@@ -321,7 +325,7 @@ export default function App() {
           <Textarea
             inputMode="text"
             label="O que ocorreu?"
-            className="w-full max-w-[284px] mb-4"
+            className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
           />
@@ -431,7 +435,7 @@ export default function App() {
           <Textarea
             inputMode="text"
             label="Alguma observação?"
-            className="w-full max-w-[284px] mb-4"
+            className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
           />
@@ -445,7 +449,7 @@ export default function App() {
           <Input
             inputMode="text"
             label="Endereço da soltura"
-            className="w-full max-w-[284px] mb-4"
+            className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
           />
