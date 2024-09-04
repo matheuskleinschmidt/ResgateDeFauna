@@ -118,17 +118,29 @@ export default function App() {
     try {
       const location = await getLocation();
       if (location.latitude && location.longitude) {
-        setValue('location', `${location.latitude}, ${location.longitude}`);
-      }else {
+        setValue("location", `${location.latitude}, ${location.longitude}`);
+      } else {
         console.error("Location not found");
       }
     } catch (error) {
-      console.error('Error getting location:', error);
+      console.error("Error getting location:", error);
+    }
+  };
+
+  const handleGetLocation1 = async () => {
+    try {
+      const location = await getLocation();
+      if (location.latitude && location.longitude) {
+        setValue("location1", `${location.latitude}, ${location.longitude}`);
+      } else {
+        console.error("Location not found");
+      }
+    } catch (error) {
+      console.error("Error getting location:", error);
     }
   };
 
   useEffect(() => {
-    console.log("Selected group:", selectedGroup);
     if (selectedGroup) {
       const speciesForGroup = allSpecies.filter(
         (species) => species.groupId === selectedGroup
@@ -147,7 +159,6 @@ export default function App() {
     control,
     formState: { errors },
   } = useForm();
-
 
   const onSubmit = async (data) => {
     const baseUrl = window.location.origin;
@@ -188,15 +199,15 @@ export default function App() {
           <Input
             {...field}
             className="w-full max-w-xs mb-4"
-            label="Localização"
+            label="Localização do resgate"
             placeholder="Clique no botão para preencher"
           />
         )}
       />
       {error && <p>Error: {error}</p>}
-      <Button 
-      className="w-full max-w-xs mb-4"
-      onClick={handleGetLocation}>Obter Localização</Button>
+      <Button className="w-full max-w-xs mb-4" onClick={handleGetLocation}>
+        Obter Localização
+      </Button>
 
       <Controller
         name="AnimalGroup"
@@ -454,6 +465,23 @@ export default function App() {
           />
         )}
       />
+      <Controller
+        name="location1"
+        control={control}
+        render={({ field }) => (
+          <Input
+            {...field}
+            className="w-full max-w-xs mb-4"
+            label="Localização da soltura"
+            placeholder="Clique no botão para preencher"
+          />
+        )}
+      />
+      {error && <p>Error: {error}</p>}
+      <Button className="w-full max-w-xs mb-4" onClick={handleGetLocation1}>
+        Obter Localização
+      </Button>
+
       <Button type="submit" className="mt-4 w-full sm:max-w-xs mb-4">
         Enviar
       </Button>
