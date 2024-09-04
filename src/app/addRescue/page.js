@@ -9,104 +9,7 @@ import { Textarea } from "@nextui-org/input";
 import { Select, SelectSection, SelectItem } from "@nextui-org/select";
 import { Button } from "@nextui-org/react";
 import useGeolocation from "../components/useGeolocation";
-
-const calledBy = [
-  { key: "1", label: "Ouvidoria" },
-  { key: "2", label: "Telefone" },
-  { key: "3", label: "Whatsapp" },
-  { key: "4", label: "Facebook" },
-  { key: "5", label: "Instagram" },
-  { key: "6", label: "E-mail" },
-  { key: "7", label: "Na fujama" },
-  { key: "8", label: "Bombeiros" },
-  { key: "9", label: "Outros" },
-];
-
-const procedureBy = [
-  { key: "1", label: "Resgate " },
-  { key: "2", label: "Telefone " },
-  { key: "3", label: "Whatsapp" },
-  { key: "4", label: "Facebook" },
-  { key: "5", label: "Instagram" },
-  { key: "6", label: "E-mail" },
-  { key: "7", label: "Sistema Ouvidoria" },
-  { key: "8", label: "Animal não localizado" },
-  { key: "9", label: "Outros" },
-];
-
-const ages = [
-  { key: "1", label: "Filhote" },
-  { key: "2", label: "Adulto" },
-  { key: "3", label: "Idoso" },
-  { key: "4", label: "Outros" },
-];
-
-const situations = [
-  { key: "1", label: "Atropelamento" },
-  { key: "2", label: "Caça" },
-  { key: "3", label: "Ataque por Pets" },
-  { key: "4", label: "Vidraça" },
-  { key: "5", label: "Cativeiro" },
-  { key: "6", label: "Outros" },
-];
-
-const postRescue = [
-  { key: "1", label: "Soltura imediata" },
-  { key: "2", label: "Veterinário + soltura/internação " },
-  { key: "3", label: "Veterinário + soltura sem internação " },
-  { key: "4", label: "Cetas" },
-  { key: "5", label: "Obito" },
-  { key: "6", label: "Butanta " },
-  { key: "7", label: "Outros" },
-];
-
-const AnimalGroups = [
-  { key: "1", label: "Mamifero" },
-  { key: "2", label: "Répteis " },
-  { key: "3", label: "Aves " },
-  { key: "4", label: "Peixes" },
-  { key: "5", label: "Anfibios" },
-  { key: "7", label: "Outros" },
-];
-
-const allSpecies = [
-  {
-    id: "101",
-    scientificName: "Canis lupus",
-    commonName: "Lobo",
-    groupId: "1",
-  },
-  {
-    id: "102",
-    scientificName: "Felis catus",
-    commonName: "Gato",
-    groupId: "1", // Mamíferos
-  },
-  {
-    id: "201",
-    scientificName: "Python regius",
-    commonName: "Píton-real",
-    groupId: "2", // Répteis
-  },
-  {
-    id: "202",
-    scientificName: "Chelonia mydas",
-    commonName: "Tartaruga-verde",
-    groupId: "2", // Répteis
-  },
-  {
-    id: "301",
-    scientificName: "Falco peregrinus",
-    commonName: "Falcão-peregrino",
-    groupId: "3", // Aves
-  },
-  {
-    id: "302",
-    scientificName: "Ara macao",
-    commonName: "Arara-vermelha",
-    groupId: "3", // Aves
-  },
-];
+import data from "../utils/datas.js";
 
 export default function App() {
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -142,7 +45,7 @@ export default function App() {
 
   useEffect(() => {
     if (selectedGroup) {
-      const speciesForGroup = allSpecies.filter(
+      const speciesForGroup = data.allSpecies.filter(
         (species) => species.groupId === selectedGroup
       );
       setFilteredSpecies(speciesForGroup);
@@ -223,7 +126,7 @@ export default function App() {
               setSelectedGroup(value.target.value);
             }}
           >
-            {AnimalGroups.map((AnimalGroups) => (
+            {data.AnimalGroups.map((AnimalGroups) => (
               <SelectItem key={AnimalGroups.key} value={AnimalGroups.key}>
                 {AnimalGroups.label}
               </SelectItem>
@@ -259,23 +162,26 @@ export default function App() {
         defaultValue={null}
         render={({ field }) => (
           <Input
-            inputMode="numeric"
-            label="Peso do animal "
+            type="number"
+            placeholder="0.00"
+            label="Peso do animal (Kg)"
             className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
           />
         )}
       />
+
       <h3>Medidas</h3>
-      <h4>Em centimetros</h4>
+      <h4>Em metros</h4>
       <Controller
         name="height"
         control={control}
         defaultValue={null}
         render={({ field }) => (
           <Input
-            inputMode="numeric"
+            type="number"
+            placeholder="0.00"
             label="Altura do animal"
             className="w-full max-w-xs mb-4"
             selected={field.value}
@@ -289,7 +195,8 @@ export default function App() {
         defaultValue={null}
         render={({ field }) => (
           <Input
-            inputMode="numeric"
+            type="number"
+            placeholder="0.00"
             label="Comprimento do animal"
             className="w-full max-w-xs mb-4"
             selected={field.value}
@@ -303,7 +210,8 @@ export default function App() {
         defaultValue={null}
         render={({ field }) => (
           <Input
-            inputMode="numeric"
+            type="number"
+            placeholder="0.00"
             label="Largura do animal"
             className="w-full max-w-xs mb-4"
             selected={field.value}
@@ -353,7 +261,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {calledBy.map((calledBy) => (
+            {data.calledBy.map((calledBy) => (
               <SelectItem key={calledBy.key} value={calledBy.key}>
                 {calledBy.label}
               </SelectItem>
@@ -372,7 +280,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {procedureBy.map((procedureBy) => (
+            {data.procedureBy.map((procedureBy) => (
               <SelectItem key={procedureBy.key} value={procedureBy.key}>
                 {procedureBy.label}
               </SelectItem>
@@ -391,7 +299,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {ages.map((ages) => (
+            {data.ages.map((ages) => (
               <SelectItem key={ages.key} value={ages.key}>
                 {ages.label}
               </SelectItem>
@@ -410,7 +318,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {situations.map((situations) => (
+            {data.situations.map((situations) => (
               <SelectItem key={situations.key} value={situations.key}>
                 {situations.label}
               </SelectItem>
@@ -429,7 +337,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {postRescue.map((postRescue) => (
+            {data.postRescue.map((postRescue) => (
               <SelectItem key={postRescue.key} value={postRescue.key}>
                 {postRescue.label}
               </SelectItem>
