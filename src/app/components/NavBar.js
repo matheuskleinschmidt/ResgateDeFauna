@@ -18,7 +18,7 @@ export default function App() {
 
   const menuItems = [
     { label: "Resgates", href: "/rescue" },
-    { label: "Adicionar Resgate", href: "/addRescue" },
+    { label: "Adicionar Resgate", href: "/rescue/addRescue" },
   ];
 
   return (

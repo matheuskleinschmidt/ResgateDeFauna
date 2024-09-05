@@ -6,7 +6,7 @@ export default function App() {
     <div className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md">
       <Card  className="w-full max-w-xs mb-4">
         <CardBody>
-        <Link href="/addRescue"><p>Adicionar resgate</p></Link>
+        <Link href="/rescue/addRescue"><p>Adicionar resgate</p></Link>
         </CardBody>
       </Card>
       <Card  className="w-full max-w-xs mb-4">

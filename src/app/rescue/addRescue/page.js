@@ -8,8 +8,8 @@ import { Input } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
 import { Select, SelectSection, SelectItem } from "@nextui-org/select";
 import { Button } from "@nextui-org/react";
-import useGeolocation from "../components/useGeolocation";
-import data from "../utils/datas.js";
+import useGeolocation from "../../components/useGeolocation";
+import data from "../../utils/datas.js";
 
 export default function App() {
   const [selectedGroup, setSelectedGroup] = useState(null);
