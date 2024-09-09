@@ -17,8 +17,8 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const menuItems = [
-    { label: "Resgates", href: "/rescue" },
-    { label: "Adicionar Resgate", href: "/rescue/addRescue" },
+    { label: "Resgates", href: "/pages/rescue" },
+    { label: "Adicionar Resgate", href: "/pages/rescue/addRescue" },
   ];
 
   return (
@@ -46,7 +46,7 @@ export default function App() {
           </Link>
         </NavbarBrand>
         <NavbarItem>
-          <Link color="foreground" href="/rescue">
+          <Link color="foreground" href="/pages/rescue">
             Resgates
           </Link>
         </NavbarItem>

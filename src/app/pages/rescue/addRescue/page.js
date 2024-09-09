@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
@@ -9,34 +8,14 @@ import { Input } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
 import { Select, SelectSection, SelectItem } from "@nextui-org/select";
 import { Button } from "@nextui-org/react";
-import useGeolocation from "../../components/useGeolocation";
-import data from "../../utils/datas.js";
+import useGeolocation from "../../../components/useGeolocation";
+import data from "../../../utils/datas.js";
 
-export default function App({ params }) {
+export default function App() {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [filteredSpecies, setFilteredSpecies] = useState([]);
+
   const { location, getLocation, error } = useGeolocation();
-  const [rescue, setRescue] = useState([]);
-
-  useEffect(() => {
-    const fetchRescueData = async () => {
-      try {
-        const baseUrl = window.location.origin;
-        
-        const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
-        console.log(apiUrl);
-        const response = await axios.get(apiUrl);
-
-        console.log(response);
-        setRescue(response.data);
-      } catch (error) {
-        console.error("Erro ao fazer a requisição:", error);
-      }
-    };
-    
-
-    fetchRescueData();
-  }, []);
 
   const handleGetLocation = async () => {
     try {
@@ -102,8 +81,6 @@ export default function App({ params }) {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md"
     >
-    <div>My Post: {params.id}</div>
-    <div>My Post: {rescue.typeOfAnimal}</div>
       <Controller
         name="date"
         control={control}
