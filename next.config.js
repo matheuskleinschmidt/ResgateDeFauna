@@ -12,6 +12,10 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   },
 });
 
-const nextConfig = {};
+const nextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: ["sequelize"],
+  },
+};
 
 module.exports = withPWA(nextConfig);
