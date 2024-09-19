@@ -1,0 +1,36 @@
+# .github/workflows/migrate.yml
+
+name: Run Migrations on Main Push
+
+on:
+  push:
+    branches:
+      - main # Dispara o workflow ao fazer push na branch main
+
+jobs:
+  migrations:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      # Passo 4: Executar as migrations do Sequelize
+      - name: Run Sequelize Migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }} ,
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }} ,
+          DB_NAME: ${{ secrets.DB_NAME }} ,
+          DB_HOST: ${{ secrets.DB_HOST }} ,
+          DB_PORT: ${{ secrets.DB_PORT }} ,
+
+        run: npm run migrate
