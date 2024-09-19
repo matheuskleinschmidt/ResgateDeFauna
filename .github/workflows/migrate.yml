@@ -23,6 +23,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Print DB Port
+        env:
+          DB_PORT: ${{ secrets.DB_PORT }}
+          
+        run: |
+          echo "Database port: $DB_PORT"
+
+        
+
       # Passo 4: Executar as migrations do Sequelize
       - name: Run Sequelize Migrations
         env:
