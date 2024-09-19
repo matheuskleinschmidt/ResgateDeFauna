@@ -6,7 +6,7 @@ export const options = {
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
   dialect: "postgres",
-  Logging: process.env.NODE_ENV === "development" ? console.log : false,
+  Logging:  console.log,
   migrationStorageTableName: "migrations",
 };
 
