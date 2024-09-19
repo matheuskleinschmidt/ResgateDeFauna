@@ -27,7 +27,7 @@ jobs:
         env:
           DB_PORT: ${{ secrets.DB_PORT }}
         run: |
-          echo "Database opa port: $DB_PORT"
+          echo "Database port: $DB_PORT"
 
         
 
