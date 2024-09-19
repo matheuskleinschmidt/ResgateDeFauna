@@ -28,7 +28,7 @@ jobs:
           DB_PORT: ${{ secrets.DB_PORT }}
           
         run: |
-          echo "Database port: $DB_PORT"
+          echo "Database port:  ${{ secrets.DB_PORT }}"
 
         
 
@@ -36,10 +36,10 @@ jobs:
       - name: Run Sequelize Migrations
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }} ,
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }} ,
-          DB_NAME: ${{ secrets.DB_NAME }} ,
-          DB_HOST: ${{ secrets.DB_HOST }} ,
-          DB_PORT: ${{ secrets.DB_PORT }} ,
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
 
         run: npx sequelize db:migrate --env production
