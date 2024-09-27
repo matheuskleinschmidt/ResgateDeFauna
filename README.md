@@ -1,6 +1,6 @@
 # Resumo do projeto:
 
-O projeto surgiu a partir da participação em um curso de resgate de serpentes, durante o qual um aluno teve a oportunidade de interagir com um Biólogo da FUJAMA (Fundação do Meio Ambiente de Jaraguá do Sul). Durante sua palestra, o biólogo mencionou que, ao realizar resgates de animais, preenchia manualmente uma folha de papel para registrar as informações, posteriormente transferindo-as para uma planilha de Excel. Ao identificar essa oportunidade de melhoria, o projeto visa oferecer suporte à instituição, reduzindo a necessidade de retrabalho e proporcionando maior facilidade em seu processo de registro e gestão de dados.
+O projeto surgiu a partir da participação em um curso de resgate de animais silvestres, durante o qual um aluno teve a oportunidade de interagir com um Biólogo da FUJAMA (Fundação do Meio Ambiente de Jaraguá do Sul). Durante sua palestra, o biólogo mencionou que, ao realizar resgates de animais, preenchia manualmente uma folha de papel para registrar as informações, posteriormente transferindo-as para uma planilha de Excel. Ao identificar essa oportunidade de melhoria, o projeto visa oferecer suporte à instituição, reduzindo a necessidade de retrabalho e proporcionando maior facilidade em seu processo de registro e gestão de dados.
 
 # Introdução
 
