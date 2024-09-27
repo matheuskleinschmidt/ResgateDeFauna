@@ -1,5 +1,5 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
-import sequelize from "../../db_connection.js";
+import sequelize from "../../../db_connection.js";
 
 class Rescues extends Model {
   static associate(models) {

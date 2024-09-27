@@ -1,4 +1,4 @@
-import Rescues from '@/app/models/Rescues'; 
+import Rescues from '@/app/api/models/Rescues'; 
 
 
 async function createRescueRecord(data) {

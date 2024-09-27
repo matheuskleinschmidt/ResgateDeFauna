@@ -1,11 +1,11 @@
-import Rescues from '../models/Rescues.js';
-import Species from '../models/Species.js';
-import CalledBys from '../models/CalledBys.js';
-import ProcedureOrientationBys from '../models/ProcedureOrientationBys.js';
-import Situations from '../models/Situations.js';
-import PostRescues from '../models/PostRescues.js';
-import RescueStatus from '../models/RescueStatus.js';
-import AnimalGroups from '../models/AnimalGroups.js';
+import Rescues from './models/Rescues.js';
+import Species from './models/Species.js';
+import CalledBys from './models/CalledBys.js';
+import ProcedureOrientationBys from './models/ProcedureOrientationBys.js';
+import Situations from './models/Situations.js';
+import PostRescues from './models/PostRescues.js';
+import RescueStatus from './models/RescueStatus.js';
+import AnimalGroups from './models/AnimalGroups.js';
 
 Rescues.associate({
   Species,

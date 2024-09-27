@@ -1,16 +1,16 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
-import sequelize from "../../db_connection.js";
+import sequelize from "../../../db_connection.js";
 
-class PostRescues extends Model {
+class CalledBys extends Model {
   static associate(models) {
     this.belongsTo(models.Rescues, {
-      foreignKey: "postRescueId",
+      foreignKey: "calledById",
       as: "rescues",
     });
   }
 }
 
-PostRescues.init(
+CalledBys.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -35,10 +35,10 @@ PostRescues.init(
   },
   {
     sequelize,
-    modelName: "postRescues",
-    tableName: "postRescues",
+    modelName: "calledBys",
+    tableName: "calledBys",
     timestamps: true,
   }
 );
 
-export default PostRescues;
+export default CalledBys;

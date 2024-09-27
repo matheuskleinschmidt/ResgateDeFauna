@@ -1,16 +1,16 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
-import sequelize from "../../db_connection.js";
+import sequelize from "../../../db_connection.js";
 
-class RescueStatus extends Model {
+class Situations extends Model {
   static associate(models) {
     this.belongsTo(models.Rescues, {
-      foreignKey: "statusRescueId",
+      foreignKey: "situationId",
       as: "rescues",
     });
   }
 }
 
-RescueStatus.init(
+Situations.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -35,10 +35,10 @@ RescueStatus.init(
   },
   {
     sequelize,
-    modelName: "RescueStatus",
-    tableName: "rescueStatus",
+    modelName: "situations",
+    tableName: "situations",
     timestamps: true,
   }
 );
 
-export default RescueStatus;
+export default Situations;

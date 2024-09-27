@@ -1,16 +1,16 @@
-import { Model, DataTypes,Sequelize } from "sequelize";
-import sequelize from "../../db_connection.js";
+import { Model, DataTypes, Sequelize } from "sequelize";
+import sequelize from "../../../db_connection.js";
 
-class ProcedureOrientationBys extends Model {
+class PostRescues extends Model {
   static associate(models) {
     this.belongsTo(models.Rescues, {
-      foreignKey: "procedureOrientationById",
+      foreignKey: "postRescueId",
       as: "rescues",
     });
   }
 }
 
-ProcedureOrientationBys.init(
+PostRescues.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -35,10 +35,10 @@ ProcedureOrientationBys.init(
   },
   {
     sequelize,
-    modelName: "procedureOrientationBys",
-    tableName: "procedureOrientationBys",
+    modelName: "postRescues",
+    tableName: "postRescues",
     timestamps: true,
   }
 );
 
-export default ProcedureOrientationBys;
+export default PostRescues;

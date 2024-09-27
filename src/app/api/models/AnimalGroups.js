@@ -1,25 +1,25 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
-import sequelize from "../../db_connection.js";
+import sequelize from "../../../db_connection.js";
 
-class Situations extends Model {
+class AnimalGroups extends Model {
   static associate(models) {
-    this.belongsTo(models.Rescues, {
-      foreignKey: "situationId",
-      as: "rescues",
+    this.hasMany(models.Species, {
+      foreignKey: "groupId",
+      as: "species",
     });
   }
 }
 
-Situations.init(
+AnimalGroups.init(
   {
     id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       autoIncrement: true,
       primaryKey: true,
+      allowNull: false,
     },
-    name: {
-      type: DataTypes.STRING,
+    groupName: {
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
     createdAt: {
@@ -35,10 +35,10 @@ Situations.init(
   },
   {
     sequelize,
-    modelName: "situations",
-    tableName: "situations",
+    modelName: "animalGroups",
+    tableName: "animalGroups",
     timestamps: true,
   }
 );
 
-export default Situations;
+export default AnimalGroups;
