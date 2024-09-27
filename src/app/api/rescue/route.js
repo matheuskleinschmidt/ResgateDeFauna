@@ -1,4 +1,5 @@
 import data from './mock.json'
+import createRescueRecord from '../controllers/rescue';
 
 const rescues = data
 
@@ -29,9 +30,7 @@ export async function OPTIONS() {
 export async function POST(req) {
   try {
     const body = await req.json();
-    console.log('---------------------------------------------------------------------------------------------------------------------');
-    console.log('Request Body:', body);
-
+    createRescueRecord(body);
     return new Response(JSON.stringify(body), {
       status: 200,
       headers: {
