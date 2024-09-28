@@ -12,10 +12,9 @@ import {
 } from "@nextui-org/table";
 import moment from "moment";
 import "moment-timezone";
-import { link } from "@nextui-org/react";
 import Link from "next/link";
 
-const timezone = "America/Sao_Paulo"; 
+const timezone = "America/Sao_Paulo";
 
 const RescuePage = () => {
   const [rescues, setRescues] = useState([]);
@@ -41,33 +40,30 @@ const RescuePage = () => {
 
   return (
     <div className="responsive-table">
-      <Table isStriped="true" isCompact="true">
+      <Table isStriped isCompact>
         <TableHeader>
           <TableColumn>Espécie</TableColumn>
           <TableColumn>Situação</TableColumn>
           <TableColumn>Chamado via</TableColumn>
           <TableColumn>Data e hora</TableColumn>
         </TableHeader>
-        <TableBody items={rescues}>
-          {(rescues) => (
-            <TableRow key={rescues.id}>
+        <TableBody>
+          {rescues.map((rescue) => (
+            <TableRow key={rescue.id}>
               <TableCell>
-                {" "}
-                <Link
-                  href={`${window.location.origin}/pages/rescue/${rescues.id}`}
-                >
-                  {rescues.species.commonName}{" "}
+                <Link href={`/pages/rescue/${rescue.id}`}>
+                  {rescue.species.commonName}
                 </Link>
               </TableCell>
-              <TableCell>{rescues.situation.name}</TableCell>
-              <TableCell>{rescues.calledBy.name}</TableCell>
+              <TableCell>{rescue.situation.name}</TableCell>
+              <TableCell>{rescue.calledBy.name}</TableCell>
               <TableCell>
-                {moment(rescues.fullDate)
+                {moment(rescue.fullDate)
                   .tz(timezone)
                   .format("DD/MM/YYYY HH:mm:ss")}
               </TableCell>
             </TableRow>
-          )}
+          ))}
         </TableBody>
       </Table>
 
