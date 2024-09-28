@@ -85,7 +85,6 @@ export async function getRescuesWithStrings(id) {
 
 
 export async function createOrUpdateRescueRecord(id, data) {
-
   try {
     const { year, month, day } = data.date;
     const { hour = 0, minute = 0, second = 0, millisecond = 0 } = data.time || {};

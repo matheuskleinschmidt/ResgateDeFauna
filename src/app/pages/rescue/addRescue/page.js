@@ -129,6 +129,7 @@ export default function App() {
         defaultValue={null}
         render={({ field }) => (
           <Select
+            isRequired
             label="Qual o grupo do animal?"
             className="w-full max-w-xs mb-4"
             value={field.value}
@@ -152,6 +153,7 @@ export default function App() {
         defaultValue={null}
         render={({ field }) => (
           <Select
+            isRequired
             label="Qual a espécie do animal?"
             className="w-full max-w-xs mb-4"
             value={field.value}

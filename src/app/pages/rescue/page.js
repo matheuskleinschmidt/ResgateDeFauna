@@ -40,31 +40,34 @@ const RescuePage = () => {
   return (
     <div className="responsive-table">
       <Table isStriped isCompact>
-        <TableHeader>
-          <TableColumn>Espécie</TableColumn>
-          <TableColumn>Situação</TableColumn>
-          <TableColumn>Chamado via</TableColumn>
-          <TableColumn>Data e hora</TableColumn>
-        </TableHeader>
-        <TableBody>
-          {rescues.map((rescue) => (
-            <TableRow key={rescue.id}>
-              <TableCell>
-                <Link href={`/pages/rescue/${rescue.id}`}>
-                  {rescue.species.commonName}
-                </Link>
-              </TableCell>
-              <TableCell>{rescue.situation?.name || 'Situação desconhecida'}</TableCell>
-              <TableCell>{rescue.calledBy?.name || 'Chamado por desconhecido'}</TableCell>
-              <TableCell>
-                {moment(rescue.fullDate)
-                  .tz(timezone)
-                  .format("DD/MM/YYYY HH:mm:ss")}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+  <TableHeader>
+    <TableColumn>Espécie</TableColumn>
+    <TableColumn>Situação</TableColumn>
+    <TableColumn>Chamado via</TableColumn>
+    <TableColumn>Data e hora</TableColumn>
+  </TableHeader>
+  <TableBody emptyContent={"Não há registros salvos."}>
+    {Array.isArray(rescues) && rescues.length > 0 ? (
+      rescues.map((rescue) => (
+        <TableRow key={rescue.id}>
+          <TableCell>
+            <Link href={`/pages/rescue/${rescue.id}`}>
+              {rescue.species.commonName}
+            </Link>
+          </TableCell>
+          <TableCell>{rescue.situation?.name || 'Situação desconhecida'}</TableCell>
+          <TableCell>{rescue.calledBy?.name || 'Chamado por desconhecido'}</TableCell>
+          <TableCell>
+            {moment(rescue.fullDate)
+              .tz(timezone)
+              .format("DD/MM/YYYY HH:mm:ss")}
+          </TableCell>
+        </TableRow>
+      ))
+    ) : null}
+  </TableBody>
+</Table>
+
 
       <style jsx>{`
         .responsive-table {
