@@ -31,7 +31,7 @@ export default function App({ params }) {
         const response = await axios.get(apiUrl);
         const dataResponse = response.data[0]; // Acessa o primeiro elemento do array
 
-        //setValue("date", dataResponse.fullDate);
+       // setValue("date", dataResponse.fullDate);
 
         setValue(
           "locationCoordinates",
@@ -185,29 +185,28 @@ export default function App({ params }) {
       </Button>
 
       <Controller
-  name="AnimalGroup"
-  control={control}
-  defaultValue={null}
-  render={({ field }) => (
-    <Select
-      label="Qual o grupo do animal?"
-      className="w-full max-w-xs mb-4"
-      selectedKeys={field.value ? new Set([field.value]) : new Set()}
-      onSelectionChange={(keys) => {
-        const selectedKey = Array.from(keys).pop();
-        field.onChange(selectedKey);
-        setSelectedGroup(selectedKey);
-      }}
-    >
-      {data.AnimalGroups.map((AnimalGroup) => (
-        <SelectItem key={AnimalGroup.key.toString()} value={AnimalGroup.key.toString()}>
-          {AnimalGroup.label}
-        </SelectItem>
-      ))}
-    </Select>
-  )}
-/>
-
+        name="AnimalGroup"
+        control={control}
+        defaultValue={null}
+        render={({ field }) => (
+          <Select
+            label="Qual o grupo do animal?"
+            className="w-full max-w-xs mb-4"
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+              setSelectedGroup(selectedKey);
+            }}
+          >
+            {data.AnimalGroups.map((AnimalGroup) => (
+              <SelectItem key={AnimalGroup.key.toString()} value={AnimalGroup.key.toString()}>
+                {AnimalGroup.label}
+              </SelectItem>
+            ))}
+          </Select>
+        )}
+      />
 
       <Controller
         name="Species"
@@ -217,7 +216,7 @@ export default function App({ params }) {
           <Select
             label="Qual a espécie do animal?"
             className="w-full max-w-xs mb-4"
-            defaultSelectedKeys={field.value ? [field.value] : []}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
             onSelectionChange={(keys) => {
               const selectedKey = Array.from(keys).pop();
               field.onChange(selectedKey);
@@ -243,7 +242,7 @@ export default function App({ params }) {
             placeholder="0.00"
             label="Peso do animal (Kg)"
             className="w-full max-w-xs mb-4"
-            value={field.value}
+            value={field.value || ''}
             onChange={field.onChange}
           />
         )}
@@ -261,7 +260,7 @@ export default function App({ params }) {
             placeholder="0.00"
             label="Altura do animal"
             className="w-full max-w-xs mb-4"
-            value={field.value}
+            value={field.value || ''}
             onChange={field.onChange}
           />
         )}
@@ -276,7 +275,7 @@ export default function App({ params }) {
             placeholder="0.00"
             label="Comprimento do animal"
             className="w-full max-w-xs mb-4"
-            value={field.value}
+            value={field.value || ''}
             onChange={field.onChange}
           />
         )}
@@ -291,7 +290,7 @@ export default function App({ params }) {
             placeholder="0.00"
             label="Largura do animal"
             className="w-full max-w-xs mb-4"
-            value={field.value}
+            value={field.value || ''}
             onChange={field.onChange}
           />
         )}
@@ -306,7 +305,7 @@ export default function App({ params }) {
             inputMode="text"
             label="Endereço do resgate"
             className="w-full max-w-xs mb-4"
-            value={field.value}
+            value={field.value || ''}
             onChange={field.onChange}
           />
         )}
@@ -321,7 +320,7 @@ export default function App({ params }) {
             inputMode="text"
             label="O que ocorreu?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
+            value={field.value || ''}
             onChange={field.onChange}
           />
         )}
@@ -335,7 +334,7 @@ export default function App({ params }) {
           <Select
             label="O chamado é via?"
             className="w-full max-w-xs mb-4"
-            defaultSelectedKeys={field.value ? [field.value] : []}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
             onSelectionChange={(keys) => {
               const selectedKey = Array.from(keys).pop();
               field.onChange(selectedKey);
@@ -358,7 +357,7 @@ export default function App({ params }) {
           <Select
             label="O procedimento foi via?"
             className="w-full max-w-xs mb-4"
-            defaultSelectedKeys={field.value ? [field.value] : []}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
             onSelectionChange={(keys) => {
               const selectedKey = Array.from(keys).pop();
               field.onChange(selectedKey);
@@ -381,7 +380,7 @@ export default function App({ params }) {
           <Select
             label="Idade do animal?"
             className="w-full max-w-xs mb-4"
-            defaultSelectedKeys={field.value ? [field.value] : []}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
             onSelectionChange={(keys) => {
               const selectedKey = Array.from(keys).pop();
               field.onChange(selectedKey);
@@ -404,7 +403,7 @@ export default function App({ params }) {
           <Select
             label="Situação do animal?"
             className="w-full max-w-xs mb-4"
-            defaultSelectedKeys={field.value ? [field.value] : []}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
             onSelectionChange={(keys) => {
               const selectedKey = Array.from(keys).pop();
               field.onChange(selectedKey);
@@ -427,7 +426,7 @@ export default function App({ params }) {
           <Select
             label="Pós o resgate"
             className="w-full max-w-xs mb-4"
-            defaultSelectedKeys={field.value ? [field.value] : []}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
             onSelectionChange={(keys) => {
               const selectedKey = Array.from(keys).pop();
               field.onChange(selectedKey);
@@ -451,7 +450,7 @@ export default function App({ params }) {
             inputMode="text"
             label="Alguma observação?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
+            value={field.value || ''}
             onChange={field.onChange}
           />
         )}
@@ -466,7 +465,7 @@ export default function App({ params }) {
             inputMode="text"
             label="Endereço da soltura"
             className="w-full max-w-xs mb-4"
-            value={field.value}
+            value={field.value || ''}
             onChange={field.onChange}
           />
         )}
