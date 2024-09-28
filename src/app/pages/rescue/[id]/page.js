@@ -22,7 +22,7 @@ export default function App({ params }) {
     const fetchRescueData = async () => {
       try {
         const baseUrl = window.location.origin;
-        
+
         const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
         console.log(apiUrl);
         const response = await axios.get(apiUrl);
@@ -33,29 +33,15 @@ export default function App({ params }) {
         console.error("Erro ao fazer a requisição:", error);
       }
     };
-    
 
     fetchRescueData();
   }, []);
 
-  const handleGetLocation = async () => {
+  const handleGetLocation = async (field) => {
     try {
       const location = await getLocation();
       if (location.latitude && location.longitude) {
-        setValue("location", `${location.latitude}, ${location.longitude}`);
-      } else {
-        console.error("Location not found");
-      }
-    } catch (error) {
-      console.error("Error getting location:", error);
-    }
-  };
-
-  const handleGetLocation1 = async () => {
-    try {
-      const location = await getLocation();
-      if (location.latitude && location.longitude) {
-        setValue("location1", `${location.latitude}, ${location.longitude}`);
+        setValue(field, `${location.latitude}, ${location.longitude}`);
       } else {
         console.error("Location not found");
       }
@@ -102,8 +88,8 @@ export default function App({ params }) {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md"
     >
-    <div>My Post: {params.id}</div>
-    <div>My Post: {rescue.typeOfAnimal}</div>
+      <div>My Post: {params.id}</div>
+      <div>My Post: {rescue.typeOfAnimal}</div>
       <Controller
         name="date"
         control={control}
@@ -119,7 +105,7 @@ export default function App({ params }) {
       />
 
       <Controller
-        name="location"
+        name="locationCoordinates"
         control={control}
         render={({ field }) => (
           <Input
@@ -131,8 +117,11 @@ export default function App({ params }) {
         )}
       />
       {error && <p>Error: {error}</p>}
-      <Button className="w-full max-w-xs mb-4" onClick={handleGetLocation}>
-        Obter Localização
+      <Button
+        className="w-full max-w-xs mb-4"
+        onClick={() => handleGetLocation("locationCoordinates")}
+      >
+        Obter Localização do Resgate
       </Button>
 
       <Controller
@@ -397,7 +386,7 @@ export default function App({ params }) {
         )}
       />
       <Controller
-        name="location1"
+        name="releaseLocationCoordinates"
         control={control}
         render={({ field }) => (
           <Input
@@ -408,11 +397,12 @@ export default function App({ params }) {
           />
         )}
       />
-      {error && <p>Error: {error}</p>}
-      <Button className="w-full max-w-xs mb-4" onClick={handleGetLocation1}>
-        Obter Localização
+      <Button
+        className="w-full max-w-xs mb-4"
+        onClick={() => handleGetLocation("releaseLocationCoordinates")}
+      >
+        Obter Localização da Soltura
       </Button>
-
       <Button type="submit" className="mt-4 w-full sm:max-w-xs mb-4">
         Enviar
       </Button>
