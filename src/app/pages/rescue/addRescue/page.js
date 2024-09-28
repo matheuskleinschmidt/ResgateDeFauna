@@ -9,6 +9,7 @@ import { Input } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
 import { Select, SelectSection, SelectItem } from "@nextui-org/select";
 import { Button } from "@nextui-org/react";
+import {TimeInput} from "@nextui-org/date-input";
 import useGeolocation from "../../../components/useGeolocation";
 import data from "../../../utils/datas.js";
 
@@ -31,18 +32,6 @@ export default function App() {
     }
   };
 
-  const handleGetLocation1 = async () => {
-    try {
-      const location = await getLocation();
-      if (location.latitude && location.longitude) {
-        setValue("location1", `${location.latitude}, ${location.longitude}`);
-      } else {
-        console.error("Location not found");
-      }
-    } catch (error) {
-      console.error("Error getting location:", error);
-    }
-  };
 
   useEffect(() => {
     if (selectedGroup) {
@@ -68,7 +57,7 @@ export default function App() {
     const baseUrl = window.location.origin;
 
     const apiUrl = `${baseUrl}/api/rescue`;
-    console.log(apiUrl);
+
     try {
       const response = await axios.post(apiUrl, data);
       console.log("Response:", response.data);
@@ -82,12 +71,27 @@ export default function App() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md"
     >
+          <Controller
+        name="time"
+        control={control}
+        defaultValue={null}
+        render={({ field }) => (
+          <TimeInput
+            isRequired
+            label="Hora do evento"
+            className="w-full max-w-xs mb-4"
+            value={field.value}
+            onChange={field.onChange}
+          />
+        )}
+      />
       <Controller
         name="date"
         control={control}
         defaultValue={null}
         render={({ field }) => (
           <DatePicker
+            isRequired
             label="Dia da ocorrência"
             className="w-full max-w-xs mb-4"
             selected={field.value}
@@ -102,6 +106,7 @@ export default function App() {
         render={({ field }) => (
           <Input
             {...field}
+            isRequired
             className="w-full max-w-xs mb-4"
             label="Localização do resgate"
             placeholder="Clique no botão para preencher"

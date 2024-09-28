@@ -85,7 +85,7 @@ export async function getRescuesWithStrings(id) {
 
 
 export async function createOrUpdateRescueRecord(id, data) {
-  console.log(data);
+
   try {
     const { year, month, day } = data.date;
     const { hour = 0, minute = 0, second = 0, millisecond = 0 } = data.time || {};
@@ -104,11 +104,14 @@ export async function createOrUpdateRescueRecord(id, data) {
       longitude: parseFloat(locationCoords[1].trim()),
     };
 
-    const releaseLocationCoords = data.releaseLocationCoordinates.split(',');
-    const releaseLocationCoordinates = {
-      latitude: parseFloat(releaseLocationCoords[0].trim()),
-      longitude: parseFloat(releaseLocationCoords[1].trim()),
-    };
+    let releaseLocationCoordinates = null;
+    if (data.releaseLocationCoordinates && data.releaseLocationCoordinates.trim() !== '') {
+      const releaseLocationCoords = data.releaseLocationCoordinates.split(',');
+      releaseLocationCoordinates = {
+        latitude: parseFloat(releaseLocationCoords[0].trim()),
+        longitude: parseFloat(releaseLocationCoords[1].trim()),
+      };
+    }
 
     const rescueData = {
       animalTypeId: parseInt(data.Species),

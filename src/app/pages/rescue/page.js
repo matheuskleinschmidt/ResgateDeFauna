@@ -25,10 +25,9 @@ const RescuePage = () => {
         const baseUrl = window.location.origin;
 
         const apiUrl = `${baseUrl}/api/rescue`;
-        console.log(apiUrl);
-        const response = await axios.get(apiUrl);
 
-        console.log(response.data);
+        const response = await axios.get(apiUrl);
+        console.log("response", response);
         setRescues(response.data);
       } catch (error) {
         console.error("Erro ao fazer a requisição:", error);
@@ -55,8 +54,8 @@ const RescuePage = () => {
                   {rescue.species.commonName}
                 </Link>
               </TableCell>
-              <TableCell>{rescue.situation.name}</TableCell>
-              <TableCell>{rescue.calledBy.name}</TableCell>
+              <TableCell>{rescue.situation?.name || 'Situação desconhecida'}</TableCell>
+              <TableCell>{rescue.calledBy?.name || 'Chamado por desconhecido'}</TableCell>
               <TableCell>
                 {moment(rescue.fullDate)
                   .tz(timezone)

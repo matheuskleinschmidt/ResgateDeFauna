@@ -32,7 +32,7 @@ export default function App({ params }) {
         const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
         const response = await axios.get(apiUrl);
         const dataResponse = response.data[0]; 
-        console.log(dataResponse);
+
         setValue("Species", dataResponse.species.id.toString());
 
         setSelectedGroup(dataResponse.species.groupId.toString());
@@ -139,8 +139,6 @@ export default function App({ params }) {
   };
 
   const onSubmit = async (data) => {
-    console.log(data.id);
-    console.log(data);
     const baseUrl = window.location.origin;
     const apiUrl = `${baseUrl}/api/rescue/${params.id}`; 
     try {

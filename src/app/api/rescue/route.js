@@ -29,7 +29,8 @@ export async function OPTIONS() {
 export async function POST(req) {
   try {
     const body = await req.json();
-    createOrUpdateRescueRecord(body);
+
+    createOrUpdateRescueRecord(false, body);
     return new Response(JSON.stringify(body), {
       status: 200,
       headers: {
