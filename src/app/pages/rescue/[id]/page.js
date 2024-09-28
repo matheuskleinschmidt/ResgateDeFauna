@@ -9,6 +9,8 @@ import { Input } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Button } from "@nextui-org/react";
+import {TimeInput} from "@nextui-org/date-input";
+import {parseDate, getLocalTimeZone, Time} from "@internationalized/date";
 import useGeolocation from "../../../components/useGeolocation";
 import data from "../../../utils/datas.js";
 
@@ -31,7 +33,11 @@ export default function App({ params }) {
         const response = await axios.get(apiUrl);
         const dataResponse = response.data[0]; // Acessa o primeiro elemento do array
 
-       // setValue("date", dataResponse.fullDate);
+              // Extrair a data no formato "YYYY-MM-DD"
+              const dateString = dataResponse.fullDate.split("T")[0];
+              // Converter para DateValue usando parseDate
+              const dateValue = parseDate(dateString);
+              setValue("date", dateValue);
 
         setValue(
           "locationCoordinates",
@@ -148,6 +154,9 @@ export default function App({ params }) {
     >
       <div>Meu Post: {params.id}</div>
 
+      <TimeInput label="Event Time" className="w-full max-w-xs mb-4" defaultValue={new Time(11, 45)} />
+
+      
       <Controller
         name="date"
         control={control}
