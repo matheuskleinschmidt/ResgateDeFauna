@@ -24,7 +24,7 @@ const calledBy = [
     { key: "9", label: "Outros" },
   ];
   
-  const ages = [
+  const ageRanges = [
     { key: "1", label: "Filhote" },
     { key: "2", label: "Adulto" },
     { key: "3", label: "Idoso" },
@@ -56,46 +56,46 @@ const calledBy = [
     { key: "3", label: "Aves " },
     { key: "4", label: "Peixes" },
     { key: "5", label: "Anfibios" },
-    { key: "7", label: "Outros" },
+    { key: "6", label: "Outros" },
   ];
   
   const allSpecies = [
     {
-      id: "101",
+      id: "1",
       scientificName: "Canis lupus",
       commonName: "Lobo",
       groupId: "1",
     },
     {
-      id: "102",
+      id: "2",
       scientificName: "Felis catus",
       commonName: "Gato",
       groupId: "1", 
     },
     {
-      id: "201",
+      id: "3",
       scientificName: "Python regius",
       commonName: "Píton-real",
       groupId: "2",
     },
     {
-      id: "202",
+      id: "4",
       scientificName: "Chelonia mydas",
       commonName: "Tartaruga-verde",
       groupId: "2",
     },
     {
-      id: "301",
+      id: "5",
       scientificName: "Falco peregrinus",
       commonName: "Falcão-peregrino",
       groupId: "3",
     },
     {
-      id: "302",
+      id: "6",
       scientificName: "Ara macao",
       commonName: "Arara-vermelha",
       groupId: "3",
     },
   ];
 
-  module.exports = {calledBy, procedureBy,ages,situations,postRescue,AnimalGroups,allSpecies}
+  module.exports = {calledBy, procedureBy,ageRanges,situations,postRescue,AnimalGroups,allSpecies}

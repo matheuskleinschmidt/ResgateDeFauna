@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.8",
+    "@internationalized/date": "^3.5.5",
     "@nextui-org/react": "^2.4.6",
     "axios": "^1.7.5",
     "framer-motion": "^11.3.30",

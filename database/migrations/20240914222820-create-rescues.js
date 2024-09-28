@@ -61,6 +61,14 @@ module.exports = {
         },
         allowNull: true,
       },
+      ageRangeId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "ageRanges",
+          key: "id",
+        },
+        allowNull: true,
+      },
       postRescueId: {
         type: Sequelize.INTEGER,
         references: {

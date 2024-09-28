@@ -12,8 +12,10 @@ import {
 } from "@nextui-org/table";
 import moment from "moment";
 import "moment-timezone";
+import { link } from "@nextui-org/react";
+import Link from "next/link";
 
-const timezone = 'America/Sao_Paulo'; // Timezone do Brasil
+const timezone = "America/Sao_Paulo"; 
 
 const RescuePage = () => {
   const [rescues, setRescues] = useState([]);
@@ -22,25 +24,23 @@ const RescuePage = () => {
     const fetchRescueData = async () => {
       try {
         const baseUrl = window.location.origin;
-        
+
         const apiUrl = `${baseUrl}/api/rescue`;
         console.log(apiUrl);
         const response = await axios.get(apiUrl);
 
-        console.log(response);
+        console.log(response.data);
         setRescues(response.data);
       } catch (error) {
         console.error("Erro ao fazer a requisição:", error);
       }
     };
-    
 
     fetchRescueData();
   }, []);
 
   return (
     <div className="responsive-table">
-    
       <Table isStriped="true" isCompact="true">
         <TableHeader>
           <TableColumn>Espécie</TableColumn>
@@ -51,10 +51,21 @@ const RescuePage = () => {
         <TableBody items={rescues}>
           {(rescues) => (
             <TableRow key={rescues.id}>
-              <TableCell>{rescues.species}</TableCell>
-              <TableCell>{rescues.situation}</TableCell>
-              <TableCell>{rescues.calledVia}</TableCell>
-              <TableCell>{moment(rescues.date).tz(timezone).format('DD/MM/YYYY HH:mm:ss')}</TableCell>
+              <TableCell>
+                {" "}
+                <Link
+                  href={`${window.location.origin}/pages/rescue/${rescues.id}`}
+                >
+                  {rescues.species.commonName}{" "}
+                </Link>
+              </TableCell>
+              <TableCell>{rescues.situation.name}</TableCell>
+              <TableCell>{rescues.calledBy.name}</TableCell>
+              <TableCell>
+                {moment(rescues.fullDate)
+                  .tz(timezone)
+                  .format("DD/MM/YYYY HH:mm:ss")}
+              </TableCell>
             </TableRow>
           )}
         </TableBody>

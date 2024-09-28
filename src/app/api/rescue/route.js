@@ -1,9 +1,8 @@
-import data from './mock.json'
-import createRescueRecord from '../controllers/rescue';
+import { getRescuesWithStrings, createOrUpdateRescueRecord } from '../controllers/rescue';
 
-const rescues = data
 
 export async function GET(req) {
+  const rescues = await getRescuesWithStrings()
   return new Response(JSON.stringify(rescues), {
     status: 200,
     headers: {
@@ -30,7 +29,7 @@ export async function OPTIONS() {
 export async function POST(req) {
   try {
     const body = await req.json();
-    createRescueRecord(body);
+    createOrUpdateRescueRecord(body);
     return new Response(JSON.stringify(body), {
       status: 200,
       headers: {

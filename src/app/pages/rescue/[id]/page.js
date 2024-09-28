@@ -31,20 +31,17 @@ export default function App({ params }) {
         const baseUrl = window.location.origin;
         const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
         const response = await axios.get(apiUrl);
-        const dataResponse = response.data[0]; // Acessa o primeiro elemento do array
+        const dataResponse = response.data[0]; 
 
-              // Extrair a data no formato "YYYY-MM-DD"
+
         const dateString = dataResponse.fullDate.split("T")[0];
-        // Converter para DateValue usando parseDate
         const dateValue = parseDate(dateString);
         setValue("date", dateValue);
 
-        // Extrair o horário
-        const timeString = dataResponse.fullDate.split("T")[1]; // Obtém "HH:MM:SS.sssZ"
-        const timeParts = timeString.split(":"); // Divide em ["HH", "MM", "SS.sssZ"]
+        const timeString = dataResponse.fullDate.split("T")[1]; 
+        const timeParts = timeString.split(":"); 
         const hours = parseInt(timeParts[0], 10);
         const minutes = parseInt(timeParts[1], 10);
-        // Criar objeto Time
         const timeValue = new Time(hours, minutes);
         setValue("time", timeValue);
 
@@ -63,15 +60,12 @@ export default function App({ params }) {
           `${dataResponse.releaseLocationCoordinates.latitude}, ${dataResponse.releaseLocationCoordinates.longitude}`
         );
 
-        // Preencher as medidas
         setValue("height", dataResponse.measurement.height);
         setValue("length", dataResponse.measurement.length);
         setValue("width", dataResponse.measurement.width);
 
-        // Função para normalizar strings
         const normalizeString = (str) => str.toString().toLowerCase().trim();
 
-        // Mapear nomes para chaves nos campos de seleção
         const calledByItem = data.calledBy.find(
           (item) =>
             normalizeString(item.label) === normalizeString(dataResponse.calledBy.name)
@@ -100,7 +94,6 @@ export default function App({ params }) {
         const postRescueKey = postRescueItem ? postRescueItem.key.toString() : null;
         setValue("postRescue", postRescueKey);
 
-        // Mapear idade
         const ageItem = data.ages.find(
           (item) =>
             normalizeString(item.label) === normalizeString(dataResponse.age.toString())
@@ -108,7 +101,6 @@ export default function App({ params }) {
         const ageKey = ageItem ? ageItem.key.toString() : null;
         setValue("age", ageKey);
 
-        // Definir Espécie e Grupo de Animal
         setValue("Species", dataResponse.species.id.toString());
 
         setSelectedGroup(dataResponse.species.groupId.toString());
@@ -147,7 +139,7 @@ export default function App({ params }) {
 
   const onSubmit = async (data) => {
     const baseUrl = window.location.origin;
-    const apiUrl = `${baseUrl}/api/rescue`;
+    const apiUrl = `${baseUrl}/api/rescue/${params.id}`; 
     try {
       const response = await axios.post(apiUrl, data);
       console.log("Resposta:", response.data);
@@ -161,8 +153,6 @@ export default function App({ params }) {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md"
     >
-      <div>Meu Post: {params.id}</div>
-
       <Controller
         name="time"
         control={control}
