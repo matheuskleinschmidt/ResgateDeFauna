@@ -34,10 +34,19 @@ export default function App({ params }) {
         const dataResponse = response.data[0]; // Acessa o primeiro elemento do array
 
               // Extrair a data no formato "YYYY-MM-DD"
-              const dateString = dataResponse.fullDate.split("T")[0];
-              // Converter para DateValue usando parseDate
-              const dateValue = parseDate(dateString);
-              setValue("date", dateValue);
+        const dateString = dataResponse.fullDate.split("T")[0];
+        // Converter para DateValue usando parseDate
+        const dateValue = parseDate(dateString);
+        setValue("date", dateValue);
+
+        // Extrair o horário
+        const timeString = dataResponse.fullDate.split("T")[1]; // Obtém "HH:MM:SS.sssZ"
+        const timeParts = timeString.split(":"); // Divide em ["HH", "MM", "SS.sssZ"]
+        const hours = parseInt(timeParts[0], 10);
+        const minutes = parseInt(timeParts[1], 10);
+        // Criar objeto Time
+        const timeValue = new Time(hours, minutes);
+        setValue("time", timeValue);
 
         setValue(
           "locationCoordinates",
@@ -154,9 +163,21 @@ export default function App({ params }) {
     >
       <div>Meu Post: {params.id}</div>
 
-      <TimeInput label="Event Time" className="w-full max-w-xs mb-4" defaultValue={new Time(11, 45)} />
+      <Controller
+        name="time"
+        control={control}
+        defaultValue={null}
+        render={({ field }) => (
+          <TimeInput
+            label="Hora do evento"
+            className="w-full max-w-xs mb-4"
+            value={field.value}
+            onChange={field.onChange}
+          />
+        )}
+      />
 
-      
+
       <Controller
         name="date"
         control={control}
