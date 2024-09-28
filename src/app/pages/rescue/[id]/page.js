@@ -7,7 +7,7 @@ import React from "react";
 import { DatePicker } from "@nextui-org/react";
 import { Input } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
-import { Select, SelectSection, SelectItem } from "@nextui-org/select";
+import { Select, SelectItem } from "@nextui-org/select";
 import { Button } from "@nextui-org/react";
 import useGeolocation from "../../../components/useGeolocation";
 import data from "../../../utils/datas.js";
@@ -15,29 +15,22 @@ import data from "../../../utils/datas.js";
 export default function App({ params }) {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [filteredSpecies, setFilteredSpecies] = useState([]);
-  const { location, getLocation, error } = useGeolocation();
-  const [rescue, setRescue] = useState([]);
+  const { getLocation, error } = useGeolocation();
 
   const {
-    register,
     handleSubmit,
-    watch,
     setValue,
     control,
-    formState: { errors },
   } = useForm();
 
   useEffect(() => {
     const fetchRescueData = async () => {
       try {
         const baseUrl = window.location.origin;
-
         const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
-        console.log(apiUrl);
         const response = await axios.get(apiUrl);
-        const dataResponse = response.data[0]; // Acessa o primeiro elemento
+        const dataResponse = response.data[0]; // Acessa o primeiro elemento do array
 
-        console.log(dataResponse);
         //setValue("date", dataResponse.fullDate);
 
         setValue(
@@ -60,40 +53,51 @@ export default function App({ params }) {
         setValue("length", dataResponse.measurement.length);
         setValue("width", dataResponse.measurement.width);
 
+        // Função para normalizar strings
+        const normalizeString = (str) => str.toString().toLowerCase().trim();
+
         // Mapear nomes para chaves nos campos de seleção
-        const calledByKey = data.calledBy.find(
-          (item) => item.label === dataResponse.calledBy.name
-        )?.key;
+        const calledByItem = data.calledBy.find(
+          (item) =>
+            normalizeString(item.label) === normalizeString(dataResponse.calledBy.name)
+        );
+        const calledByKey = calledByItem ? calledByItem.key.toString() : null;
         setValue("calledBy", calledByKey);
 
-        const procedureByKey = data.procedureBy.find(
-          (item) => item.label === dataResponse.procedureOrientationBy.name
-        )?.key;
+        const procedureByItem = data.procedureBy.find(
+          (item) =>
+            normalizeString(item.label) === normalizeString(dataResponse.procedureOrientationBy.name)
+        );
+        const procedureByKey = procedureByItem ? procedureByItem.key.toString() : null;
         setValue("procedureBy", procedureByKey);
 
-        const situationKey = data.situations.find(
-          (item) => item.label === dataResponse.situation.name
-        )?.key;
+        const situationItem = data.situations.find(
+          (item) =>
+            normalizeString(item.label) === normalizeString(dataResponse.situation.name)
+        );
+        const situationKey = situationItem ? situationItem.key.toString() : null;
         setValue("situation", situationKey);
 
-        const postRescueKey = data.postRescue.find(
-          (item) => item.label === dataResponse.postRescue.name
-        )?.key;
+        const postRescueItem = data.postRescue.find(
+          (item) =>
+            normalizeString(item.label) === normalizeString(dataResponse.postRescue.name)
+        );
+        const postRescueKey = postRescueItem ? postRescueItem.key.toString() : null;
         setValue("postRescue", postRescueKey);
 
-        // Definir Espécie e Grupo de Animal
-        setValue("Species", dataResponse.species.id);
-
-        setSelectedGroup(dataResponse.species.groupId);
-        setValue("AnimalGroup", dataResponse.species.groupId);
-
-        // Mapear idade se necessário
-        const ageKey = data.ages.find(
-          (item) => item.label === dataResponse.age.toString()
-        )?.key;
+        // Mapear idade
+        const ageItem = data.ages.find(
+          (item) =>
+            normalizeString(item.label) === normalizeString(dataResponse.age.toString())
+        );
+        const ageKey = ageItem ? ageItem.key.toString() : null;
         setValue("age", ageKey);
 
-        setRescue(dataResponse);
+        // Definir Espécie e Grupo de Animal
+        setValue("Species", dataResponse.species.id.toString());
+
+        setSelectedGroup(dataResponse.species.groupId.toString());
+        setValue("AnimalGroup", dataResponse.species.groupId.toString());
       } catch (error) {
         console.error("Erro ao fazer a requisição:", error);
       }
@@ -102,24 +106,10 @@ export default function App({ params }) {
     fetchRescueData();
   }, [params.id, setValue]);
 
-  const handleGetLocation = async (field) => {
-    try {
-      const location = await getLocation();
-      if (location.latitude && location.longitude) {
-        setValue(field, `${location.latitude}, ${location.longitude}`);
-      } else {
-        console.error("Location not found");
-      }
-    } catch (error) {
-      console.error("Error getting location:", error);
-    }
-  };
-
   useEffect(() => {
-    console.log("selectedGroup", selectedGroup);
     if (selectedGroup) {
       const speciesForGroup = data.allSpecies.filter(
-        (species) => species.groupId === selectedGroup
+        (species) => species.groupId.toString() === selectedGroup
       );
       setFilteredSpecies(speciesForGroup);
     } else {
@@ -127,16 +117,27 @@ export default function App({ params }) {
     }
   }, [selectedGroup]);
 
+  const handleGetLocation = async (field) => {
+    try {
+      const location = await getLocation();
+      if (location.latitude && location.longitude) {
+        setValue(field, `${location.latitude}, ${location.longitude}`);
+      } else {
+        console.error("Localização não encontrada");
+      }
+    } catch (error) {
+      console.error("Erro ao obter localização:", error);
+    }
+  };
+
   const onSubmit = async (data) => {
     const baseUrl = window.location.origin;
-
     const apiUrl = `${baseUrl}/api/rescue`;
-    console.log(apiUrl);
     try {
       const response = await axios.post(apiUrl, data);
-      console.log("Response:", response.data);
+      console.log("Resposta:", response.data);
     } catch (error) {
-      console.error("Error submitting data:", error);
+      console.error("Erro ao enviar dados:", error);
     }
   };
 
@@ -145,7 +146,7 @@ export default function App({ params }) {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md"
     >
-      <div>My Post: {params.id}</div>
+      <div>Meu Post: {params.id}</div>
 
       <Controller
         name="date"
@@ -175,7 +176,7 @@ export default function App({ params }) {
           />
         )}
       />
-      {error && <p>Error: {error}</p>}
+      {error && <p>Erro: {error}</p>}
       <Button
         className="w-full max-w-xs mb-4"
         onClick={() => handleGetLocation("locationCoordinates")}
@@ -184,27 +185,29 @@ export default function App({ params }) {
       </Button>
 
       <Controller
-        name="AnimalGroup"
-        control={control}
-        defaultValue={null}
-        render={({ field }) => (
-          <Select
-            label="Qual o grupo do animal?"
-            className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={(value) => {
-              field.onChange(value);
-              setSelectedGroup(value.target.value);
-            }}
-          >
-            {data.AnimalGroups.map((AnimalGroups) => (
-              <SelectItem key={AnimalGroups.key} value={AnimalGroups.key}>
-                {AnimalGroups.label}
-              </SelectItem>
-            ))}
-          </Select>
-        )}
-      />
+  name="AnimalGroup"
+  control={control}
+  defaultValue={null}
+  render={({ field }) => (
+    <Select
+      label="Qual o grupo do animal?"
+      className="w-full max-w-xs mb-4"
+      selectedKeys={field.value ? new Set([field.value]) : new Set()}
+      onSelectionChange={(keys) => {
+        const selectedKey = Array.from(keys).pop();
+        field.onChange(selectedKey);
+        setSelectedGroup(selectedKey);
+      }}
+    >
+      {data.AnimalGroups.map((AnimalGroup) => (
+        <SelectItem key={AnimalGroup.key.toString()} value={AnimalGroup.key.toString()}>
+          {AnimalGroup.label}
+        </SelectItem>
+      ))}
+    </Select>
+  )}
+/>
+
 
       <Controller
         name="Species"
@@ -214,12 +217,15 @@ export default function App({ params }) {
           <Select
             label="Qual a espécie do animal?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={field.onChange}
+            defaultSelectedKeys={field.value ? [field.value] : []}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+            }}
             disabled={!selectedGroup}
           >
             {filteredSpecies.map((species) => (
-              <SelectItem key={species.id} value={species.id}>
+              <SelectItem key={species.id.toString()} value={species.id.toString()}>
                 {`${species.commonName} - ${species.scientificName}`}
               </SelectItem>
             ))}
@@ -329,17 +335,21 @@ export default function App({ params }) {
           <Select
             label="O chamado é via?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={field.onChange}
+            defaultSelectedKeys={field.value ? [field.value] : []}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+            }}
           >
             {data.calledBy.map((calledBy) => (
-              <SelectItem key={calledBy.key} value={calledBy.key}>
+              <SelectItem key={calledBy.key.toString()} value={calledBy.key.toString()}>
                 {calledBy.label}
               </SelectItem>
             ))}
           </Select>
         )}
       />
+
       <Controller
         name="procedureBy"
         control={control}
@@ -348,17 +358,21 @@ export default function App({ params }) {
           <Select
             label="O procedimento foi via?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={field.onChange}
+            defaultSelectedKeys={field.value ? [field.value] : []}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+            }}
           >
             {data.procedureBy.map((procedureBy) => (
-              <SelectItem key={procedureBy.key} value={procedureBy.key}>
+              <SelectItem key={procedureBy.key.toString()} value={procedureBy.key.toString()}>
                 {procedureBy.label}
               </SelectItem>
             ))}
           </Select>
         )}
       />
+
       <Controller
         name="age"
         control={control}
@@ -367,17 +381,21 @@ export default function App({ params }) {
           <Select
             label="Idade do animal?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={field.onChange}
+            defaultSelectedKeys={field.value ? [field.value] : []}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+            }}
           >
-            {data.ages.map((ages) => (
-              <SelectItem key={ages.key} value={ages.key}>
-                {ages.label}
+            {data.ages.map((age) => (
+              <SelectItem key={age.key.toString()} value={age.key.toString()}>
+                {age.label}
               </SelectItem>
             ))}
           </Select>
         )}
       />
+
       <Controller
         name="situation"
         control={control}
@@ -386,17 +404,21 @@ export default function App({ params }) {
           <Select
             label="Situação do animal?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={field.onChange}
+            defaultSelectedKeys={field.value ? [field.value] : []}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+            }}
           >
-            {data.situations.map((situations) => (
-              <SelectItem key={situations.key} value={situations.key}>
-                {situations.label}
+            {data.situations.map((situation) => (
+              <SelectItem key={situation.key.toString()} value={situation.key.toString()}>
+                {situation.label}
               </SelectItem>
             ))}
           </Select>
         )}
       />
+
       <Controller
         name="postRescue"
         control={control}
@@ -405,17 +427,21 @@ export default function App({ params }) {
           <Select
             label="Pós o resgate"
             className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={field.onChange}
+            defaultSelectedKeys={field.value ? [field.value] : []}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+            }}
           >
             {data.postRescue.map((postRescue) => (
-              <SelectItem key={postRescue.key} value={postRescue.key}>
+              <SelectItem key={postRescue.key.toString()} value={postRescue.key.toString()}>
                 {postRescue.label}
               </SelectItem>
             ))}
           </Select>
         )}
       />
+
       <Controller
         name="observation"
         control={control}
@@ -430,6 +456,7 @@ export default function App({ params }) {
           />
         )}
       />
+
       <Controller
         name="releaseLocation"
         control={control}
@@ -444,6 +471,7 @@ export default function App({ params }) {
           />
         )}
       />
+
       <Controller
         name="releaseLocationCoordinates"
         control={control}
