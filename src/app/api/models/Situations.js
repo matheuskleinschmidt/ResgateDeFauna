@@ -35,7 +35,7 @@ Situations.init(
   },
   {
     sequelize,
-    modelName: "situations",
+    modelName: "Situations",
     tableName: "situations",
     timestamps: true,
   }

@@ -35,7 +35,7 @@ CalledBys.init(
   },
   {
     sequelize,
-    modelName: "calledBys",
+    modelName: "AalledBys",
     tableName: "calledBys",
     timestamps: true,
   }

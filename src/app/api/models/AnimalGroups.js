@@ -35,7 +35,7 @@ AnimalGroups.init(
   },
   {
     sequelize,
-    modelName: "animalGroups",
+    modelName: "AnimalGroups",
     tableName: "animalGroups",
     timestamps: true,
   }

@@ -35,7 +35,7 @@ PostRescues.init(
   },
   {
     sequelize,
-    modelName: "postRescues",
+    modelName: "PostRescues",
     tableName: "postRescues",
     timestamps: true,
   }

@@ -35,7 +35,7 @@ ProcedureOrientationBys.init(
   },
   {
     sequelize,
-    modelName: "procedureOrientationBys",
+    modelName: "ProcedureOrientationBys",
     tableName: "procedureOrientationBys",
     timestamps: true,
   }

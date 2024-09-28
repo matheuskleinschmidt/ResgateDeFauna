@@ -45,7 +45,7 @@ Species.init({
     },
   }, {
     sequelize,
-    modelName: 'species',
+    modelName: 'Species',
     tableName: 'species',
     timestamps: true
   });
