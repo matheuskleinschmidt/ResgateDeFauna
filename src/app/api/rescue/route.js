@@ -1,4 +1,4 @@
-import { getRescuesWithStrings, createOrUpdateRescueRecord } from '../controllers/rescue';
+import { getRescuesWithStrings, createOrUpdateRescueRecord } from '@/app/api/controllers/rescue';
 
 
 export async function GET(req) {

@@ -1,4 +1,4 @@
-import { getRescuesWithStrings, createOrUpdateRescueRecord } from "./../../../api/controllers/rescue";
+import { getRescuesWithStrings, createOrUpdateRescueRecord } from "@/app/api/controllers/rescue";
 
 
 export async function GET(req, { params }) {
@@ -17,7 +17,9 @@ export async function GET(req, { params }) {
 }
 
 export async function PUT(req, { params }) {
-  let data = await createOrUpdateRescueRecord(params.id)
+  const body = await req.json();
+  let data = await createOrUpdateRescueRecord(params.id, body)
+  console.log("---------------------------------------------------------------------------------------------------------------------");
   console.log(data);
   return new Response(JSON.stringify(data), {
     status: 200,

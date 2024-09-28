@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
@@ -17,16 +18,16 @@ export default function App() {
 
   const { location, getLocation, error } = useGeolocation();
 
-  const handleGetLocation = async () => {
+  const handleGetLocation = async (field) => {
     try {
       const location = await getLocation();
       if (location.latitude && location.longitude) {
-        setValue("location", `${location.latitude}, ${location.longitude}`);
+        setValue(field, `${location.latitude}, ${location.longitude}`);
       } else {
-        console.error("Location not found");
+        console.error("Localização não encontrada");
       }
     } catch (error) {
-      console.error("Error getting location:", error);
+      console.error("Erro ao obter localização:", error);
     }
   };
 
@@ -96,7 +97,7 @@ export default function App() {
       />
 
       <Controller
-        name="location"
+        name="locationCoordinates"
         control={control}
         render={({ field }) => (
           <Input
@@ -104,12 +105,17 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             label="Localização do resgate"
             placeholder="Clique no botão para preencher"
+            value={field.value}
+            onChange={field.onChange}
           />
         )}
       />
-      {error && <p>Error: {error}</p>}
-      <Button className="w-full max-w-xs mb-4" onClick={handleGetLocation}>
-        Obter Localização
+      {error && <p>Erro: {error}</p>}
+      <Button
+        className="w-full max-w-xs mb-4"
+        onClick={() => handleGetLocation("locationCoordinates")}
+      >
+        Obter Localização do Resgate
       </Button>
 
       <Controller
@@ -299,7 +305,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {data.ages.map((ages) => (
+            {data.ageRanges.map((ages) => (
               <SelectItem key={ages.key} value={ages.key}>
                 {ages.label}
               </SelectItem>
@@ -359,7 +365,7 @@ export default function App() {
           />
         )}
       />
-      <Controller
+      {/* <Controller
         name="releaseLocation"
         control={control}
         defaultValue={null}
@@ -372,9 +378,10 @@ export default function App() {
             onChange={field.onChange}
           />
         )}
-      />
+      /> */}
+
       <Controller
-        name="location1"
+        name="releaseLocationCoordinates"
         control={control}
         render={({ field }) => (
           <Input
@@ -382,12 +389,16 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             label="Localização da soltura"
             placeholder="Clique no botão para preencher"
+            value={field.value}
+            onChange={field.onChange}
           />
         )}
       />
-      {error && <p>Error: {error}</p>}
-      <Button className="w-full max-w-xs mb-4" onClick={handleGetLocation1}>
-        Obter Localização
+      <Button
+        className="w-full max-w-xs mb-4"
+        onClick={() => handleGetLocation("releaseLocationCoordinates")}
+      >
+        Obter Localização da Soltura
       </Button>
 
       <Button type="submit" className="mt-4 w-full sm:max-w-xs mb-4">

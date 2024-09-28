@@ -32,6 +32,11 @@ export default function App({ params }) {
         const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
         const response = await axios.get(apiUrl);
         const dataResponse = response.data[0]; 
+        console.log(dataResponse);
+        setValue("Species", dataResponse.species.id.toString());
+
+        setSelectedGroup(dataResponse.species.groupId.toString());
+        setValue("AnimalGroup", dataResponse.species.groupId.toString());
 
 
         const dateString = dataResponse.fullDate.split("T")[0];
@@ -53,7 +58,7 @@ export default function App({ params }) {
         setValue("adress", dataResponse.address);
         setValue("occurrence", dataResponse.occurrence);
         setValue("observation", dataResponse.observation);
-        setValue("releaseLocation", dataResponse.releaseLocation);
+        //setValue("releaseLocation", dataResponse.releaseLocation);
 
         setValue(
           "releaseLocationCoordinates",
@@ -94,17 +99,13 @@ export default function App({ params }) {
         const postRescueKey = postRescueItem ? postRescueItem.key.toString() : null;
         setValue("postRescue", postRescueKey);
 
-        const ageItem = data.ages.find(
+        const ageItem = data.ageRanges.find(
           (item) =>
-            normalizeString(item.label) === normalizeString(dataResponse.age.toString())
+            normalizeString(item.label) === normalizeString(dataResponse.ageRanges.toString())
         );
         const ageKey = ageItem ? ageItem.key.toString() : null;
         setValue("age", ageKey);
 
-        setValue("Species", dataResponse.species.id.toString());
-
-        setSelectedGroup(dataResponse.species.groupId.toString());
-        setValue("AnimalGroup", dataResponse.species.groupId.toString());
       } catch (error) {
         console.error("Erro ao fazer a requisição:", error);
       }
@@ -138,10 +139,12 @@ export default function App({ params }) {
   };
 
   const onSubmit = async (data) => {
+    console.log(data.id);
+    console.log(data);
     const baseUrl = window.location.origin;
     const apiUrl = `${baseUrl}/api/rescue/${params.id}`; 
     try {
-      const response = await axios.post(apiUrl, data);
+      const response = await axios.put(apiUrl, data);
       console.log("Resposta:", response.data);
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
@@ -406,7 +409,7 @@ export default function App({ params }) {
               field.onChange(selectedKey);
             }}
           >
-            {data.ages.map((age) => (
+            {data.ageRanges.map((age) => (
               <SelectItem key={age.key.toString()} value={age.key.toString()}>
                 {age.label}
               </SelectItem>
@@ -476,7 +479,7 @@ export default function App({ params }) {
         )}
       />
 
-      <Controller
+      {/* <Controller
         name="releaseLocation"
         control={control}
         defaultValue={null}
@@ -489,7 +492,7 @@ export default function App({ params }) {
             onChange={field.onChange}
           />
         )}
-      />
+      /> */}
 
       <Controller
         name="releaseLocationCoordinates"
@@ -511,8 +514,9 @@ export default function App({ params }) {
       >
         Obter Localização da Soltura
       </Button>
+
       <Button type="submit" className="mt-4 w-full sm:max-w-xs mb-4">
-        Enviar
+        Atualizar
       </Button>
     </form>
   );
