@@ -18,6 +18,15 @@ export default function App({ params }) {
   const { location, getLocation, error } = useGeolocation();
   const [rescue, setRescue] = useState([]);
 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    control,
+    formState: { errors },
+  } = useForm();
+
   useEffect(() => {
     const fetchRescueData = async () => {
       try {
@@ -26,16 +35,72 @@ export default function App({ params }) {
         const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
         console.log(apiUrl);
         const response = await axios.get(apiUrl);
+        const dataResponse = response.data[0]; // Acessa o primeiro elemento
 
-        console.log(response);
-        setRescue(response.data);
+        console.log(dataResponse);
+        //setValue("date", dataResponse.fullDate);
+
+        setValue(
+          "locationCoordinates",
+          `${dataResponse.locationCoordinates.latitude}, ${dataResponse.locationCoordinates.longitude}`
+        );
+        setValue("weight", dataResponse.weight);
+        setValue("adress", dataResponse.address);
+        setValue("occurrence", dataResponse.occurrence);
+        setValue("observation", dataResponse.observation);
+        setValue("releaseLocation", dataResponse.releaseLocation);
+
+        setValue(
+          "releaseLocationCoordinates",
+          `${dataResponse.releaseLocationCoordinates.latitude}, ${dataResponse.releaseLocationCoordinates.longitude}`
+        );
+
+        // Preencher as medidas
+        setValue("height", dataResponse.measurement.height);
+        setValue("length", dataResponse.measurement.length);
+        setValue("width", dataResponse.measurement.width);
+
+        // Mapear nomes para chaves nos campos de seleção
+        const calledByKey = data.calledBy.find(
+          (item) => item.label === dataResponse.calledBy.name
+        )?.key;
+        setValue("calledBy", calledByKey);
+
+        const procedureByKey = data.procedureBy.find(
+          (item) => item.label === dataResponse.procedureOrientationBy.name
+        )?.key;
+        setValue("procedureBy", procedureByKey);
+
+        const situationKey = data.situations.find(
+          (item) => item.label === dataResponse.situation.name
+        )?.key;
+        setValue("situation", situationKey);
+
+        const postRescueKey = data.postRescue.find(
+          (item) => item.label === dataResponse.postRescue.name
+        )?.key;
+        setValue("postRescue", postRescueKey);
+
+        // Definir Espécie e Grupo de Animal
+        setValue("Species", dataResponse.species.id);
+
+        setSelectedGroup(dataResponse.species.groupId);
+        setValue("AnimalGroup", dataResponse.species.groupId);
+
+        // Mapear idade se necessário
+        const ageKey = data.ages.find(
+          (item) => item.label === dataResponse.age.toString()
+        )?.key;
+        setValue("age", ageKey);
+
+        setRescue(dataResponse);
       } catch (error) {
         console.error("Erro ao fazer a requisição:", error);
       }
     };
 
     fetchRescueData();
-  }, []);
+  }, [params.id, setValue]);
 
   const handleGetLocation = async (field) => {
     try {
@@ -51,6 +116,7 @@ export default function App({ params }) {
   };
 
   useEffect(() => {
+    console.log("selectedGroup", selectedGroup);
     if (selectedGroup) {
       const speciesForGroup = data.allSpecies.filter(
         (species) => species.groupId === selectedGroup
@@ -60,15 +126,6 @@ export default function App({ params }) {
       setFilteredSpecies([]);
     }
   }, [selectedGroup]);
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    control,
-    formState: { errors },
-  } = useForm();
 
   const onSubmit = async (data) => {
     const baseUrl = window.location.origin;
@@ -89,7 +146,7 @@ export default function App({ params }) {
       className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md"
     >
       <div>My Post: {params.id}</div>
-      <div>My Post: {rescue.typeOfAnimal}</div>
+
       <Controller
         name="date"
         control={control}
@@ -98,7 +155,7 @@ export default function App({ params }) {
           <DatePicker
             label="Dia da ocorrência"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value}
             onChange={field.onChange}
           />
         )}
@@ -113,6 +170,8 @@ export default function App({ params }) {
             className="w-full max-w-xs mb-4"
             label="Localização do resgate"
             placeholder="Clique no botão para preencher"
+            value={field.value}
+            onChange={field.onChange}
           />
         )}
       />
@@ -178,7 +237,7 @@ export default function App({ params }) {
             placeholder="0.00"
             label="Peso do animal (Kg)"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value}
             onChange={field.onChange}
           />
         )}
@@ -196,7 +255,7 @@ export default function App({ params }) {
             placeholder="0.00"
             label="Altura do animal"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value}
             onChange={field.onChange}
           />
         )}
@@ -211,7 +270,7 @@ export default function App({ params }) {
             placeholder="0.00"
             label="Comprimento do animal"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value}
             onChange={field.onChange}
           />
         )}
@@ -226,7 +285,7 @@ export default function App({ params }) {
             placeholder="0.00"
             label="Largura do animal"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value}
             onChange={field.onChange}
           />
         )}
@@ -241,7 +300,7 @@ export default function App({ params }) {
             inputMode="text"
             label="Endereço do resgate"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value}
             onChange={field.onChange}
           />
         )}
@@ -256,7 +315,7 @@ export default function App({ params }) {
             inputMode="text"
             label="O que ocorreu?"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value}
             onChange={field.onChange}
           />
         )}
@@ -366,7 +425,7 @@ export default function App({ params }) {
             inputMode="text"
             label="Alguma observação?"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value}
             onChange={field.onChange}
           />
         )}
@@ -380,7 +439,7 @@ export default function App({ params }) {
             inputMode="text"
             label="Endereço da soltura"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value}
             onChange={field.onChange}
           />
         )}
@@ -394,6 +453,8 @@ export default function App({ params }) {
             className="w-full max-w-xs mb-4"
             label="Localização da soltura"
             placeholder="Clique no botão para preencher"
+            value={field.value}
+            onChange={field.onChange}
           />
         )}
       />
