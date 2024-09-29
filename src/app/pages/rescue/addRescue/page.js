@@ -55,7 +55,6 @@ export default function App() {
 
   const onSubmit = async (data) => {
     const baseUrl = window.location.origin;
-
     const apiUrl = `${baseUrl}/api/rescue`;
 
     try {
@@ -301,8 +300,9 @@ export default function App() {
           </Select>
         )}
       />
+
       <Controller
-        name="age"
+        name="ageRange"
         control={control}
         defaultValue={null}
         render={({ field }) => (

@@ -50,6 +50,11 @@ export default function App() {
             Resgates
           </Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/pages/rescue/addRescue">
+            Adicionar Resgate
+          </Link>
+        </NavbarItem>
       </NavbarContent>
 
       <NavbarMenu>

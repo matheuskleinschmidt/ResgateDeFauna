@@ -33,6 +33,8 @@ export default function App({ params }) {
         const response = await axios.get(apiUrl);
         const dataResponse = response.data[0]; 
 
+        console.log("Resposta:", dataResponse);
+
         setValue("Species", dataResponse.species.id.toString());
 
         setSelectedGroup(dataResponse.species.groupId.toString());
@@ -49,7 +51,7 @@ export default function App({ params }) {
         const minutes = parseInt(timeParts[1], 10);
         const timeValue = new Time(hours, minutes);
         setValue("time", timeValue);
-
+        console.log("dataResponse.ageRange.name", dataResponse.ageRange.name);  
         setValue(
           "locationCoordinates",
           `${dataResponse.locationCoordinates.latitude}, ${dataResponse.locationCoordinates.longitude}`
@@ -58,11 +60,12 @@ export default function App({ params }) {
         setValue("adress", dataResponse.address);
         setValue("occurrence", dataResponse.occurrence);
         setValue("observation", dataResponse.observation);
-        //setValue("releaseLocation", dataResponse.releaseLocation);
 
         setValue(
           "releaseLocationCoordinates",
-          `${dataResponse.releaseLocationCoordinates.latitude}, ${dataResponse.releaseLocationCoordinates.longitude}`
+          dataResponse.releaseLocationCoordinates 
+            ? `${dataResponse.releaseLocationCoordinates.latitude}, ${dataResponse.releaseLocationCoordinates.longitude}`
+            : null
         );
 
         setValue("height", dataResponse.measurement.height);
@@ -70,6 +73,13 @@ export default function App({ params }) {
         setValue("width", dataResponse.measurement.width);
 
         const normalizeString = (str) => str.toString().toLowerCase().trim();
+
+        const ageItem = data.ageRanges.find(
+          (item) =>
+            normalizeString(item.label) === normalizeString(dataResponse.ageRange.name.toString())
+        );
+        const ageKey = ageItem ? ageItem.key.toString() : null;
+        setValue("ageRange", ageKey);
 
         const calledByItem = data.calledBy.find(
           (item) =>
@@ -99,12 +109,6 @@ export default function App({ params }) {
         const postRescueKey = postRescueItem ? postRescueItem.key.toString() : null;
         setValue("postRescue", postRescueKey);
 
-        const ageItem = data.ageRanges.find(
-          (item) =>
-            normalizeString(item.label) === normalizeString(dataResponse.ageRanges.toString())
-        );
-        const ageKey = ageItem ? ageItem.key.toString() : null;
-        setValue("age", ageKey);
 
       } catch (error) {
         console.error("Erro ao fazer a requisição:", error);
@@ -394,7 +398,7 @@ export default function App({ params }) {
       />
 
       <Controller
-        name="age"
+        name="ageRange"
         control={control}
         defaultValue={null}
         render={({ field }) => (

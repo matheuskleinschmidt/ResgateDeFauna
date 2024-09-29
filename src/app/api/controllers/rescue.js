@@ -128,7 +128,7 @@ export async function createOrUpdateRescueRecord(id, data) {
       occurrence: data.occurrence,
       calledById: data.calledBy ? parseInt(data.calledBy) : null,
       procedureOrientationById: data.procedureBy ? parseInt(data.procedureBy) : null,
-      age: data.age !== null ? parseInt(data.age) : null,
+      ageRangeId: data.ageRange !== null ? parseInt(data.ageRange) : null,
       situationId: data.situation ? parseInt(data.situation) : null,
       postRescueId: data.postRescue ? parseInt(data.postRescue) : null,
       observation: data.observation,
@@ -137,7 +137,6 @@ export async function createOrUpdateRescueRecord(id, data) {
       releaseLocationCoordinates: releaseLocationCoordinates,
       statusRescueId: null,
     };
-
     if (id) {
       await Rescues.update(rescueData, { where: { id: id } });
       console.log('Registro de resgate atualizado com sucesso');
