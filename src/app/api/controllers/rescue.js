@@ -6,6 +6,7 @@ import Situations from '@/app/api/models/Situations.js';
 import PostRescues from '@/app/api/models/PostRescues.js';
 import RescueStatus from '@/app/api/models/RescueStatus.js';
 import AnimalGroups from '@/app/api/models/AnimalGroups.js';
+import AgeRanges from '@/app/api/models/ageRanges.js';
 
 Rescues.associate({
   Species,
@@ -14,6 +15,7 @@ Rescues.associate({
   Situations,
   PostRescues,
   RescueStatus,
+  AgeRanges
 });
 
 Species.associate({ AnimalGroups });
@@ -22,6 +24,7 @@ ProcedureOrientationBys.associate({ Rescues });
 Situations.associate({ Rescues });
 PostRescues.associate({ Rescues });
 RescueStatus.associate({ Rescues });
+AgeRanges.associate({ Rescues });
 
 export async function getRescuesWithStrings(id) {
   try {
@@ -36,6 +39,11 @@ export async function getRescuesWithStrings(id) {
           model: CalledBys,
           as: 'calledBy',
           attributes: ['name'],
+        },
+        {
+          model: AgeRanges,
+          as: 'ageRange',
+          attributes: ['name','id'],
         },
         {
           model: ProcedureOrientationBys,
