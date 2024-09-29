@@ -95,6 +95,14 @@ Rescues.init(
       },
       allowNull: true,
     },
+    ageRangeId: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: "ageRanges",
+        key: "id",
+      },
+      allowNull: true,
+    },
     postRescueId: {
       type: DataTypes.INTEGER,
       references: {
