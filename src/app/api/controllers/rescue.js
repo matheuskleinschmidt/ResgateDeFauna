@@ -94,45 +94,64 @@ export async function getRescuesWithStrings(id) {
 
 export async function createOrUpdateRescueRecord(id, data) {
   try {
-    const { year, month, day } = data.date;
+    // Verifique se data.date existe e tem year, month e day válidos
+    const { year, month, day } = data.date || {};
+    if (!year || !month || !day) {
+      throw new Error('Data inválida: Ano, mês ou dia ausentes.');
+    }
+
     const { hour = 0, minute = 0, second = 0, millisecond = 0 } = data.time || {};
 
     const fullDate = new Date(year, month - 1, day, hour, minute, second, millisecond);
 
+    // Verifique se height, length e width são válidos
     const measurement = {
-      height: parseFloat(data.height),
-      length: parseFloat(data.length),
-      width: parseFloat(data.width),
+      height: parseFloat(data.height) || 0,
+      length: parseFloat(data.length) || 0,
+      width: parseFloat(data.width) || 0,
     };
 
-    const locationCoords = data.locationCoordinates.split(',');
-    const locationCoordinates = {
-      latitude: parseFloat(locationCoords[0].trim()),
-      longitude: parseFloat(locationCoords[1].trim()),
-    };
+    // Verifique se locationCoordinates é uma string válida
+    let locationCoordinates = null;
+    if (data.locationCoordinates && data.locationCoordinates.trim() !== '') {
+      const locationCoords = data.locationCoordinates.split(',');
+      if (locationCoords.length === 2) {
+        locationCoordinates = {
+          latitude: parseFloat(locationCoords[0].trim()),
+          longitude: parseFloat(locationCoords[1].trim()),
+        };
+      } else {
+        throw new Error('Coordenadas de localização inválidas');
+      }
+    }
 
+    // Verifique se releaseLocationCoordinates é uma string válida
     let releaseLocationCoordinates = null;
     if (data.releaseLocationCoordinates && data.releaseLocationCoordinates.trim() !== '') {
       const releaseLocationCoords = data.releaseLocationCoordinates.split(',');
-      releaseLocationCoordinates = {
-        latitude: parseFloat(releaseLocationCoords[0].trim()),
-        longitude: parseFloat(releaseLocationCoords[1].trim()),
-      };
+      if (releaseLocationCoords.length === 2) {
+        releaseLocationCoordinates = {
+          latitude: parseFloat(releaseLocationCoords[0].trim()),
+          longitude: parseFloat(releaseLocationCoords[1].trim()),
+        };
+      } else {
+        throw new Error('Coordenadas de liberação inválidas');
+      }
     }
 
     const rescueData = {
-      animalTypeId: parseInt(data.Species),
+      animalTypeId: parseInt(data.Species) || null,
       fullDate: fullDate,
-      weight: parseFloat(data.weight),
+      weight: parseFloat(data.weight) || 0,
       measurement: measurement,
-      occurrence: data.occurrence,
+      occurrence: data.occurrence || '',
       calledById: data.calledBy ? parseInt(data.calledBy) : null,
       procedureOrientationById: data.procedureBy ? parseInt(data.procedureBy) : null,
       ageRangeId: data.ageRange !== null ? parseInt(data.ageRange) : null,
       situationId: data.situation ? parseInt(data.situation) : null,
       postRescueId: data.postRescue ? parseInt(data.postRescue) : null,
-      observation: data.observation,
-      address: data.adress,
+      observation: data.observation || '',
+      address: data.address || '',
       locationCoordinates: locationCoordinates,
       releaseLocationCoordinates: releaseLocationCoordinates,
       statusRescueId: null,

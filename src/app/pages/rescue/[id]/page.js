@@ -33,8 +33,6 @@ export default function App({ params }) {
         const response = await axios.get(apiUrl);
         const dataResponse = response.data[0]; 
 
-        console.log("Resposta:", dataResponse);
-
         setValue("Species", dataResponse.species.id.toString());
 
         setSelectedGroup(dataResponse.species.groupId.toString());
@@ -51,10 +49,10 @@ export default function App({ params }) {
         const minutes = parseInt(timeParts[1], 10);
         const timeValue = new Time(hours, minutes);
         setValue("time", timeValue);
-        console.log("dataResponse.ageRange.name", dataResponse.ageRange.name);  
+
         setValue(
           "locationCoordinates",
-          `${dataResponse.locationCoordinates.latitude}, ${dataResponse.locationCoordinates.longitude}`
+          `${dataResponse.locationCoordinates !=  null ? dataResponse.locationCoordinates.latitude : null}, ${dataResponse.locationCoordinates !=  null ? dataResponse.locationCoordinates.longitude : null}`
         );
         setValue("weight", dataResponse.weight);
         setValue("adress", dataResponse.address);
@@ -81,34 +79,49 @@ export default function App({ params }) {
         const ageKey = ageItem ? ageItem.key.toString() : null;
         setValue("ageRange", ageKey);
 
-        const calledByItem = data.calledBy.find(
-          (item) =>
-            normalizeString(item.label) === normalizeString(dataResponse.calledBy.name)
-        );
-        const calledByKey = calledByItem ? calledByItem.key.toString() : null;
+        const calledByName = dataResponse.calledBy?.name || null; 
+        let calledByKey = null;
+        
+        if (calledByName && Array.isArray(data.calledBy)) {
+          const calledByItem = data.calledBy.find(
+            (item) => normalizeString(item.label) === normalizeString(calledByName)
+          );
+          calledByKey = calledByItem ? calledByItem.key.toString() : null;
+        }
         setValue("calledBy", calledByKey);
 
-        const procedureByItem = data.procedureBy.find(
-          (item) =>
-            normalizeString(item.label) === normalizeString(dataResponse.procedureOrientationBy.name)
-        );
-        const procedureByKey = procedureByItem ? procedureByItem.key.toString() : null;
+        const procedureByName = dataResponse.procedureOrientationBy?.name || null;
+        let procedureByKey = null;
+        if (procedureByName && Array.isArray(data.procedureBy)) {
+          const procedureByItem = data.procedureBy.find(
+            (item) => normalizeString(item.label) === normalizeString(procedureByName)
+          );
+          procedureByKey = procedureByItem ? procedureByItem.key.toString() : null;
+        }
         setValue("procedureBy", procedureByKey);
 
-        const situationItem = data.situations.find(
-          (item) =>
-            normalizeString(item.label) === normalizeString(dataResponse.situation.name)
-        );
-        const situationKey = situationItem ? situationItem.key.toString() : null;
+        const situationName = dataResponse.situation?.name || null; // Verifica se situation e name existem
+        let situationKey = null;
+
+        if (situationName && Array.isArray(data.situations)) {
+          const situationItem = data.situations.find(
+            (item) => normalizeString(item.label) === normalizeString(situationName)
+          );
+          situationKey = situationItem ? situationItem.key.toString() : null;
+        }
         setValue("situation", situationKey);
 
-        const postRescueItem = data.postRescue.find(
-          (item) =>
-            normalizeString(item.label) === normalizeString(dataResponse.postRescue.name)
-        );
-        const postRescueKey = postRescueItem ? postRescueItem.key.toString() : null;
-        setValue("postRescue", postRescueKey);
 
+        const postRescueName = dataResponse.postRescue?.name || null; // Verifica se postRescue e name existem
+        let postRescueKey = null;
+
+        if (postRescueName && Array.isArray(data.postRescue)) {
+          const postRescueItem = data.postRescue.find(
+            (item) => normalizeString(item.label) === normalizeString(postRescueName)
+          );
+          postRescueKey = postRescueItem ? postRescueItem.key.toString() : null;
+        }
+        setValue("postRescue", postRescueKey);
 
       } catch (error) {
         console.error("Erro ao fazer a requisição:", error);
@@ -147,7 +160,6 @@ export default function App({ params }) {
     const apiUrl = `${baseUrl}/api/rescue/${params.id}`; 
     try {
       const response = await axios.put(apiUrl, data);
-      console.log("Resposta:", response.data);
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
     }

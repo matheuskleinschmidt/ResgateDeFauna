@@ -27,7 +27,6 @@ const RescuePage = () => {
         const apiUrl = `${baseUrl}/api/rescue`;
 
         const response = await axios.get(apiUrl);
-        console.log("response", response);
         setRescues(response.data);
       } catch (error) {
         console.error("Erro ao fazer a requisição:", error);
