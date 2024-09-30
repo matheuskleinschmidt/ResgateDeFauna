@@ -12,12 +12,13 @@ import { Button } from "@nextui-org/react";
 import {TimeInput} from "@nextui-org/date-input";
 import useGeolocation from "../../../components/useGeolocation";
 import data from "../../../utils/datas.js";
+import { useRouter } from "next/navigation"; 
 
 export default function App() {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [filteredSpecies, setFilteredSpecies] = useState([]);
-
   const { location, getLocation, error } = useGeolocation();
+  const router = useRouter();
 
   const handleGetLocation = async (field) => {
     try {
@@ -60,6 +61,8 @@ export default function App() {
     try {
       const response = await axios.post(apiUrl, data);
       console.log("Response:", response.data);
+      window.alert("Registro criado com sucesso!");
+      router.push("/pages/rescue");
     } catch (error) {
       console.error("Error submitting data:", error);
     }
