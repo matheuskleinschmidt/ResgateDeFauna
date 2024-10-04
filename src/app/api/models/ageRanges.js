@@ -1,15 +1,9 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
-import sequelize from "../../../db_connection.js";
+import sequelize from "@/db_connection";
+import Rescues from "@/app/api/models/Rescues"
 
 
-class AgeRanges extends Model {
-  static associate(models) {
-    models.Rescues.belongsTo(this, {
-      foreignKey: "ageRangeId",
-      as: "ageRange",
-    });
-  }
-}
+class AgeRanges extends Model {}
 
 AgeRanges.init(
   {
@@ -36,10 +30,13 @@ AgeRanges.init(
   },
   {
     sequelize,
-    modelName: "AgeRanges",
+    modelName: "ageRanges",
     tableName: "ageRanges",
     timestamps: true,
   }
 );
+
+AgeRanges.hasMany(Rescues);
+Rescues.belongsTo(AgeRanges);
 
 export default AgeRanges;

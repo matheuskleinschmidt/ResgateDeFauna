@@ -1,14 +1,8 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import sequelize from "../../../db_connection.js";
+import Rescues from "@/app/api/models/Rescues"
 
-class RescueStatus extends Model {
-  static associate(models) {
-    this.belongsTo(models.Rescues, {
-      foreignKey: "statusRescueId",
-      as: "rescues",
-    });
-  }
-}
+class RescueStatus extends Model {}
 
 RescueStatus.init(
   {
@@ -35,10 +29,14 @@ RescueStatus.init(
   },
   {
     sequelize,
-    modelName: "RescueStatus",
+    modelName: "rescueStatus",
     tableName: "rescueStatus",
     timestamps: true,
   }
 );
+
+RescueStatus.hasMany(Rescues);
+//corrigir para que não precise
+Rescues.belongsTo(RescueStatus,{foreignKey:'statusRescueId'});
 
 export default RescueStatus;

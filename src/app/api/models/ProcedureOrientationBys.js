@@ -1,14 +1,8 @@
 import { Model, DataTypes,Sequelize } from "sequelize";
 import sequelize from "../../../db_connection.js";
+import Rescues from "@/app/api/models/Rescues"
 
-class ProcedureOrientationBys extends Model {
-  static associate(models) {
-    this.belongsTo(models.Rescues, {
-      foreignKey: "procedureOrientationById",
-      as: "rescues",
-    });
-  }
-}
+class ProcedureOrientationBys extends Model {}
 
 ProcedureOrientationBys.init(
   {
@@ -35,10 +29,13 @@ ProcedureOrientationBys.init(
   },
   {
     sequelize,
-    modelName: "ProcedureOrientationBys",
+    modelName: "procedureOrientationBys",
     tableName: "procedureOrientationBys",
     timestamps: true,
   }
 );
+
+ProcedureOrientationBys.hasMany(Rescues);
+Rescues.belongsTo(ProcedureOrientationBys)
 
 export default ProcedureOrientationBys;

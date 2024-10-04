@@ -1,39 +1,7 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import sequelize from "../../../db_connection.js";
 
-class Rescues extends Model {
-  static associate(models) {
-    this.belongsTo(models.Species, {
-      foreignKey: 'animalTypeId',
-      as: 'species',
-    });
-
-    this.belongsTo(models.CalledBys, {
-      foreignKey: 'calledById',
-      as: 'calledBy',
-    });
-
-    this.belongsTo(models.ProcedureOrientationBys, {
-      foreignKey: 'procedureOrientationById',
-      as: 'procedureOrientationBy',
-    });
-
-    this.belongsTo(models.Situations, {
-      foreignKey: 'situationId',
-      as: 'situation',
-    });
-
-    this.belongsTo(models.PostRescues, {
-      foreignKey: 'postRescueId',
-      as: 'postRescue',
-    });
-
-    this.belongsTo(models.RescueStatus, {
-      foreignKey: 'statusRescueId',
-      as: 'statusRescue',
-    });
-  }
-}
+class Rescues extends Model {}
 
 Rescues.init(
   {

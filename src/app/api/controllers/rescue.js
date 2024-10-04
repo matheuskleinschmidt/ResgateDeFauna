@@ -8,23 +8,23 @@ import RescueStatus from '@/app/api/models/RescueStatus.js';
 import AnimalGroups from '@/app/api/models/AnimalGroups.js';
 import AgeRanges from '@/app/api/models/ageRanges.js';
 
-Rescues.associate({
-  Species,
-  CalledBys,
-  ProcedureOrientationBys,
-  Situations,
-  PostRescues,
-  RescueStatus,
-  AgeRanges
-});
+// Rescues.associate({
+//   // Species,
+//   // CalledBys,
+//   // ProcedureOrientationBys,
+//   // Situations,
+//   PostRescues,
+//   RescueStatus,
+//   //AgeRanges
+// });
 
-Species.associate({ AnimalGroups });
-CalledBys.associate({ Rescues });
-ProcedureOrientationBys.associate({ Rescues });
-Situations.associate({ Rescues });
-PostRescues.associate({ Rescues });
-RescueStatus.associate({ Rescues });
-AgeRanges.associate({ Rescues });
+// Species.associate({ AnimalGroups });
+// CalledBys.associate({ Rescues });
+// ProcedureOrientationBys.associate({ Rescues });
+// Situations.associate({ Rescues });
+// PostRescues.associate({ Rescues });
+// RescueStatus.associate({ Rescues });
+// AgeRanges.associate({ Rescues });
 
 export async function getRescuesWithStrings(id) {
   try {
@@ -32,38 +32,24 @@ export async function getRescuesWithStrings(id) {
       include: [
         {
           model: Species,
-          as: 'species',
-          attributes: ['commonName', 'scientificName','groupId','id'],
         },
         {
           model: CalledBys,
-          as: 'calledBy',
-          attributes: ['name'],
         },
         {
           model: AgeRanges,
-          as: 'ageRange',
-          attributes: ['name','id'],
         },
         {
           model: ProcedureOrientationBys,
-          as: 'procedureOrientationBy',
-          attributes: ['name'],
         },
         {
           model: Situations,
-          as: 'situation',
-          attributes: ['name'],
         },
         {
           model: PostRescues,
-          as: 'postRescue',
-          attributes: ['name'],
         },
         {
           model: RescueStatus,
-          as: 'statusRescue',
-          attributes: ['name'],
         },
       ],
       attributes: [

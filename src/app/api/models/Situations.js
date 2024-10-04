@@ -1,14 +1,8 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import sequelize from "../../../db_connection.js";
+import Rescues from "@/app/api/models/Rescues"
 
-class Situations extends Model {
-  static associate(models) {
-    this.belongsTo(models.Rescues, {
-      foreignKey: "situationId",
-      as: "rescues",
-    });
-  }
-}
+class Situations extends Model {}
 
 Situations.init(
   {
@@ -35,10 +29,13 @@ Situations.init(
   },
   {
     sequelize,
-    modelName: "Situations",
+    modelName: "situations",
     tableName: "situations",
     timestamps: true,
   }
 );
+
+Situations.hasMany(Rescues);
+Rescues.belongsTo(Situations)
 
 export default Situations;

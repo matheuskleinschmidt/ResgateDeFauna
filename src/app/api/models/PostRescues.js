@@ -1,14 +1,8 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import sequelize from "../../../db_connection.js";
+import Rescues from "@/app/api/models/Rescues"
 
-class PostRescues extends Model {
-  static associate(models) {
-    this.belongsTo(models.Rescues, {
-      foreignKey: "postRescueId",
-      as: "rescues",
-    });
-  }
-}
+class PostRescues extends Model {}
 
 PostRescues.init(
   {
@@ -35,10 +29,13 @@ PostRescues.init(
   },
   {
     sequelize,
-    modelName: "PostRescues",
+    modelName: "postRescues",
     tableName: "postRescues",
     timestamps: true,
   }
 );
+
+PostRescues.hasMany(Rescues);
+Rescues.belongsTo(PostRescues);
 
 export default PostRescues;
