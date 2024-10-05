@@ -13,11 +13,13 @@ import {TimeInput} from "@nextui-org/date-input";
 import {parseDate, getLocalTimeZone, Time} from "@internationalized/date";
 import useGeolocation from "../../../components/useGeolocation";
 import data from "../../../utils/datas.js";
+import { useRouter } from "next/navigation"; 
 
 export default function App({ params }) {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [filteredSpecies, setFilteredSpecies] = useState([]);
   const { getLocation, error } = useGeolocation();
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -100,7 +102,7 @@ export default function App({ params }) {
         }
         setValue("procedureBy", procedureByKey);
 
-        const situationName = dataResponse.situation?.name || null; // Verifica se situation e name existem
+        const situationName = dataResponse.situation?.name || null;
         let situationKey = null;
 
         if (situationName && Array.isArray(data.situations)) {
@@ -112,7 +114,7 @@ export default function App({ params }) {
         setValue("situation", situationKey);
 
 
-        const postRescueName = dataResponse.postRescue?.name || null; // Verifica se postRescue e name existem
+        const postRescueName = dataResponse.postRescue?.name || null;
         let postRescueKey = null;
 
         if (postRescueName && Array.isArray(data.postRescue)) {
@@ -160,6 +162,9 @@ export default function App({ params }) {
     const apiUrl = `${baseUrl}/api/rescue/${params.id}`; 
     try {
       const response = await axios.put(apiUrl, data);
+      console.log("Response:", response.data);
+      window.alert("Registro editado com sucesso!");
+      router.push("/pages/rescue");
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
     }

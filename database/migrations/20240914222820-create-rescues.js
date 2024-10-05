@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      animalTypeId: {
+      speciesId: {
         type: Sequelize.INTEGER,
         references: {
           model: "species",
@@ -93,10 +93,18 @@ module.exports = {
         type: Sequelize.JSONB,
         allowNull: true,
       },
-      statusRescueId: {
+      statusId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "rescueStatus",
+          model: "status",
+          key: "id",
+        },
+        allowNull: true,
+      },
+      userId:{
+        type: Sequelize.UUID,
+        references: {
+          model: "users",
           key: "id",
         },
         allowNull: true,

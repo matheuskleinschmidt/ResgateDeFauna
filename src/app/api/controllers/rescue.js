@@ -4,66 +4,38 @@ import CalledBys from '@/app/api/models/CalledBys.js';
 import ProcedureOrientationBys from '@/app/api/models/ProcedureOrientationBys.js';
 import Situations from '@/app/api/models/Situations.js';
 import PostRescues from '@/app/api/models/PostRescues.js';
-import RescueStatus from '@/app/api/models/RescueStatus.js';
+import status from '@/app/api/models/Status.js';
 import AnimalGroups from '@/app/api/models/AnimalGroups.js';
 import AgeRanges from '@/app/api/models/ageRanges.js';
-
-Rescues.associate({
-  Species,
-  CalledBys,
-  ProcedureOrientationBys,
-  Situations,
-  PostRescues,
-  RescueStatus,
-  AgeRanges
-});
-
-Species.associate({ AnimalGroups });
-CalledBys.associate({ Rescues });
-ProcedureOrientationBys.associate({ Rescues });
-Situations.associate({ Rescues });
-PostRescues.associate({ Rescues });
-RescueStatus.associate({ Rescues });
-AgeRanges.associate({ Rescues });
+import Users from '@/app/api/models/users';
 
 export async function getRescuesWithStrings(id) {
   try {
     const queryOptions = {
       include: [
         {
+          model: Users,
+        },
+        {
           model: Species,
-          as: 'species',
-          attributes: ['commonName', 'scientificName','groupId','id'],
         },
         {
           model: CalledBys,
-          as: 'calledBy',
-          attributes: ['name'],
         },
         {
           model: AgeRanges,
-          as: 'ageRange',
-          attributes: ['name','id'],
         },
         {
           model: ProcedureOrientationBys,
-          as: 'procedureOrientationBy',
-          attributes: ['name'],
         },
         {
           model: Situations,
-          as: 'situation',
-          attributes: ['name'],
         },
         {
           model: PostRescues,
-          as: 'postRescue',
-          attributes: ['name'],
         },
         {
-          model: RescueStatus,
-          as: 'statusRescue',
-          attributes: ['name'],
+          model: status,
         },
       ],
       attributes: [
@@ -94,7 +66,6 @@ export async function getRescuesWithStrings(id) {
 
 export async function createOrUpdateRescueRecord(id, data) {
   try {
-    // Verifique se data.date existe e tem year, month e day válidos
     const { year, month, day } = data.date || {};
     if (!year || !month || !day) {
       throw new Error('Data inválida: Ano, mês ou dia ausentes.');
@@ -104,14 +75,12 @@ export async function createOrUpdateRescueRecord(id, data) {
 
     const fullDate = new Date(year, month - 1, day, hour, minute, second, millisecond);
 
-    // Verifique se height, length e width são válidos
     const measurement = {
       height: parseFloat(data.height) || 0,
       length: parseFloat(data.length) || 0,
       width: parseFloat(data.width) || 0,
     };
 
-    // Verifique se locationCoordinates é uma string válida
     let locationCoordinates = null;
     if (data.locationCoordinates && data.locationCoordinates.trim() !== '') {
       const locationCoords = data.locationCoordinates.split(',');
@@ -125,7 +94,6 @@ export async function createOrUpdateRescueRecord(id, data) {
       }
     }
 
-    // Verifique se releaseLocationCoordinates é uma string válida
     let releaseLocationCoordinates = null;
     if (data.releaseLocationCoordinates && data.releaseLocationCoordinates.trim() !== '') {
       const releaseLocationCoords = data.releaseLocationCoordinates.split(',');
@@ -140,7 +108,7 @@ export async function createOrUpdateRescueRecord(id, data) {
     }
 
     const rescueData = {
-      animalTypeId: parseInt(data.Species) || null,
+      speciesId: parseInt(data.Species) || null,
       fullDate: fullDate,
       weight: parseFloat(data.weight) || 0,
       measurement: measurement,
@@ -152,6 +120,7 @@ export async function createOrUpdateRescueRecord(id, data) {
       postRescueId: data.postRescue ? parseInt(data.postRescue) : null,
       observation: data.observation || '',
       address: data.address || '',
+      "userId": null,
       locationCoordinates: locationCoordinates,
       releaseLocationCoordinates: releaseLocationCoordinates,
       statusRescueId: null,

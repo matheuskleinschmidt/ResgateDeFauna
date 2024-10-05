@@ -1,5 +1,6 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import sequelize from "../../../db_connection.js";
+import Rescues from "@/app/api/models/Rescues"
 
 class CalledBys extends Model {
   static associate(models) {
@@ -35,10 +36,13 @@ CalledBys.init(
   },
   {
     sequelize,
-    modelName: "AalledBys",
+    modelName: "calledBys",
     tableName: "calledBys",
     timestamps: true,
   }
 );
+
+CalledBys.hasMany(Rescues);
+Rescues.belongsTo(CalledBys)
 
 export default CalledBys;
