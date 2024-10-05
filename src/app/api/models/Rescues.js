@@ -103,6 +103,14 @@ Rescues.init(
       },
       allowNull: true,
     },
+    usersId:{
+      type: Sequelize.UUID,
+      references: {
+        model: "users",
+        key: "id",
+      },
+      allowNull: true,
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,

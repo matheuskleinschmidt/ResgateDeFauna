@@ -101,6 +101,14 @@ module.exports = {
         },
         allowNull: true,
       },
+      usersId:{
+        type: Sequelize.UUID,
+        references: {
+          model: "users",
+          key: "id",
+        },
+        allowNull: true,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

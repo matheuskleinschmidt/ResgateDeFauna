@@ -7,11 +7,15 @@ import PostRescues from '@/app/api/models/PostRescues.js';
 import status from '@/app/api/models/Status.js';
 import AnimalGroups from '@/app/api/models/AnimalGroups.js';
 import AgeRanges from '@/app/api/models/ageRanges.js';
+import Users from '@/app/api/models/users';
 
 export async function getRescuesWithStrings(id) {
   try {
     const queryOptions = {
       include: [
+        {
+          model: Users,
+        },
         {
           model: Species,
         },
