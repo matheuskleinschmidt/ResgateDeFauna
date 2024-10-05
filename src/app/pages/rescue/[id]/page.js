@@ -13,11 +13,13 @@ import {TimeInput} from "@nextui-org/date-input";
 import {parseDate, getLocalTimeZone, Time} from "@internationalized/date";
 import useGeolocation from "../../../components/useGeolocation";
 import data from "../../../utils/datas.js";
+import { useRouter } from "next/navigation"; 
 
 export default function App({ params }) {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [filteredSpecies, setFilteredSpecies] = useState([]);
   const { getLocation, error } = useGeolocation();
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -160,6 +162,9 @@ export default function App({ params }) {
     const apiUrl = `${baseUrl}/api/rescue/${params.id}`; 
     try {
       const response = await axios.put(apiUrl, data);
+      console.log("Response:", response.data);
+      window.alert("Registro editado com sucesso!");
+      router.push("/pages/rescue");
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
     }
