@@ -101,7 +101,7 @@ module.exports = {
         },
         allowNull: true,
       },
-      usersId:{
+      userId:{
         type: Sequelize.UUID,
         references: {
           model: "users",

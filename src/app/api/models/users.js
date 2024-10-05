@@ -59,6 +59,6 @@ Users.init(
 );
 
 Users.hasMany(Rescues);
-Rescues.belongsTo(Users,{foreignKey: 'usersId',});
+Rescues.belongsTo(Users);
 
 export default Users;

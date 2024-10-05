@@ -103,7 +103,7 @@ Rescues.init(
       },
       allowNull: true,
     },
-    usersId:{
+    userId:{
       type: Sequelize.UUID,
       references: {
         model: "users",
@@ -124,7 +124,7 @@ Rescues.init(
   },
   {
     sequelize,
-    modelName: "Rescues",
+    modelName: "rescues",
     tableName: "rescues",
     timestamps: true,
   }

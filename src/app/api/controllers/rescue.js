@@ -120,6 +120,7 @@ export async function createOrUpdateRescueRecord(id, data) {
       postRescueId: data.postRescue ? parseInt(data.postRescue) : null,
       observation: data.observation || '',
       address: data.address || '',
+      "userId": null,
       locationCoordinates: locationCoordinates,
       releaseLocationCoordinates: releaseLocationCoordinates,
       statusRescueId: null,
