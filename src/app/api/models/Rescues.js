@@ -11,7 +11,7 @@ Rescues.init(
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    animalTypeId: {
+    speciesId: {
       type: DataTypes.INTEGER,
       references: {
         model: "Species",
@@ -95,10 +95,10 @@ Rescues.init(
       type: DataTypes.JSONB,
       allowNull: true,
     },
-    statusRescueId: {
+    statusId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "RescueStatus",
+        model: "status",
         key: "id",
       },
       allowNull: true,

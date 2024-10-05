@@ -45,7 +45,6 @@ Species.init({
   });
 
 Species.hasMany(Rescues);
-//corrigir para que não precise
-Rescues.belongsTo(Species,{foreignKey: 'animalTypeId',})
+Rescues.belongsTo(Species)
 
 export default Species

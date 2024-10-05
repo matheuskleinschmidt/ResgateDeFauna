@@ -100,7 +100,7 @@ export default function App({ params }) {
         }
         setValue("procedureBy", procedureByKey);
 
-        const situationName = dataResponse.situation?.name || null; // Verifica se situation e name existem
+        const situationName = dataResponse.situation?.name || null;
         let situationKey = null;
 
         if (situationName && Array.isArray(data.situations)) {
@@ -112,7 +112,7 @@ export default function App({ params }) {
         setValue("situation", situationKey);
 
 
-        const postRescueName = dataResponse.postRescue?.name || null; // Verifica se postRescue e name existem
+        const postRescueName = dataResponse.postRescue?.name || null;
         let postRescueKey = null;
 
         if (postRescueName && Array.isArray(data.postRescue)) {

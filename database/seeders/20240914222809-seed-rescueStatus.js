@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('rescueStatus', [
+    return queryInterface.bulkInsert('status', [
       { name: 'Aberto', createdAt: new Date(), updatedAt: new Date() },
       { name: 'Em andamento', createdAt: new Date(), updatedAt: new Date() },
       { name: 'Fechado', createdAt: new Date(), updatedAt: new Date() },
@@ -12,6 +12,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('rescueStatus', null, {});
+    return queryInterface.bulkDelete('status', null, {});
   }
 };

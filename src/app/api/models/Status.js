@@ -2,9 +2,9 @@ import { Model, DataTypes, Sequelize } from "sequelize";
 import sequelize from "../../../db_connection.js";
 import Rescues from "@/app/api/models/Rescues"
 
-class RescueStatus extends Model {}
+class Status extends Model {}
 
-RescueStatus.init(
+Status.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -29,14 +29,13 @@ RescueStatus.init(
   },
   {
     sequelize,
-    modelName: "rescueStatus",
-    tableName: "rescueStatus",
+    modelName: "status",
+    tableName: "status",
     timestamps: true,
   }
 );
 
-RescueStatus.hasMany(Rescues);
-//corrigir para que não precise
-Rescues.belongsTo(RescueStatus,{foreignKey:'statusRescueId'});
+Status.hasMany(Rescues);
+Rescues.belongsTo(Status);
 
-export default RescueStatus;
+export default Status;
