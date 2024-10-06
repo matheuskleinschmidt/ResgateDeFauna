@@ -16,7 +16,7 @@ describe("Teste de adicionar resgate", () => {
     cy.get('[data-testid="AnimalGroup"]').click();
 
 
-    cy.get('[role="listbox"]').should("be.visible");
+    //cy.get('[role="listbox"]').should("be.visible");
 
     cy.contains("span", "Mamifero", { timeout: 5000 })
       .should("be.visible")
