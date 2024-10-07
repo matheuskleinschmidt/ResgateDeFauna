@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { fetchRescueData } from "@/app/utils/requests/rescue.get"
 import {
   Table,
   TableHeader,
@@ -20,20 +20,17 @@ const RescuePage = () => {
   const [rescues, setRescues] = useState([]);
 
   useEffect(() => {
-    const fetchRescueData = async () => {
+    const getData = async () => {
       try {
         const baseUrl = window.location.origin;
-
-        const apiUrl = `${baseUrl}/api/rescue`;
-
-        const response = await axios.get(apiUrl);
-        setRescues(response.data);
+        const data = await fetchRescueData(baseUrl);
+        setRescues(data);
       } catch (error) {
         console.error("Erro ao fazer a requisição:", error);
       }
     };
 
-    fetchRescueData();
+    getData();
   }, []);
 
   return (
