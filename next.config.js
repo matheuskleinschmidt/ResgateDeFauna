@@ -9,6 +9,21 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   disable: false,
   workboxOptions: {
     disableDevLogs: true,
+    runtimeCaching: [
+      {
+        urlPattern: ({ url }) => url.pathname.startsWith('/api/'),
+        handler: 'NetworkOnly',
+        method: 'POST',
+        options: {
+          backgroundSync: {
+            name: 'apiQueue',
+            options: {
+              maxRetentionTime: 24 * 60 // Retentar por até 24 horas (em minutos)
+            }
+          }
+        }
+      }
+    ]
   },
 });
 
