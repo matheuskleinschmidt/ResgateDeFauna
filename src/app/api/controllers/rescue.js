@@ -50,6 +50,7 @@ export async function getRescuesWithStrings(id) {
         'releaseLocationCoordinates',
         'locationCoordinates',
       ],
+      order: ['fullDate']
     };
 
     if (id) {
