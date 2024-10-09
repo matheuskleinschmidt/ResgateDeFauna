@@ -9,11 +9,11 @@ import { Input } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Button } from "@nextui-org/react";
-import {TimeInput} from "@nextui-org/date-input";
-import {parseDate, getLocalTimeZone, Time} from "@internationalized/date";
+import { TimeInput } from "@nextui-org/date-input";
+import { parseDate, getLocalTimeZone, Time } from "@internationalized/date";
 import useGeolocation from "../../../components/useGeolocation";
 import data from "../../../utils/datas.js";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 
 export default function App({ params }) {
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -21,11 +21,7 @@ export default function App({ params }) {
   const { getLocation, error } = useGeolocation();
   const router = useRouter();
 
-  const {
-    handleSubmit,
-    setValue,
-    control,
-  } = useForm();
+  const { handleSubmit, setValue, control } = useForm();
 
   useEffect(() => {
     const fetchRescueData = async () => {
@@ -33,20 +29,19 @@ export default function App({ params }) {
         const baseUrl = window.location.origin;
         const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
         const response = await axios.get(apiUrl);
-        const dataResponse = response.data[0]; 
+        const dataResponse = response.data[0];
 
         setValue("Species", dataResponse.species.id.toString());
 
         setSelectedGroup(dataResponse.species.AnimalGroupId.toString());
         setValue("AnimalGroup", dataResponse.species.AnimalGroupId.toString());
 
-
         const dateString = dataResponse.fullDate.split("T")[0];
         const dateValue = parseDate(dateString);
         setValue("date", dateValue);
 
-        const timeString = dataResponse.fullDate.split("T")[1]; 
-        const timeParts = timeString.split(":"); 
+        const timeString = dataResponse.fullDate.split("T")[1];
+        const timeParts = timeString.split(":");
         const hours = parseInt(timeParts[0], 10);
         const minutes = parseInt(timeParts[1], 10);
         const timeValue = new Time(hours, minutes);
@@ -54,7 +49,15 @@ export default function App({ params }) {
 
         setValue(
           "locationCoordinates",
-          `${dataResponse.locationCoordinates !=  null ? dataResponse.locationCoordinates.latitude : null}, ${dataResponse.locationCoordinates !=  null ? dataResponse.locationCoordinates.longitude : null}`
+          `${
+            dataResponse.locationCoordinates != null
+              ? dataResponse.locationCoordinates.latitude
+              : null
+          }, ${
+            dataResponse.locationCoordinates != null
+              ? dataResponse.locationCoordinates.longitude
+              : null
+          }`
         );
         setValue("weight", dataResponse.weight);
         setValue("adress", dataResponse.address);
@@ -63,7 +66,7 @@ export default function App({ params }) {
 
         setValue(
           "releaseLocationCoordinates",
-          dataResponse.releaseLocationCoordinates 
+          dataResponse.releaseLocationCoordinates
             ? `${dataResponse.releaseLocationCoordinates.latitude}, ${dataResponse.releaseLocationCoordinates.longitude}`
             : null
         );
@@ -76,29 +79,35 @@ export default function App({ params }) {
 
         const ageItem = data.ageRanges.find(
           (item) =>
-            normalizeString(item.label) === normalizeString(dataResponse.ageRange.name.toString())
+            normalizeString(item.label) ===
+            normalizeString(dataResponse.ageRange.name.toString())
         );
         const ageKey = ageItem ? ageItem.key.toString() : null;
         setValue("ageRange", ageKey);
 
-        const calledByName = dataResponse.calledBy?.name || null; 
+        const calledByName = dataResponse.calledBy?.name || null;
         let calledByKey = null;
-        
+
         if (calledByName && Array.isArray(data.calledBy)) {
           const calledByItem = data.calledBy.find(
-            (item) => normalizeString(item.label) === normalizeString(calledByName)
+            (item) =>
+              normalizeString(item.label) === normalizeString(calledByName)
           );
           calledByKey = calledByItem ? calledByItem.key.toString() : null;
         }
         setValue("calledBy", calledByKey);
 
-        const procedureByName = dataResponse.procedureOrientationBy?.name || null;
+        const procedureByName =
+          dataResponse.procedureOrientationBy?.name || null;
         let procedureByKey = null;
         if (procedureByName && Array.isArray(data.procedureBy)) {
           const procedureByItem = data.procedureBy.find(
-            (item) => normalizeString(item.label) === normalizeString(procedureByName)
+            (item) =>
+              normalizeString(item.label) === normalizeString(procedureByName)
           );
-          procedureByKey = procedureByItem ? procedureByItem.key.toString() : null;
+          procedureByKey = procedureByItem
+            ? procedureByItem.key.toString()
+            : null;
         }
         setValue("procedureBy", procedureByKey);
 
@@ -107,24 +116,24 @@ export default function App({ params }) {
 
         if (situationName && Array.isArray(data.situations)) {
           const situationItem = data.situations.find(
-            (item) => normalizeString(item.label) === normalizeString(situationName)
+            (item) =>
+              normalizeString(item.label) === normalizeString(situationName)
           );
           situationKey = situationItem ? situationItem.key.toString() : null;
         }
         setValue("situation", situationKey);
-
 
         const postRescueName = dataResponse.postRescue?.name || null;
         let postRescueKey = null;
 
         if (postRescueName && Array.isArray(data.postRescue)) {
           const postRescueItem = data.postRescue.find(
-            (item) => normalizeString(item.label) === normalizeString(postRescueName)
+            (item) =>
+              normalizeString(item.label) === normalizeString(postRescueName)
           );
           postRescueKey = postRescueItem ? postRescueItem.key.toString() : null;
         }
         setValue("postRescue", postRescueKey);
-
       } catch (error) {
         console.error("Erro ao fazer a requisição:", error);
       }
@@ -159,7 +168,7 @@ export default function App({ params }) {
 
   const onSubmit = async (data) => {
     const baseUrl = window.location.origin;
-    const apiUrl = `${baseUrl}/api/rescue/${params.id}`; 
+    const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
     try {
       const response = await axios.put(apiUrl, data);
       console.log("Response:", response.data);
@@ -167,6 +176,20 @@ export default function App({ params }) {
       router.push("/pages/rescue");
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
+    }
+  };
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm("Tem certeza que deseja deletar este resgate?");
+    if (!confirmDelete) return;
+    const baseUrl = window.location.origin;
+    const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
+    try {
+      await axios.delete(apiUrl);
+      window.alert("Registro deletado com sucesso!");
+      router.push("/pages/rescue");
+    } catch (error) {
+      console.error("Erro ao deletar registro:", error);
     }
   };
 
@@ -188,7 +211,6 @@ export default function App({ params }) {
           />
         )}
       />
-
 
       <Controller
         name="date"
@@ -242,7 +264,10 @@ export default function App({ params }) {
             }}
           >
             {data.AnimalGroups.map((AnimalGroup) => (
-              <SelectItem key={AnimalGroup.key.toString()} value={AnimalGroup.key.toString()}>
+              <SelectItem
+                key={AnimalGroup.key.toString()}
+                value={AnimalGroup.key.toString()}
+              >
                 {AnimalGroup.label}
               </SelectItem>
             ))}
@@ -266,7 +291,10 @@ export default function App({ params }) {
             disabled={!selectedGroup}
           >
             {filteredSpecies.map((species) => (
-              <SelectItem key={species.id.toString()} value={species.id.toString()}>
+              <SelectItem
+                key={species.id.toString()}
+                value={species.id.toString()}
+              >
                 {`${species.commonName} - ${species.scientificName}`}
               </SelectItem>
             ))}
@@ -284,7 +312,7 @@ export default function App({ params }) {
             placeholder="0.00"
             label="Peso do animal (Kg)"
             className="w-full max-w-xs mb-4"
-            value={field.value || ''}
+            value={field.value || ""}
             onChange={field.onChange}
           />
         )}
@@ -302,7 +330,7 @@ export default function App({ params }) {
             placeholder="0.00"
             label="Altura do animal"
             className="w-full max-w-xs mb-4"
-            value={field.value || ''}
+            value={field.value || ""}
             onChange={field.onChange}
           />
         )}
@@ -317,7 +345,7 @@ export default function App({ params }) {
             placeholder="0.00"
             label="Comprimento do animal"
             className="w-full max-w-xs mb-4"
-            value={field.value || ''}
+            value={field.value || ""}
             onChange={field.onChange}
           />
         )}
@@ -332,7 +360,7 @@ export default function App({ params }) {
             placeholder="0.00"
             label="Largura do animal"
             className="w-full max-w-xs mb-4"
-            value={field.value || ''}
+            value={field.value || ""}
             onChange={field.onChange}
           />
         )}
@@ -347,7 +375,7 @@ export default function App({ params }) {
             inputMode="text"
             label="Endereço do resgate"
             className="w-full max-w-xs mb-4"
-            value={field.value || ''}
+            value={field.value || ""}
             onChange={field.onChange}
           />
         )}
@@ -362,7 +390,7 @@ export default function App({ params }) {
             inputMode="text"
             label="O que ocorreu?"
             className="w-full max-w-xs mb-4"
-            value={field.value || ''}
+            value={field.value || ""}
             onChange={field.onChange}
           />
         )}
@@ -383,7 +411,10 @@ export default function App({ params }) {
             }}
           >
             {data.calledBy.map((calledBy) => (
-              <SelectItem key={calledBy.key.toString()} value={calledBy.key.toString()}>
+              <SelectItem
+                key={calledBy.key.toString()}
+                value={calledBy.key.toString()}
+              >
                 {calledBy.label}
               </SelectItem>
             ))}
@@ -406,7 +437,10 @@ export default function App({ params }) {
             }}
           >
             {data.procedureBy.map((procedureBy) => (
-              <SelectItem key={procedureBy.key.toString()} value={procedureBy.key.toString()}>
+              <SelectItem
+                key={procedureBy.key.toString()}
+                value={procedureBy.key.toString()}
+              >
                 {procedureBy.label}
               </SelectItem>
             ))}
@@ -452,7 +486,10 @@ export default function App({ params }) {
             }}
           >
             {data.situations.map((situation) => (
-              <SelectItem key={situation.key.toString()} value={situation.key.toString()}>
+              <SelectItem
+                key={situation.key.toString()}
+                value={situation.key.toString()}
+              >
                 {situation.label}
               </SelectItem>
             ))}
@@ -475,7 +512,10 @@ export default function App({ params }) {
             }}
           >
             {data.postRescue.map((postRescue) => (
-              <SelectItem key={postRescue.key.toString()} value={postRescue.key.toString()}>
+              <SelectItem
+                key={postRescue.key.toString()}
+                value={postRescue.key.toString()}
+              >
                 {postRescue.label}
               </SelectItem>
             ))}
@@ -492,7 +532,7 @@ export default function App({ params }) {
             inputMode="text"
             label="Alguma observação?"
             className="w-full max-w-xs mb-4"
-            value={field.value || ''}
+            value={field.value || ""}
             onChange={field.onChange}
           />
         )}
@@ -532,6 +572,15 @@ export default function App({ params }) {
         onClick={() => handleGetLocation("releaseLocationCoordinates")}
       >
         Obter Localização da Soltura
+      </Button>
+
+      <Button
+        color="danger"
+        className="mt-4 w-full sm:max-w-xs mb-4"
+        variant="bordered"
+        onClick={handleDelete}
+      >
+        Deletar Resgate
       </Button>
 
       <Button type="submit" className="mt-4 w-full sm:max-w-xs mb-4">

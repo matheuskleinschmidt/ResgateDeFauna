@@ -138,5 +138,14 @@ export async function createOrUpdateRescueRecord(id, data) {
   }
 }
 
+export async function deleteRescue(id) {
+  try {
+    await Rescues.destroy({ where: { id: id } });
+    console.log('Registro de resgate excluído com sucesso');
+  } catch (error) {
+    console.error('Erro ao excluir registro de resgate:', error);
+  }
+}
+
 
 
