@@ -1,4 +1,4 @@
-import { getRescuesWithStrings, createOrUpdateRescueRecord } from '@/app/api/controllers/rescue';
+import { getRescuesWithStrings, createOrUpdateRescueRecord, deleteRescue } from '@/app/api/controllers/rescue';
 import Rescues from '@/app/api/models/Rescues';
 
 describe('rescue.controller', () => {
@@ -115,6 +115,29 @@ describe('rescue.controller', () => {
         await createOrUpdateRescueRecord(null, data);
   
         expect(console.error).toHaveBeenCalledWith('Erro ao criar ou atualizar registro de resgate:', new Error('Coordenadas de localização inválidas'));
+      });
+    });
+    describe('deleteRescue', () => {
+      it('deve excluir um registro de resgate quando o id é fornecido', async () => {
+        const id = 1;
+        jest.spyOn(Rescues, 'destroy').mockResolvedValue(1); // Supondo que retorna 1 quando um registro é excluído
+        console.log = jest.fn();
+  
+        await deleteRescue(id);
+  
+        expect(Rescues.destroy).toHaveBeenCalledWith({ where: { id } });
+        expect(console.log).toHaveBeenCalledWith('Registro de resgate excluído com sucesso');
+      });
+  
+      it('deve lidar com erros ao excluir o registro de resgate', async () => {
+        const id = 1;
+        const error = new Error('Erro ao excluir registro');
+        jest.spyOn(Rescues, 'destroy').mockRejectedValue(error);
+        console.error = jest.fn();
+  
+        await deleteRescue(id);
+  
+        expect(console.error).toHaveBeenCalledWith('Erro ao excluir registro de resgate:', error);
       });
     });
   });
