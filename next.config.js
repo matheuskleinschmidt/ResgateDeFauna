@@ -18,7 +18,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
           backgroundSync: {
             name: 'apiQueue',
             options: {
-              maxRetentionTime: 24 * 60 // Retentar por até 24 horas (em minutos)
+              maxRetentionTime: 24 * 60
             }
           }
         }

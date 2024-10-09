@@ -37,7 +37,7 @@ export default function App() {
   useEffect(() => {
     if (selectedGroup) {
       const speciesForGroup = data.allSpecies.filter(
-        (species) => species.groupId === selectedGroup
+        (species) => species.AnimalGroupId === selectedGroup
       );
       setFilteredSpecies(speciesForGroup);
     } else {
@@ -236,7 +236,7 @@ export default function App() {
       />
 
       <Controller
-        name="adress"
+        name="address"
         control={control}
         defaultValue={null}
         render={({ field }) => (
