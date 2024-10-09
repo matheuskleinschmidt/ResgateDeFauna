@@ -120,7 +120,7 @@ describe('rescue.controller', () => {
     describe('deleteRescue', () => {
       it('deve excluir um registro de resgate quando o id é fornecido', async () => {
         const id = 1;
-        jest.spyOn(Rescues, 'destroy').mockResolvedValue(1); // Supondo que retorna 1 quando um registro é excluído
+        jest.spyOn(Rescues, 'destroy').mockResolvedValue(1);
         console.log = jest.fn();
   
         await deleteRescue(id);
