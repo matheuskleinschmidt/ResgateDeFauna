@@ -17,7 +17,7 @@ const options = {
   logging: process.env.NODE_ENV === "development" ? console.log : false,
   migrationStorageTableName: "migrations",
 };
-
+//
 if (process.env.NODE_ENV === "production") {
   options.dialectOptions = {
     ssl: {
