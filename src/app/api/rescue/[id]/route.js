@@ -31,7 +31,6 @@ export async function PUT(req, { params }) {
 }
 
 export async function DELETE(req, { params }) {
-  console.log(params)
   let data = await deleteRescue(params.id)
   return new Response(JSON.stringify(data), {
     status: 200,
