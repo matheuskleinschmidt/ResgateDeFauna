@@ -1,4 +1,3 @@
-// rescue.controller.test.js
 import { getRescuesWithStrings, createOrUpdateRescueRecord } from '@/app/api/controllers/rescue';
 import Rescues from '@/app/api/models/Rescues';
 

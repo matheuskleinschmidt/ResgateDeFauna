@@ -37,8 +37,8 @@ export default function App({ params }) {
 
         setValue("Species", dataResponse.species.id.toString());
 
-        setSelectedGroup(dataResponse.species.groupId.toString());
-        setValue("AnimalGroup", dataResponse.species.groupId.toString());
+        setSelectedGroup(dataResponse.species.AnimalGroupId.toString());
+        setValue("AnimalGroup", dataResponse.species.AnimalGroupId.toString());
 
 
         const dateString = dataResponse.fullDate.split("T")[0];
@@ -136,7 +136,7 @@ export default function App({ params }) {
   useEffect(() => {
     if (selectedGroup) {
       const speciesForGroup = data.allSpecies.filter(
-        (species) => species.groupId.toString() === selectedGroup
+        (species) => species.AnimalGroupId.toString() === selectedGroup
       );
       setFilteredSpecies(speciesForGroup);
     } else {

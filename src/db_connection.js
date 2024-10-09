@@ -1,7 +1,9 @@
-import { Sequelize } from "sequelize";
-import { options } from "../database/config/config.mjs";
-import pg from 'pg';
+const { Sequelize } = require('sequelize');
+const config = require('../database/config/config.js');
 
-const sequelize = new Sequelize({ ...options, dialectModule: pg }) 
+const env = process.env.NODE_ENV || 'development';
+const options = config[env];
 
-export default sequelize;
+const sequelize = new Sequelize(options.database, options.username, options.password, options);
+
+module.exports = sequelize;

@@ -19,7 +19,7 @@ Species.init({
       type: DataTypes.STRING(100),
       allowNull: false
     },
-    groupId: {
+    AnimalGroupId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
