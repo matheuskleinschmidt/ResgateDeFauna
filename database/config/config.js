@@ -8,6 +8,12 @@ const options = {
   port: Number(process.env.DB_PORT),
   dialect: "postgres",
   dialectModule: pg,
+  "dialectOptions": {
+    "ssl": {
+      "require": true,
+      "rejectUnauthorized": false
+    }
+  },
   logging: process.env.NODE_ENV === "development" ? console.log : false,
   migrationStorageTableName: "migrations",
 };
