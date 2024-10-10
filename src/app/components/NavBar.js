@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import {useState, useEffect} from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -12,14 +12,24 @@ import {
   Link,
 } from "@nextui-org/react";
 import { AcmeLogo } from "./AcmeLogo.jsx";
+import axios from "axios";
 
 export default function App() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
     { label: "Resgates", href: "/pages/rescue" },
     { label: "Adicionar Resgate", href: "/pages/rescue/addRescue" },
   ];
+
+  
+  useEffect(() => {
+    const situations = localStorage.getItem('utils');
+    if (!situations) {
+      axios.get(`${window.location.origin}/api/dateUtil/auxiliaryInfos`)
+        .then((data) => localStorage.setItem('utils', JSON.stringify(data.data)));
+    }
+  }, []);
 
   return (
     <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} className="mb-4">
