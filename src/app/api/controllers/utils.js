@@ -12,12 +12,12 @@ import Users from "@/app/api/models/users";
 export async function getauxiliaryInfos() {
   try {
     return {
-      calledBys: await CalledBys.findAll(),
-      procedureOrientationBys: await ProcedureOrientationBys.findAll(),
-      situations: await Situations.findAll(),
-      postRescues: await PostRescues.findAll(),
-      status: await status.findAll(),
-      ageRanges: await AgeRanges.findAll(),
+      calledBys: await CalledBys.findAll({attributes: ["id", "name"]}),
+      procedureOrientationBys: await ProcedureOrientationBys.findAll({attributes: ["id", "name"]}),
+      situations: await Situations.findAll({attributes: ["id", "name"]}),
+      postRescues: await PostRescues.findAll({attributes: ["id", "name"]}),
+      status: await status.findAll({attributes: ["id", "name"]}),
+      ageRanges: await AgeRanges.findAll({attributes: ["id", "name"]}),
     };
   } catch (err) {
     console.error("Erro ao buscar informações auxiliares:", err);
