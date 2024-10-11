@@ -53,11 +53,11 @@ export default function App({ params }) {
           `${
             dataResponse.locationCoordinates != null
               ? dataResponse.locationCoordinates.latitude
-              : null
+              : ""
           }, ${
             dataResponse.locationCoordinates != null
               ? dataResponse.locationCoordinates.longitude
-              : null
+              : ""
           }`
         );
         setValue("weight", dataResponse.weight);
@@ -69,7 +69,7 @@ export default function App({ params }) {
           "releaseLocationCoordinates",
           dataResponse.releaseLocationCoordinates
             ? `${dataResponse.releaseLocationCoordinates.latitude}, ${dataResponse.releaseLocationCoordinates.longitude}`
-            : null
+            : ""
         );
 
         setValue("height", dataResponse.measurement.height);
@@ -213,6 +213,7 @@ export default function App({ params }) {
             className="w-full max-w-xs mb-4"
             value={field.value}
             onChange={field.onChange}
+            isRequired
           />
         )}
       />
@@ -227,6 +228,7 @@ export default function App({ params }) {
             className="w-full max-w-xs mb-4"
             value={field.value}
             onChange={field.onChange}
+            isRequired
           />
         )}
       />
@@ -242,6 +244,7 @@ export default function App({ params }) {
             placeholder="Clique no botão para preencher"
             value={field.value}
             onChange={field.onChange}
+            isRequired
           />
         )}
       />
@@ -262,6 +265,7 @@ export default function App({ params }) {
             label="Qual o grupo do animal?"
             className="w-full max-w-xs mb-4"
             selectedKeys={field.value ? new Set([field.value]) : new Set()}
+            isRequired
             onSelectionChange={(keys) => {
               const selectedKey = Array.from(keys).pop();
               field.onChange(selectedKey);
@@ -289,6 +293,7 @@ export default function App({ params }) {
             label="Qual a espécie do animal?"
             className="w-full max-w-xs mb-4"
             selectedKeys={field.value ? new Set([field.value]) : new Set()}
+            isRequired
             onSelectionChange={(keys) => {
               const selectedKey = Array.from(keys).pop();
               field.onChange(selectedKey);
