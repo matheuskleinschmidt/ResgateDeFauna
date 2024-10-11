@@ -30,6 +30,7 @@ export default function App({ params }) {
         const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
         const response = await axios.get(apiUrl);
         const dataResponse = response.data[0];
+        console.log("Data Response:", dataResponse);
 
         setValue("Species", dataResponse.species.id.toString());
 
@@ -77,12 +78,16 @@ export default function App({ params }) {
 
         const normalizeString = (str) => str.toString().toLowerCase().trim();
 
-        const ageItem = data.ageRanges.find(
-          (item) =>
-            normalizeString(item.label) ===
-            normalizeString(dataResponse.ageRange.name.toString())
-        );
-        const ageKey = ageItem ? ageItem.key.toString() : null;
+        const ageRangeName = dataResponse.ageRange?.name.toString() || null;
+        let ageKey = null;
+        
+        if (ageRangeName && Array.isArray(data.ageRanges)) {
+          const ageItem = data.ageRanges.find(
+            (item) =>
+              normalizeString(item.label) === normalizeString(ageRangeName)
+          );
+          ageKey = ageItem ? ageItem.key.toString() : null;
+        }
         setValue("ageRange", ageKey);
 
         const calledByName = dataResponse.calledBy?.name || null;
