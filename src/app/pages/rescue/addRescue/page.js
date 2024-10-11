@@ -17,6 +17,13 @@ import { useRouter } from "next/navigation";
 export default function App() {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [filteredSpecies, setFilteredSpecies] = useState([]);
+
+  const [calledBys, setCalledBys] = useState([]);
+  const [procedureOrientationBys, setProcedureOrientationBys] = useState([]);
+  const [ageRanges, setAgeRanges] = useState([]);
+  const [situations, setSituations] = useState([]);
+  const [postRescue, setPostRescue] = useState([]);
+  
   const { location, getLocation, error } = useGeolocation();
   const router = useRouter();
 
@@ -33,6 +40,19 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    const utils = localStorage.getItem('utils');
+    
+    if (utils) {
+      const parsedData = JSON.parse(utils);
+
+      setCalledBys(parsedData.calledBys || []);
+      setProcedureOrientationBys(parsedData.procedureOrientationBys || []);
+      setAgeRanges(parsedData.ageRanges || []);
+      setSituations(parsedData.situations || []);
+      setPostRescue(parsedData.postRescues || []);
+    }
+  }, []);
 
   useEffect(() => {
     if (selectedGroup) {
@@ -276,7 +296,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {data.calledBy.map((calledBy) => (
+            {calledBys.map((calledBy) => (
               <SelectItem key={calledBy.key} value={calledBy.key}>
                 {calledBy.label}
               </SelectItem>
@@ -295,7 +315,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {data.procedureBy.map((procedureBy) => (
+            {procedureOrientationBys.map((procedureBy) => (
               <SelectItem key={procedureBy.key} value={procedureBy.key}>
                 {procedureBy.label}
               </SelectItem>
@@ -315,7 +335,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {data.ageRanges.map((ages) => (
+            {ageRanges.map((ages) => (
               <SelectItem key={ages.key} value={ages.key}>
                 {ages.label}
               </SelectItem>
@@ -334,7 +354,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {data.situations.map((situations) => (
+            {situations.map((situations) => (
               <SelectItem key={situations.key} value={situations.key}>
                 {situations.label}
               </SelectItem>
@@ -353,7 +373,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {data.postRescue.map((postRescue) => (
+            {postRescue.map((postRescue) => (
               <SelectItem key={postRescue.key} value={postRescue.key}>
                 {postRescue.label}
               </SelectItem>
