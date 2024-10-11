@@ -1,14 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import {React, useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import React from "react";
-import { DatePicker } from "@nextui-org/react";
-import { Input } from "@nextui-org/react";
+import { Input, Button, DatePicker } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
 import { Select, SelectSection, SelectItem } from "@nextui-org/select";
-import { Button } from "@nextui-org/react";
 import {TimeInput} from "@nextui-org/date-input";
 import useGeolocation from "../../../components/useGeolocation";
 import data from "../../../utils/datas.js";
@@ -66,9 +63,7 @@ export default function App() {
   }, [selectedGroup]);
 
   const {
-    register,
     handleSubmit,
-    watch,
     setValue,
     control,
     formState: { errors },
