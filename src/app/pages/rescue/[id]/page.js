@@ -30,6 +30,7 @@ export default function App({ params }) {
         const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
         const response = await axios.get(apiUrl);
         const dataResponse = response.data[0];
+        console.log("Data Response:", dataResponse);
 
         setValue("Species", dataResponse.species.id.toString());
 
@@ -52,11 +53,11 @@ export default function App({ params }) {
           `${
             dataResponse.locationCoordinates != null
               ? dataResponse.locationCoordinates.latitude
-              : null
+              : ""
           }, ${
             dataResponse.locationCoordinates != null
               ? dataResponse.locationCoordinates.longitude
-              : null
+              : ""
           }`
         );
         setValue("weight", dataResponse.weight);
@@ -68,7 +69,7 @@ export default function App({ params }) {
           "releaseLocationCoordinates",
           dataResponse.releaseLocationCoordinates
             ? `${dataResponse.releaseLocationCoordinates.latitude}, ${dataResponse.releaseLocationCoordinates.longitude}`
-            : null
+            : ""
         );
 
         setValue("height", dataResponse.measurement.height);
@@ -77,12 +78,16 @@ export default function App({ params }) {
 
         const normalizeString = (str) => str.toString().toLowerCase().trim();
 
-        const ageItem = data.ageRanges.find(
-          (item) =>
-            normalizeString(item.label) ===
-            normalizeString(dataResponse.ageRange.name.toString())
-        );
-        const ageKey = ageItem ? ageItem.key.toString() : null;
+        const ageRangeName = dataResponse.ageRange?.name.toString() || null;
+        let ageKey = null;
+        
+        if (ageRangeName && Array.isArray(data.ageRanges)) {
+          const ageItem = data.ageRanges.find(
+            (item) =>
+              normalizeString(item.label) === normalizeString(ageRangeName)
+          );
+          ageKey = ageItem ? ageItem.key.toString() : null;
+        }
         setValue("ageRange", ageKey);
 
         const calledByName = dataResponse.calledBy?.name || null;
@@ -208,6 +213,7 @@ export default function App({ params }) {
             className="w-full max-w-xs mb-4"
             value={field.value}
             onChange={field.onChange}
+            isRequired
           />
         )}
       />
@@ -222,6 +228,7 @@ export default function App({ params }) {
             className="w-full max-w-xs mb-4"
             value={field.value}
             onChange={field.onChange}
+            isRequired
           />
         )}
       />
@@ -237,6 +244,7 @@ export default function App({ params }) {
             placeholder="Clique no botão para preencher"
             value={field.value}
             onChange={field.onChange}
+            isRequired
           />
         )}
       />
@@ -257,6 +265,7 @@ export default function App({ params }) {
             label="Qual o grupo do animal?"
             className="w-full max-w-xs mb-4"
             selectedKeys={field.value ? new Set([field.value]) : new Set()}
+            isRequired
             onSelectionChange={(keys) => {
               const selectedKey = Array.from(keys).pop();
               field.onChange(selectedKey);
@@ -284,6 +293,7 @@ export default function App({ params }) {
             label="Qual a espécie do animal?"
             className="w-full max-w-xs mb-4"
             selectedKeys={field.value ? new Set([field.value]) : new Set()}
+            isRequired
             onSelectionChange={(keys) => {
               const selectedKey = Array.from(keys).pop();
               field.onChange(selectedKey);
