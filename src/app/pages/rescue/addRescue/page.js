@@ -6,10 +6,10 @@ import axios from "axios";
 import { Input, Button, DatePicker } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
 import { Select, SelectSection, SelectItem } from "@nextui-org/select";
-import {TimeInput} from "@nextui-org/date-input";
+import { TimeInput } from "@nextui-org/date-input";
 import useGeolocation from "../../../components/useGeolocation";
 import data from "../../../utils/datas.js";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 
 export default function App() {
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -36,6 +36,7 @@ export default function App() {
       console.error("Erro ao obter localização:", error);
     }
   };
+
 
   useEffect(() => {
     const utils = localStorage.getItem('utils');
@@ -88,7 +89,7 @@ export default function App() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md"
     >
-          <Controller
+      <Controller
         name="time"
         control={control}
         defaultValue={null}
@@ -99,6 +100,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             value={field.value}
             onChange={field.onChange}
+            data-testid="time"
           />
         )}
       />
@@ -113,6 +115,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
+            data-testid="date"
           />
         )}
       />
@@ -129,12 +132,14 @@ export default function App() {
             placeholder="Clique no botão para preencher"
             value={field.value}
             onChange={field.onChange}
+            data-testid="locationCoordinates"
           />
         )}
       />
       {error && <p>Erro: {error}</p>}
       <Button
         className="w-full max-w-xs mb-4"
+        data-testid="getLocationButton"
         onClick={() => handleGetLocation("locationCoordinates")}
       >
         Obter Localização do Resgate
@@ -150,6 +155,7 @@ export default function App() {
             label="Qual o grupo do animal?"
             className="w-full max-w-xs mb-4"
             value={field.value}
+            data-testid="AnimalGroup"
             onChange={(value) => {
               field.onChange(value);
               setSelectedGroup(value.target.value);
@@ -176,6 +182,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
             disabled={!selectedGroup}
+            data-testid="Species"
           >
             {filteredSpecies.map((species) => (
               <SelectItem key={species.id} value={species.id}>
@@ -198,6 +205,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
+            data-testid="weight"
           />
         )}
       />
@@ -216,6 +224,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
+            data-testid="height"
           />
         )}
       />
@@ -231,6 +240,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
+            data-testid="length"
           />
         )}
       />
@@ -246,6 +256,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
+            data-testid="width"
           />
         )}
       />
@@ -261,6 +272,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
+            data-testid="adress"
           />
         )}
       />
@@ -276,6 +288,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
+            data-testid="occurrence"
           />
         )}
       />
@@ -290,6 +303,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             value={field.value}
             onChange={field.onChange}
+            data-testid="calledBy"
           >
             {calledBys.map((calledBy) => (
               <SelectItem key={calledBy.key} value={calledBy.key}>
@@ -309,6 +323,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             value={field.value}
             onChange={field.onChange}
+            data-testid="procedureBy"
           >
             {procedureOrientationBys.map((procedureBy) => (
               <SelectItem key={procedureBy.key} value={procedureBy.key}>
@@ -329,6 +344,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             value={field.value}
             onChange={field.onChange}
+            data-testid="ageRange"
           >
             {ageRanges.map((ages) => (
               <SelectItem key={ages.key} value={ages.key}>
@@ -348,6 +364,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             value={field.value}
             onChange={field.onChange}
+            data-testid="situation"
           >
             {situations.map((situations) => (
               <SelectItem key={situations.key} value={situations.key}>
@@ -367,6 +384,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             value={field.value}
             onChange={field.onChange}
+            data-testid="postRescue"
           >
             {postRescue.map((postRescue) => (
               <SelectItem key={postRescue.key} value={postRescue.key}>
@@ -387,6 +405,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
+            data-testid="observation"
           />
         )}
       />
@@ -401,6 +420,7 @@ export default function App() {
             className="w-full max-w-xs mb-4"
             selected={field.value}
             onChange={field.onChange}
+            data-testid="locationCoordinates"
           />
         )}
       /> */}
@@ -416,11 +436,13 @@ export default function App() {
             placeholder="Clique no botão para preencher"
             value={field.value}
             onChange={field.onChange}
+            data-testid="releaseLocationCoordinates"
           />
         )}
       />
       <Button
         className="w-full max-w-xs mb-4"
+        data-testid="getReleaseLocationButton"
         onClick={() => handleGetLocation("releaseLocationCoordinates")}
       >
         Obter Localização da Soltura

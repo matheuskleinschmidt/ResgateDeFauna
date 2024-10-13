@@ -11,6 +11,8 @@
     "migrate": "dotenv -- sequelize-cli db:migrate",
     "migrate:rollback": "dotenv -- sequelize-cli db:migrate:undo",
     "migrate:rollback:all": "dotenv -- sequelize-cli db:migrate:undo:all",
+    "e2e": "start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
+    "e2e:headless": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
     "test": "jest  --coverage"
   },
   "dependencies": {
@@ -27,13 +29,15 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "start-server-and-test": "^2.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.25.7",
     "@babel/preset-env": "^7.25.7",
     "@babel/preset-react": "^7.25.7",
     "autoprefixer": "^10.4.20",
+    "cypress": "^13.15.0",
     "babel-jest": "^29.7.0",
     "dotenv-cli": "^7.4.2",
     "eslint": "^8",
