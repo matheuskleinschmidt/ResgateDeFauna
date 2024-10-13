@@ -115,7 +115,7 @@ Procedimentos de implementação e implantação para garantir uma transição s
 | Permitir usuário listar resgates com diversos filtros.                | Autenticação simples.              |
 | Permitir o usuário de modificar os tipos de espécies pré-cadastrados. | Aplicação PWA.                     |
 | Mapa de onde foi feito os resgates.                                   |                                    |
-| Relatório mensal dos resgates feitos filtrado por espécie.            |                                    |
+| Tela com gráficos dos resgates feitos filtrado por espécie e mês.     |                                    |
 
 # Representação dos Requisitos:
 

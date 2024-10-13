@@ -1,14 +1,8 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import sequelize from "../../../db_connection.js";
+import Species from "@/app/api/models/Species.js";
 
-class AnimalGroups extends Model {
-  static associate(models) {
-    this.hasMany(models.Species, {
-      foreignKey: "groupId",
-      as: "species",
-    });
-  }
-}
+class AnimalGroups extends Model {}
 
 AnimalGroups.init(
   {
@@ -40,5 +34,7 @@ AnimalGroups.init(
     timestamps: true,
   }
 );
+
+Species.belongsTo(AnimalGroups)
 
 export default AnimalGroups;

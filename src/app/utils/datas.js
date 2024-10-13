@@ -64,37 +64,37 @@ const calledBy = [
       id: "1",
       scientificName: "Canis lupus",
       commonName: "Lobo",
-      groupId: "1",
+      AnimalGroupId: "1",
     },
     {
       id: "2",
       scientificName: "Felis catus",
       commonName: "Gato",
-      groupId: "1", 
+      AnimalGroupId: "1", 
     },
     {
       id: "3",
       scientificName: "Python regius",
       commonName: "Píton-real",
-      groupId: "2",
+      AnimalGroupId: "2",
     },
     {
       id: "4",
       scientificName: "Chelonia mydas",
       commonName: "Tartaruga-verde",
-      groupId: "2",
+      AnimalGroupId: "2",
     },
     {
       id: "5",
       scientificName: "Falco peregrinus",
       commonName: "Falcão-peregrino",
-      groupId: "3",
+      AnimalGroupId: "3",
     },
     {
       id: "6",
       scientificName: "Ara macao",
       commonName: "Arara-vermelha",
-      groupId: "3",
+      AnimalGroupId: "3",
     },
   ];
 

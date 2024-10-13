@@ -50,6 +50,7 @@ export async function getRescuesWithStrings(id) {
         'releaseLocationCoordinates',
         'locationCoordinates',
       ],
+      order: ['fullDate']
     };
 
     if (id) {
@@ -134,6 +135,15 @@ export async function createOrUpdateRescueRecord(id, data) {
     }
   } catch (error) {
     console.error('Erro ao criar ou atualizar registro de resgate:', error);
+  }
+}
+
+export async function deleteRescue(id) {
+  try {
+    await Rescues.destroy({ where: { id: id } });
+    console.log('Registro de resgate excluído com sucesso');
+  } catch (error) {
+    console.error('Erro ao excluir registro de resgate:', error);
   }
 }
 
