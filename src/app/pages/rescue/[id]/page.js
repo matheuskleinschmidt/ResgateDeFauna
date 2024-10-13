@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { React, useState, useEffect } from "react";
@@ -51,9 +52,6 @@ export default function App({ params }) {
         ? JSON.parse(speciesAndAnimalGroups)
         : {};
 
-      console.log(utilsParsedData.calledBys);
-      console.log(speciesAndAnimalGroupsParsedData);
-
       const updatedOptions = {
         calledBy: utilsParsedData.calledBys || options.calledBy,
         procedureBy:
@@ -72,6 +70,7 @@ export default function App({ params }) {
     } else {
       setIsOptionsLoaded(true); 
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -86,7 +85,6 @@ export default function App({ params }) {
       const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
       const response = await axios.get(apiUrl);
       const dataResponse = response.data[0];
-      console.log("Data Response:", dataResponse);
 
       setValue("Species", dataResponse.species.id.toString());
 
