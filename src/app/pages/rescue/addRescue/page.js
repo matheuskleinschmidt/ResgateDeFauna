@@ -1,14 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import {React, useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import React from "react";
-import { DatePicker } from "@nextui-org/react";
-import { Input } from "@nextui-org/react";
+import { Input, Button, DatePicker } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
 import { Select, SelectSection, SelectItem } from "@nextui-org/select";
-import { Button } from "@nextui-org/react";
 import {TimeInput} from "@nextui-org/date-input";
 import useGeolocation from "../../../components/useGeolocation";
 import data from "../../../utils/datas.js";
@@ -17,6 +14,13 @@ import { useRouter } from "next/navigation";
 export default function App() {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [filteredSpecies, setFilteredSpecies] = useState([]);
+
+  const [calledBys, setCalledBys] = useState([]);
+  const [procedureOrientationBys, setProcedureOrientationBys] = useState([]);
+  const [ageRanges, setAgeRanges] = useState([]);
+  const [situations, setSituations] = useState([]);
+  const [postRescue, setPostRescue] = useState([]);
+  
   const { location, getLocation, error } = useGeolocation();
   const router = useRouter();
 
@@ -33,6 +37,19 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    const utils = localStorage.getItem('utils');
+    
+    if (utils) {
+      const parsedData = JSON.parse(utils);
+
+      setCalledBys(parsedData.calledBys || []);
+      setProcedureOrientationBys(parsedData.procedureOrientationBys || []);
+      setAgeRanges(parsedData.ageRanges || []);
+      setSituations(parsedData.situations || []);
+      setPostRescue(parsedData.postRescues || []);
+    }
+  }, []);
 
   useEffect(() => {
     if (selectedGroup) {
@@ -46,9 +63,7 @@ export default function App() {
   }, [selectedGroup]);
 
   const {
-    register,
     handleSubmit,
-    watch,
     setValue,
     control,
     formState: { errors },
@@ -276,7 +291,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {data.calledBy.map((calledBy) => (
+            {calledBys.map((calledBy) => (
               <SelectItem key={calledBy.key} value={calledBy.key}>
                 {calledBy.label}
               </SelectItem>
@@ -295,7 +310,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {data.procedureBy.map((procedureBy) => (
+            {procedureOrientationBys.map((procedureBy) => (
               <SelectItem key={procedureBy.key} value={procedureBy.key}>
                 {procedureBy.label}
               </SelectItem>
@@ -315,7 +330,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {data.ageRanges.map((ages) => (
+            {ageRanges.map((ages) => (
               <SelectItem key={ages.key} value={ages.key}>
                 {ages.label}
               </SelectItem>
@@ -334,7 +349,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {data.situations.map((situations) => (
+            {situations.map((situations) => (
               <SelectItem key={situations.key} value={situations.key}>
                 {situations.label}
               </SelectItem>
@@ -353,7 +368,7 @@ export default function App() {
             value={field.value}
             onChange={field.onChange}
           >
-            {data.postRescue.map((postRescue) => (
+            {postRescue.map((postRescue) => (
               <SelectItem key={postRescue.key} value={postRescue.key}>
                 {postRescue.label}
               </SelectItem>
