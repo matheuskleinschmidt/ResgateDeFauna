@@ -6,7 +6,6 @@ import axios from "axios";
 import { Input, Button, DatePicker } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
 import { Select, SelectSection, SelectItem } from "@nextui-org/select";
-import { Button } from "@nextui-org/react";
 import { TimeInput } from "@nextui-org/date-input";
 import useGeolocation from "../../../components/useGeolocation";
 import data from "../../../utils/datas.js";
