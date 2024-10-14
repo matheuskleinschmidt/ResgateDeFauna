@@ -5,7 +5,9 @@ name: Run Migrations on Main Push
 on:
   push:
     branches:
-      - main # Dispara o workflow ao fazer push na branch main
+      - main
+    paths:
+      - 'database/**'
 
 jobs:
   migrations:
