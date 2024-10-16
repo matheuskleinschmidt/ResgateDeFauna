@@ -21,7 +21,7 @@ export default function App() {
       </Card>
       <Card  className="w-full max-w-xs mb-4">
         <CardBody>
-        <Link href="#"><p>Configurações</p></Link>
+        <Link href="/pages/configurations"><p>Configurações</p></Link>
         </CardBody>
       </Card>
     </div>
