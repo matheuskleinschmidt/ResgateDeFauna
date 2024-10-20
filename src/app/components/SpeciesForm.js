@@ -27,7 +27,6 @@ const SpeciesForm = ({ species, onSubmit }) => {
   }, [species, setValue]);
 
   const onSubmitForm = async (data) => {
-    console.log(data);
     try {
       if (species) {
         await axios.put(`/api/dateUtil/species/${species.id}`, data);

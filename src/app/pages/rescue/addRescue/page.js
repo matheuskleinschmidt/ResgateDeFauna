@@ -70,7 +70,6 @@ export default function App() {
       const speciesForGroup = options.allSpecies.filter(
         (species) => species.AnimalGroupId.toString() === selectedGroup
       );
-      console.log("Species for group:", speciesForGroup);
       setFilteredSpecies(speciesForGroup);
     } else {
       setFilteredSpecies([]);
@@ -93,10 +92,8 @@ export default function App() {
   const onSubmit = async (data) => {
     const baseUrl = window.location.origin;
     const apiUrl = `${baseUrl}/api/rescue`;
-    console.log("Data:", data);
     try {
       const response = await axios.post(apiUrl, data);
-      console.log("Response:", response.data);
       window.alert("Registro criado com sucesso!");
       router.push("/pages/rescue");
     } catch (error) {

@@ -43,7 +43,6 @@ const AnimalGroupList = () => {
   }, []);
 
   const handleEdit = (group) => {
-    console.log('Editing group:', group);
     setCurrentGroup(group);
     setModalOpen(true);
   };

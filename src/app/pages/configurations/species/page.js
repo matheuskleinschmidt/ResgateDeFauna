@@ -36,7 +36,6 @@ const SpeciesList = () => {
           "Cache-Control": "no-cache",
         },
       });
-      console.log("Fetched Species:", response.data.species);
       setSpeciesList(response.data.species);
     } catch (error) {
       console.error("Erro ao buscar as espécies:", error);
@@ -161,8 +160,6 @@ const SpeciesForm = ({ species, onSubmit }) => {
   const fetchAnimalGroups = async () => {
     try {
       const response = await axios.get("/api/dateUtil/speciesAndAnimalGroups");
-      console.log(species);
-      console.log(response.data.animalGroups);
       setAnimalGroups(response.data.animalGroups);
     } catch (error) {
       console.error("Erro ao buscar os grupos de animais:", error);
@@ -190,7 +187,6 @@ const SpeciesForm = ({ species, onSubmit }) => {
   }, [species, reset]);
 
   const onSubmitForm = async (data) => {
-    console.log("Form Data:", data);
     try {
       data.AnimalGroupId = parseInt(data.AnimalGroupId);
       if (species) {
