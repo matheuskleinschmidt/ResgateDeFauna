@@ -227,7 +227,6 @@ export default function App({ params }) {
     const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
     try {
       const response = await axios.put(apiUrl, data);
-      console.log("Response:", response.data);
       window.alert("Registro editado com sucesso!");
       router.push("/pages/rescue");
     } catch (error) {

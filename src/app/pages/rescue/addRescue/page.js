@@ -1,28 +1,80 @@
 "use client";
 
-import {React, useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { Input, Button, DatePicker } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
-import { Select, SelectSection, SelectItem } from "@nextui-org/select";
+import { Select, SelectItem } from "@nextui-org/select";
 import { TimeInput } from "@nextui-org/date-input";
 import useGeolocation from "../../../components/useGeolocation";
-import data from "../../../utils/datas.js";
+import utils from "../../../utils/datas.js";
 import { useRouter } from "next/navigation";
 
 export default function App() {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [filteredSpecies, setFilteredSpecies] = useState([]);
 
-  const [calledBys, setCalledBys] = useState([]);
-  const [procedureOrientationBys, setProcedureOrientationBys] = useState([]);
-  const [ageRanges, setAgeRanges] = useState([]);
-  const [situations, setSituations] = useState([]);
-  const [postRescue, setPostRescue] = useState([]);
-  
-  const { location, getLocation, error } = useGeolocation();
+  const { getLocation, error } = useGeolocation();
   const router = useRouter();
+
+  const {
+    handleSubmit,
+    setValue,
+    control,
+    formState: { errors },
+  } = useForm();
+
+  const [options, setOptions] = useState({
+    calledBy: utils.calledBy,
+    procedureBy: utils.procedureBy,
+    ageRanges: utils.ageRanges,
+    situations: utils.situations,
+    postRescue: utils.postRescue,
+    AnimalGroups: utils.AnimalGroups,
+    allSpecies: utils.allSpecies,
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const utilsData = localStorage.getItem("utils");
+      const speciesAndAnimalGroupsData = localStorage.getItem(
+        "speciesAndAnimalGroups"
+      );
+
+      const utilsParsedData = utilsData ? JSON.parse(utilsData) : {};
+      const speciesAndAnimalGroupsParsedData = speciesAndAnimalGroupsData
+        ? JSON.parse(speciesAndAnimalGroupsData)
+        : {};
+
+      const updatedOptions = {
+        calledBy: utilsParsedData.calledBys || options.calledBy,
+        procedureBy:
+          utilsParsedData.procedureOrientationBys || options.procedureBy,
+        ageRanges: utilsParsedData.ageRanges || options.ageRanges,
+        situations: utilsParsedData.situations || options.situations,
+        postRescue: utilsParsedData.postRescues || options.postRescue,
+        AnimalGroups:
+          speciesAndAnimalGroupsParsedData.animalGroups || options.AnimalGroups,
+        allSpecies:
+          speciesAndAnimalGroupsParsedData.species || options.allSpecies,
+      };
+
+      setOptions(updatedOptions);
+    }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (selectedGroup) {
+      const speciesForGroup = options.allSpecies.filter(
+        (species) => species.AnimalGroupId.toString() === selectedGroup
+      );
+      setFilteredSpecies(speciesForGroup);
+    } else {
+      setFilteredSpecies([]);
+    }
+  }, [selectedGroup, options.allSpecies]);
 
   const handleGetLocation = async (field) => {
     try {
@@ -37,46 +89,11 @@ export default function App() {
     }
   };
 
-
-  useEffect(() => {
-    const utils = localStorage.getItem('utils');
-    
-    if (utils) {
-      const parsedData = JSON.parse(utils);
-
-      setCalledBys(parsedData.calledBys || []);
-      setProcedureOrientationBys(parsedData.procedureOrientationBys || []);
-      setAgeRanges(parsedData.ageRanges || []);
-      setSituations(parsedData.situations || []);
-      setPostRescue(parsedData.postRescues || []);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (selectedGroup) {
-      const speciesForGroup = data.allSpecies.filter(
-        (species) => species.AnimalGroupId === selectedGroup
-      );
-      setFilteredSpecies(speciesForGroup);
-    } else {
-      setFilteredSpecies([]);
-    }
-  }, [selectedGroup]);
-
-  const {
-    handleSubmit,
-    setValue,
-    control,
-    formState: { errors },
-  } = useForm();
-
   const onSubmit = async (data) => {
     const baseUrl = window.location.origin;
     const apiUrl = `${baseUrl}/api/rescue`;
-
     try {
       const response = await axios.post(apiUrl, data);
-      console.log("Response:", response.data);
       window.alert("Registro criado com sucesso!");
       router.push("/pages/rescue");
     } catch (error) {
@@ -154,16 +171,20 @@ export default function App() {
             isRequired
             label="Qual o grupo do animal?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
             data-testid="AnimalGroup"
-            onChange={(value) => {
-              field.onChange(value);
-              setSelectedGroup(value.target.value);
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+              setSelectedGroup(selectedKey);
             }}
           >
-            {data.AnimalGroups.map((AnimalGroups) => (
-              <SelectItem key={AnimalGroups.key} value={AnimalGroups.key}>
-                {AnimalGroups.label}
+            {options.AnimalGroups.map((AnimalGroup) => (
+              <SelectItem
+                key={AnimalGroup.id}
+                value={AnimalGroup.id}
+              >
+                {AnimalGroup.groupName}
               </SelectItem>
             ))}
           </Select>
@@ -179,13 +200,18 @@ export default function App() {
             isRequired
             label="Qual a espécie do animal?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={field.onChange}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+            }}
             disabled={!selectedGroup}
             data-testid="Species"
           >
             {filteredSpecies.map((species) => (
-              <SelectItem key={species.id} value={species.id}>
+              <SelectItem
+                key={species.id.toString()}
+                value={species.id.toString()}
+              >
                 {`${species.commonName} - ${species.scientificName}`}
               </SelectItem>
             ))}
@@ -203,7 +229,7 @@ export default function App() {
             placeholder="0.00"
             label="Peso do animal (Kg)"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value || ""}
             onChange={field.onChange}
             data-testid="weight"
           />
@@ -222,7 +248,7 @@ export default function App() {
             placeholder="0.00"
             label="Altura do animal"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value || ""}
             onChange={field.onChange}
             data-testid="height"
           />
@@ -238,7 +264,7 @@ export default function App() {
             placeholder="0.00"
             label="Comprimento do animal"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value || ""}
             onChange={field.onChange}
             data-testid="length"
           />
@@ -254,7 +280,7 @@ export default function App() {
             placeholder="0.00"
             label="Largura do animal"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value || ""}
             onChange={field.onChange}
             data-testid="width"
           />
@@ -270,9 +296,9 @@ export default function App() {
             inputMode="text"
             label="Endereço do resgate"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value || ""}
             onChange={field.onChange}
-            data-testid="adress"
+            data-testid="address"
           />
         )}
       />
@@ -286,7 +312,7 @@ export default function App() {
             inputMode="text"
             label="O que ocorreu?"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value || ""}
             onChange={field.onChange}
             data-testid="occurrence"
           />
@@ -301,12 +327,18 @@ export default function App() {
           <Select
             label="O chamado é via?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={field.onChange}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+            }}
             data-testid="calledBy"
           >
-            {calledBys.map((calledBy) => (
-              <SelectItem key={calledBy.key} value={calledBy.key}>
+            {options.calledBy.map((calledBy) => (
+              <SelectItem
+                key={calledBy.key.toString()}
+                value={calledBy.key.toString()}
+              >
                 {calledBy.label}
               </SelectItem>
             ))}
@@ -321,12 +353,18 @@ export default function App() {
           <Select
             label="O procedimento foi via?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={field.onChange}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+            }}
             data-testid="procedureBy"
           >
-            {procedureOrientationBys.map((procedureBy) => (
-              <SelectItem key={procedureBy.key} value={procedureBy.key}>
+            {options.procedureBy.map((procedureBy) => (
+              <SelectItem
+                key={procedureBy.key.toString()}
+                value={procedureBy.key.toString()}
+              >
                 {procedureBy.label}
               </SelectItem>
             ))}
@@ -342,12 +380,18 @@ export default function App() {
           <Select
             label="Idade do animal?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={field.onChange}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+            }}
             data-testid="ageRange"
           >
-            {ageRanges.map((ages) => (
-              <SelectItem key={ages.key} value={ages.key}>
+            {options.ageRanges.map((ages) => (
+              <SelectItem
+                key={ages.key.toString()}
+                value={ages.key.toString()}
+              >
                 {ages.label}
               </SelectItem>
             ))}
@@ -362,13 +406,19 @@ export default function App() {
           <Select
             label="Situação do animal?"
             className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={field.onChange}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+            }}
             data-testid="situation"
           >
-            {situations.map((situations) => (
-              <SelectItem key={situations.key} value={situations.key}>
-                {situations.label}
+            {options.situations.map((situation) => (
+              <SelectItem
+                key={situation.key.toString()}
+                value={situation.key.toString()}
+              >
+                {situation.label}
               </SelectItem>
             ))}
           </Select>
@@ -382,12 +432,18 @@ export default function App() {
           <Select
             label="Pós o resgate"
             className="w-full max-w-xs mb-4"
-            value={field.value}
-            onChange={field.onChange}
+            selectedKeys={field.value ? new Set([field.value]) : new Set()}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys).pop();
+              field.onChange(selectedKey);
+            }}
             data-testid="postRescue"
           >
-            {postRescue.map((postRescue) => (
-              <SelectItem key={postRescue.key} value={postRescue.key}>
+            {options.postRescue.map((postRescue) => (
+              <SelectItem
+                key={postRescue.key.toString()}
+                value={postRescue.key.toString()}
+              >
                 {postRescue.label}
               </SelectItem>
             ))}
@@ -403,27 +459,12 @@ export default function App() {
             inputMode="text"
             label="Alguma observação?"
             className="w-full max-w-xs mb-4"
-            selected={field.value}
+            value={field.value || ""}
             onChange={field.onChange}
             data-testid="observation"
           />
         )}
       />
-      {/* <Controller
-        name="releaseLocation"
-        control={control}
-        defaultValue={null}
-        render={({ field }) => (
-          <Input
-            inputMode="text"
-            label="Endereço da soltura"
-            className="w-full max-w-xs mb-4"
-            selected={field.value}
-            onChange={field.onChange}
-            data-testid="locationCoordinates"
-          />
-        )}
-      /> */}
 
       <Controller
         name="releaseLocationCoordinates"
