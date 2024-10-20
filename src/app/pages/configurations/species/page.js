@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Button,
   Modal,
@@ -11,7 +11,7 @@ import {
   ModalFooter,
   useDisclosure,
   Input,
-} from '@nextui-org/react';
+} from "@nextui-org/react";
 import {
   Table,
   TableHeader,
@@ -19,9 +19,9 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-} from '@nextui-org/table';
-import { Select, SelectItem } from '@nextui-org/select';
-import { useForm, Controller } from 'react-hook-form';
+} from "@nextui-org/table";
+import { Select, SelectItem } from "@nextui-org/select";
+import { useForm, Controller } from "react-hook-form";
 
 const SpeciesList = () => {
   const [speciesList, setSpeciesList] = useState([]);
@@ -31,15 +31,15 @@ const SpeciesList = () => {
 
   const fetchSpecies = async () => {
     try {
-      const response = await axios.get('/api/dateUtil/speciesAndAnimalGroups', {
+      const response = await axios.get("/api/dateUtil/speciesAndAnimalGroups", {
         headers: {
-          'Cache-Control': 'no-cache',
+          "Cache-Control": "no-cache",
         },
       });
-      console.log('Fetched Species:', response.data.species);
+      console.log("Fetched Species:", response.data.species);
       setSpeciesList(response.data.species);
     } catch (error) {
-      console.error('Erro ao buscar as espécies:', error);
+      console.error("Erro ao buscar as espécies:", error);
     } finally {
       setLoading(false);
     }
@@ -59,7 +59,7 @@ const SpeciesList = () => {
       await axios.delete(`/api/dateUtil/species/${id}`);
       await fetchSpecies();
     } catch (error) {
-      console.error('Erro ao deletar a espécie:', error);
+      console.error("Erro ao deletar a espécie:", error);
     }
   };
 
@@ -86,7 +86,7 @@ const SpeciesList = () => {
           <TableColumn>Grupo Animal</TableColumn>
           <TableColumn>Ações</TableColumn>
         </TableHeader>
-        <TableBody emptyContent={'Não há espécies cadastradas.'}>
+        <TableBody emptyContent={"Não há espécies cadastradas."}>
           {Array.isArray(speciesList) && speciesList.length > 0
             ? speciesList.map((species) => (
                 <TableRow key={species.id}>
@@ -117,13 +117,20 @@ const SpeciesList = () => {
           {() => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                {currentSpecies ? 'Editar Espécie' : 'Criar Nova Espécie'}
+                {currentSpecies ? "Editar Espécie" : "Criar Nova Espécie"}
               </ModalHeader>
               <ModalBody>
-                <SpeciesForm species={currentSpecies} onSubmit={handleFormSubmit} />
+                <SpeciesForm
+                  species={currentSpecies}
+                  onSubmit={handleFormSubmit}
+                />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={() => onOpenChange(false)}>
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={() => onOpenChange(false)}
+                >
                   Cancelar
                 </Button>
               </ModalFooter>
@@ -144,19 +151,21 @@ const SpeciesForm = ({ species, onSubmit }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      scientificName: '',
-      commonName: '',
-      AnimalGroupId: '',
+      scientificName: "",
+      commonName: "",
+      AnimalGroupId: "",
     },
   });
   const [animalGroups, setAnimalGroups] = useState([]);
 
   const fetchAnimalGroups = async () => {
     try {
-      const response = await axios.get('/api/dateUtil/speciesAndAnimalGroups');
+      const response = await axios.get("/api/dateUtil/speciesAndAnimalGroups");
+      console.log(species);
+      console.log(response.data.animalGroups);
       setAnimalGroups(response.data.animalGroups);
     } catch (error) {
-      console.error('Erro ao buscar os grupos de animais:', error);
+      console.error("Erro ao buscar os grupos de animais:", error);
     }
   };
 
@@ -167,44 +176,44 @@ const SpeciesForm = ({ species, onSubmit }) => {
   useEffect(() => {
     if (species) {
       reset({
-        scientificName: species.scientificName || '',
-        commonName: species.commonName || '',
-        AnimalGroupId: species.AnimalGroupId || '',
+        scientificName: species.scientificName || "",
+        commonName: species.commonName || "",
+        AnimalGroupId: species.AnimalGroupId || "",
       });
     } else {
       reset({
-        scientificName: '',
-        commonName: '',
-        AnimalGroupId: '',
+        scientificName: "",
+        commonName: "",
+        AnimalGroupId: "",
       });
     }
   }, [species, reset]);
 
   const onSubmitForm = async (data) => {
-    console.log('Form Data:', data);
+    console.log("Form Data:", data);
     try {
       data.AnimalGroupId = parseInt(data.AnimalGroupId);
       if (species) {
         await axios.put(`/api/dateUtil/species/${species.id}`, data);
       } else {
-        await axios.post('/api/dateUtil/species/', data);
+        await axios.post("/api/dateUtil/species/", data);
       }
       onSubmit();
     } catch (error) {
-      console.error('Erro ao salvar a espécie:', error);
+      console.error("Erro ao salvar a espécie:", error);
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmitForm)}>
       <Input
-        {...register('scientificName', { required: true })}
+        {...register("scientificName", { required: true })}
         label="Nome Científico"
         placeholder="Nome Científico"
       />
       {errors.scientificName && <span>Este campo é obrigatório</span>}
       <Input
-        {...register('commonName', { required: true })}
+        {...register("commonName", { required: true })}
         label="Nome Comum"
         placeholder="Nome Comum"
       />
@@ -217,13 +226,13 @@ const SpeciesForm = ({ species, onSubmit }) => {
             <Select
               label="Qual o grupo do animal?"
               placeholder="Selecione um grupo"
-              selectedKeys={field.value ? [field.value] : []}
+              selectedKeys={field.value ? [String(field.value)] : []}
               onSelectionChange={(keys) =>
-                field.onChange(parseInt(Array.from(keys).pop()))
+                field.onChange(Array.from(keys).pop())
               }
             >
               {animalGroups.map((group) => (
-                <SelectItem key={group.id} value={group.id}>
+                <SelectItem key={String(group.id)} value={String(group.id)}>
                   {group.groupName}
                 </SelectItem>
               ))}
