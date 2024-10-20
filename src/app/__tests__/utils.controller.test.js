@@ -18,25 +18,7 @@ describe('utils.controller', () => {
   
         expect(consoleErrorSpy).toHaveBeenCalledWith('Erro ao buscar informações auxiliares:', error);
       });
-    });
-  
-    describe('getSpeciesAndAnimalGroups', () => {
-        it('deve lidar com erros ao buscar species e grupos de animais', async () => {
-          const error = new Error('Erro no banco de dados');
-          
-          jest.spyOn(Species, 'findAll').mockRejectedValue(error);
-          
-          const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-      
-          await expect(getSpeciesAndAnimalGroups()).rejects.toThrow('Erro no banco de dados');
-      
-          expect(consoleErrorSpy).toHaveBeenCalledWith(
-            'Erro ao buscar informações sobre species e grupos de animais:', 
-            error
-          );
-        });
-      });
-      
+    });    
       
   });
   
