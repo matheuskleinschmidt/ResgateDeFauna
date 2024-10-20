@@ -76,7 +76,9 @@ const SpeciesList = () => {
 
   return (
     <div>
-      <Button onClick={handleCreate}>Criar Nova Espécie</Button>
+          <div className="flex justify-end">
+      <Button className="flex-end ax-w-xs m-2" onClick={handleCreate}>Criar Novo Espécie</Button>
+    </div>
       <Table isStriped isCompact>
         <TableHeader>
           <TableColumn>ID</TableColumn>
