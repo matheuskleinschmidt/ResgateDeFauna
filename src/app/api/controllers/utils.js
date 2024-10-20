@@ -7,7 +7,6 @@ import PostRescues from "@/app/api/models/PostRescues.js";
 import status from "@/app/api/models/Status.js";
 import AnimalGroups from "@/app/api/models/AnimalGroups.js";
 import AgeRanges from "@/app/api/models/ageRanges.js";
-import Users from "@/app/api/models/users";
 
 export async function getauxiliaryInfos() {
   try {
@@ -27,26 +26,23 @@ export async function getauxiliaryInfos() {
 
 export async function getSpeciesAndAnimalGroups() {
   try {
-    let species = await Species.findAll({
+    const species = await Species.findAll({
       include: [
         {
           model: AnimalGroups,
-          attributes: ["id", "groupName"],
+          attributes: ['id', 'groupName'],
         },
       ],
-      attributes: ["id", "scientificName", "commonName", "AnimalGroupId"],
+      attributes: ['id', 'scientificName', 'commonName', 'AnimalGroupId'],
     });
 
-    let animalGroups = await AnimalGroups.findAll({
-      attributes: ["id", "groupName"],
+    const animalGroups = await AnimalGroups.findAll({
+      attributes: ['id', 'groupName'],
     });
 
     return { species, animalGroups };
   } catch (err) {
-    console.error(
-      "Erro ao buscar informações sobre species e grupos de animais:",
-      err
-    );
+    console.error('Error fetching species and animal groups:', err);
     throw err;
   }
 }
