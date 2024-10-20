@@ -1,18 +1,11 @@
-"use client";
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react';
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-} from "@nextui-org/table";
-import Link from "next/link";
-import SpeciesForm from '@/app/components/SpeciesForm';
+import { Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Input } from '@nextui-org/react';
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
+import { Select, SelectItem } from "@nextui-org/select";
+import { useForm, Controller } from 'react-hook-form';
 
 const SpeciesList = () => {
   const [speciesList, setSpeciesList] = useState([]);
@@ -23,6 +16,7 @@ const SpeciesList = () => {
   const fetchSpecies = async () => {
     try {
       const response = await axios.get('/api/dateUtil/speciesAndAnimalGroups');
+      console.log(response.data.species);
       setSpeciesList(response.data.species);
     } catch (error) {
       console.error('Erro ao buscar as espécies:', error);
@@ -76,11 +70,7 @@ const SpeciesList = () => {
           {Array.isArray(speciesList) && speciesList.length > 0 ? (
             speciesList.map((species) => (
               <TableRow key={species.id}>
-                <TableCell>
-                  <Link href={`/pages/species/${species.id}`}>
-                    {species.id}
-                  </Link>
-                </TableCell>
+                <TableCell>{species.id}</TableCell>
                 <TableCell>{species.scientificName}</TableCell>
                 <TableCell>{species.commonName}</TableCell>
                 <TableCell>{species.AnimalGroup.groupName}</TableCell>
@@ -125,6 +115,89 @@ const SpeciesList = () => {
         </ModalContent>
       </Modal>
     </div>
+  );
+};
+
+const SpeciesForm = ({ species, onSubmit }) => {
+  const { register, handleSubmit, reset, control } = useForm({
+    defaultValues: {
+      scientificName: '',
+      commonName: '',
+      AnimalGroupId: ''
+    }
+  });
+  const [animalGroups, setAnimalGroups] = useState([]);
+
+  const fetchAnimalGroups = async () => {
+    try {
+      const response = await axios.get('/api/dateUtil/speciesAndAnimalGroups');
+      setAnimalGroups(response.data.animalGroups);
+    } catch (error) {
+      console.error('Erro ao buscar os grupos de animais:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAnimalGroups();
+  }, []);
+
+  useEffect(() => {
+    console.log('Species passed to form:', species);
+    if (species) {
+      reset({
+        scientificName: species.scientificName || '',
+        commonName: species.commonName || '',
+        AnimalGroupId: species.AnimalGroupId || ''
+      });
+    } else {
+      reset({
+        scientificName: '',
+        commonName: '',
+        AnimalGroupId: ''
+      });
+    }
+  }, [species, reset]);
+
+  const onSubmitForm = async (data) => {
+    console.log(data);
+    try {
+      if (species) {
+        await axios.put(`/api/dateUtil/species/${species.id}`, data);
+      } else {
+        await axios.post('/api/dateUtil/species/', data);
+      }
+      onSubmit();
+    } catch (error) {
+      console.error('Erro ao salvar a espécie:', error);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmitForm)}>
+      <Input {...register('scientificName')} label="Nome Científico" placeholder="Nome Científico" />
+      <Input {...register('commonName')} label="Nome Comum" placeholder="Nome Comum" />
+      <div>
+        <Controller
+          name="AnimalGroupId"
+          control={control}
+          render={({ field }) => (
+            <Select
+              label="Qual o grupo do animal?"
+              placeholder="Selecione um grupo"
+              selectedKeys={field.value ? [field.value] : []}
+              onSelectionChange={(keys) => field.onChange(Array.from(keys).pop())}
+            >
+              {animalGroups.map((group) => (
+                <SelectItem key={group.id} value={group.id}>
+                  {group.groupName}
+                </SelectItem>
+              ))}
+            </Select>
+          )}
+        />
+      </div>
+      <Button type="submit">Salvar</Button>
+    </form>
   );
 };
 
