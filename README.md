@@ -112,10 +112,9 @@ Procedimentos de implementação e implantação para garantir uma transição s
 | --------------------------------------------------------------------- | ---------------------------------- |
 | Gerenciar os registros provenientes dos resgates.                     | Disponibilidade offline.           |
 | Permitir que o usuário classifique o animal do resgate.               | Usabilidade em um celular simples. |
-| Permitir usuário listar resgates com diversos filtros.                | Autenticação simples.              |
+| Tela com gráficos dos resgates feitos filtrado por espécie e mês.     | Autenticação simples.              |
 | Permitir o usuário de modificar os tipos de espécies pré-cadastrados. | Aplicação PWA.                     |
 | Mapa de onde foi feito os resgates.                                   |                                    |
-| Tela com gráficos dos resgates feitos filtrado por espécie e mês.     |                                    |
 
 # Representação dos Requisitos:
 
