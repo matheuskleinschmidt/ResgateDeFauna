@@ -1,3 +1,6 @@
+const path = require('path');
+const url = require('url');
+
 /** @type {import('next').NextConfig} */
 
 const withPWA = require("@ducanh2912/next-pwa").default({
@@ -18,18 +21,25 @@ const withPWA = require("@ducanh2912/next-pwa").default({
           backgroundSync: {
             name: 'apiQueue',
             options: {
-              maxRetentionTime: 24 * 60
-            }
-          }
-        }
-      }
-    ]
+              maxRetentionTime: 24 * 60,
+            },
+          },
+        },
+      },
+    ],
   },
 });
+
+const dirname = __dirname; 
 
 const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["sequelize"],
+    esmExternals: true,
+  },
+  webpack: (config) => {
+    config.resolve.alias['rlayers'] = path.resolve(dirname, 'node_modules', 'rlayers', 'dist');
+    return config;
   },
 };
 

@@ -1,18 +1,41 @@
-import React from "react";
-import { Card, CardBody, Link } from "@nextui-org/react";
+'use client';
 
-export default function configurationsPage() {
+import React from 'react';
+
+import Head from 'next/head';
+
+import 'ol/ol.css';
+
+import { fromLonLat } from 'ol/proj';
+
+import { RMap, ROSM } from 'rlayers';
+
+
+export function Browser({ children }) {
+  const [hasMounted, setHasMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) {
+    return null;
+  }
+
+  return <>{children}</>;
+};
+
+export default function Home() {
   return (
     <div>
-      <div className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md">
-        <Card className="w-full max-w-xs mb-4">
-          <CardBody>
-            <Link href="/pages/configurations/species">
-              <p>teste</p>
-            </Link>
-          </CardBody>
-        </Card>
-      </div>
+      <Head>
+        <title>rlayers test</title>
+      </Head>
+      <Browser>
+        <RMap width={'100%'} height={'60vh'} initial={{ center: fromLonLat([2.364, 48.82]), zoom: 11 }}>
+          <ROSM />
+        </RMap>
+      </Browser>
     </div>
-  );
+  )
 }
