@@ -16,7 +16,7 @@ export default function App() {
       </Card>
       <Card  className="w-full max-w-xs mb-4">
         <CardBody>
-        <Link href="#"><p>Relatórios</p></Link>
+        <Link href="/pages/reports"><p>Relatórios</p></Link>
         </CardBody>
       </Card>
       <Card  className="w-full max-w-xs mb-4">
