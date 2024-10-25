@@ -8,12 +8,7 @@ import { fromLonLat } from "ol/proj";
 import { Point } from "ol/geom";
 import axios from "axios";
 import { RMap, ROSM, RLayerVector, RFeature, ROverlay, RStyle } from "rlayers";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Divider,
-} from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Divider } from "@nextui-org/react";
 
 export function Browser({ children }) {
   const [hasMounted, setHasMounted] = React.useState(false);
@@ -82,32 +77,51 @@ export default function Home() {
                 <RStyle.RStyle>
                   <RStyle.RIcon src="/location.svg" anchor={[0.5, 0.8]} />
                 </RStyle.RStyle>
-                {rescues.map((rescue) => (
+                {rescues.length > 0 ? (
+                  rescues.map((rescue) => (
+                    <RFeature
+                      key={rescue.id}
+                      geometry={
+                        new Point(
+                          fromLonLat([
+                            rescue.locationCoordinates.longitude,
+                            rescue.locationCoordinates.latitude,
+                          ])
+                        )
+                      }
+                      onClick={(e) =>
+                        e.map
+                          .getView()
+                          .fit(e.target.getGeometry().getExtent(), {
+                            duration: 250,
+                            maxZoom: 15,
+                          })
+                      }
+                    >
+                      <ROverlay className="example-overlay">
+                        <br />
+                        <em className="bg-white/70 rounded">
+                          &#11017; {rescue.species.commonName || "Resgate"}
+                        </em>
+                      </ROverlay>
+                    </RFeature>
+                  ))
+                ) : (
                   <RFeature
-                    key={rescue.id}
                     geometry={
                       new Point(
-                        fromLonLat([
-                          rescue.locationCoordinates.longitude,
-                          rescue.locationCoordinates.latitude,
-                        ])
+                        fromLonLat([-48.8177664, -26.3225344]) 
                       )
-                    }
-                    onClick={(e) =>
-                      e.map.getView().fit(e.target.getGeometry().getExtent(), {
-                        duration: 250,
-                        maxZoom: 15,
-                      })
                     }
                   >
                     <ROverlay className="example-overlay">
                       <br />
                       <em className="bg-white/70 rounded">
-                        &#11017; {rescue.species.commonName || "Resgate"}
+                        Nenhum resgate foi feito
                       </em>
                     </ROverlay>
                   </RFeature>
-                ))}
+                )}
               </RLayerVector>
             </RMap>
           </Browser>
