@@ -19,7 +19,7 @@ const groupRecordsByDate = (records) => {
 }
 
 export default function AnimalRecordsChart() {
-  const [rescues, setRescues] = React.useState([]);
+  const [rescues, setRescues] = useState([]);
 
   useEffect(() => {
     const fetchRescueData = async () => {
@@ -48,7 +48,7 @@ export default function AnimalRecordsChart() {
         <ChartContainer
           config={{
             count: {
-              label: "Número de Registros",
+              label: "Número de Registros: ",
               color: "hsl(var(--chart-1))",
             },
           }}
