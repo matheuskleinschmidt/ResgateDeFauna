@@ -80,11 +80,13 @@ export default function App({ params }) {
   }, [params.id, isOptionsLoaded]);
 
   const fetchRescueData = async () => {
+    const rescueData = sessionStorage.getItem("selectedRescue");
+    if (rescueData) {
+      const dataResponse = JSON.parse(rescueData);
+
+
     try {
-      const baseUrl = window.location.origin;
-      const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
-      const response = await axios.get(apiUrl);
-      const dataResponse = response.data[0];
+
 
       setValue("Species", dataResponse.species.id.toString());
 
@@ -196,6 +198,11 @@ export default function App({ params }) {
     } catch (error) {
       console.error("Erro ao fazer a requisição:", error);
     }
+  } else {
+    // Handle the case where data is not in sessionStorage
+    console.error("No data found in sessionStorage");
+    // Optionally, fetch data from API or redirect the user
+  }
   };
 
   useEffect(() => {
