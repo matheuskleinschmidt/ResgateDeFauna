@@ -2,5 +2,6 @@
   "image": "mcr.microsoft.com/devcontainers/universal:2",
   "features": {
     "ghcr.io/devcontainers-extra/features/node-asdf:0": {},
+    "ghcr.io/devcontainers-extra/features/jest:2": {},
   }
 }
