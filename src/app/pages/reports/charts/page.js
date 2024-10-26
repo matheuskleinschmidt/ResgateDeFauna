@@ -1,11 +1,10 @@
 "use client";
-import MonthRescues from "@/app/components/MonthRescues"
-
+import MonthRescues from "@/app/components/MonthRescues";
 
 export default function Chart() {
   return (
-    <div className="flex items-stretch">
-      <div className="self-center">
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="w-full max-w-xl">
         <MonthRescues />
       </div>
     </div>

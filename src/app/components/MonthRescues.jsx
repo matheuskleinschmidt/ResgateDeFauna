@@ -52,7 +52,6 @@ export default function AnimalRecordsChart() {
               color: "hsl(var(--chart-1))",
             },
           }}
-          className="h-[400px]"
         >
           <BarChart data={rescues}>
             <XAxis dataKey="date" />
