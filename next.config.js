@@ -1,5 +1,4 @@
 const path = require("path");
-const url = require("url");
 
 /** @type {import('next').NextConfig} */
 
@@ -16,10 +15,23 @@ const withPWA = require("@ducanh2912/next-pwa").default({
       {
         urlPattern: ({ url }) => url.pathname.startsWith("/api/"),
         handler: "NetworkOnly",
+        method: "PUT",
+        options: {
+          backgroundSync: {
+            name: "apiQueuePUT",
+            options: {
+              maxRetentionTime: 24 * 60,
+            },
+          },
+        },
+      },
+      {
+        urlPattern: ({ url }) => url.pathname.startsWith("/api/"),
+        handler: "NetworkOnly",
         method: "POST",
         options: {
           backgroundSync: {
-            name: "apiQueue",
+            name: "apiQueuePOST",
             options: {
               maxRetentionTime: 24 * 60,
             },
