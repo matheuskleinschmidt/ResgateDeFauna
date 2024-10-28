@@ -3,8 +3,8 @@
 
 import { React, useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import axios from "axios";  
-import { DatePicker,Button, Input } from "@nextui-org/react";
+import axios from "axios";
+import { DatePicker, Button, Input } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
 import { TimeInput } from "@nextui-org/date-input";
@@ -20,13 +20,13 @@ export default function App({ params }) {
   const router = useRouter();
   const { handleSubmit, setValue, control } = useForm();
 
-  let calledBy = utils.calledBy
-  let procedureBy = utils.procedureBy
-  let ageRanges = utils.ageRanges 
-  let situations = utils.situations
-  let postRescue = utils.postRescue
-  let AnimalGroups = utils.AnimalGroups
-  let allSpecies = utils.allSpecies
+  let calledBy = utils.calledBy;
+  let procedureBy = utils.procedureBy;
+  let ageRanges = utils.ageRanges;
+  let situations = utils.situations;
+  let postRescue = utils.postRescue;
+  let AnimalGroups = utils.AnimalGroups;
+  let allSpecies = utils.allSpecies;
 
   const [options, setOptions] = useState({
     calledBy,
@@ -68,9 +68,9 @@ export default function App({ params }) {
       setOptions(updatedOptions);
       setIsOptionsLoaded(true);
     } else {
-      setIsOptionsLoaded(true); 
+      setIsOptionsLoaded(true);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -80,13 +80,11 @@ export default function App({ params }) {
   }, [params.id, isOptionsLoaded]);
 
   const fetchRescueData = async () => {
-    const rescueData = sessionStorage.getItem("selectedRescue");
-    if (rescueData) {
-      const dataResponse = JSON.parse(rescueData);
-
-
     try {
-
+      const baseUrl = window.location.origin;
+      const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
+      const response = await axios.get(apiUrl);
+      const dataResponse = response.data[0];
 
       setValue("Species", dataResponse.species.id.toString());
 
@@ -158,8 +156,7 @@ export default function App({ params }) {
       }
       setValue("calledBy", calledByKey);
 
-      const procedureByName =
-        dataResponse.procedureOrientationBy?.name || null;
+      const procedureByName = dataResponse.procedureOrientationBy?.name || null;
       let procedureByKey = null;
       if (procedureByName && Array.isArray(options.procedureBy)) {
         const procedureByItem = options.procedureBy.find(
@@ -198,11 +195,6 @@ export default function App({ params }) {
     } catch (error) {
       console.error("Erro ao fazer a requisição:", error);
     }
-  } else {
-    // Handle the case where data is not in sessionStorage
-    console.error("No data found in sessionStorage");
-    // Optionally, fetch data from API or redirect the user
-  }
   };
 
   useEffect(() => {
@@ -541,10 +533,7 @@ export default function App({ params }) {
             }}
           >
             {options.ageRanges.map((age) => (
-              <SelectItem
-                key={age.key.toString()}
-                value={age.key.toString()}
-              >
+              <SelectItem key={age.key.toString()} value={age.key.toString()}>
                 {age.label}
               </SelectItem>
             ))}
