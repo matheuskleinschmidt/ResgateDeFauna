@@ -1,5 +1,4 @@
-const path = require('path');
-const url = require('url');
+const path = require("path");
 
 /** @type {import('next').NextConfig} */
 
@@ -14,15 +13,53 @@ const withPWA = require("@ducanh2912/next-pwa").default({
     disableDevLogs: true,
     runtimeCaching: [
       {
-        urlPattern: ({ url }) => url.pathname.startsWith('/api/'),
-        handler: 'NetworkOnly',
-        method: 'POST',
+        urlPattern: ({ url }) => url.pathname.startsWith("/api/"),
+        handler: "NetworkOnly",
+        method: "PUT",
         options: {
           backgroundSync: {
-            name: 'apiQueue',
+            name: "apiQueuePUT",
             options: {
               maxRetentionTime: 24 * 60,
             },
+          },
+        },
+      },
+      {
+        urlPattern: ({ url }) => url.pathname.startsWith("/api/"),
+        handler: "NetworkOnly",
+        method: "POST",
+        options: {
+          backgroundSync: {
+            name: "apiQueuePOST",
+            options: {
+              maxRetentionTime: 24 * 60,
+            },
+          },
+        },
+      },
+      {
+        urlPattern: /^https?.*/,
+        handler: "NetworkFirst",
+        options: {
+          cacheName: "offlineCache",
+          expiration: {
+            maxEntries: 200,
+          },
+        },
+      },
+      {
+        urlPattern: /\/api\/.*$/,
+        handler: "NetworkFirst",
+        options: {
+          cacheName: "apiCache",
+          networkTimeoutSeconds: 10,
+          expiration: {
+            maxEntries: 50,
+            maxAgeSeconds: 86400,
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
           },
         },
       },
@@ -30,7 +67,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   },
 });
 
-const dirname = __dirname; 
+const dirname = __dirname;
 
 const nextConfig = {
   experimental: {
@@ -38,7 +75,12 @@ const nextConfig = {
     esmExternals: true,
   },
   webpack: (config) => {
-    config.resolve.alias['rlayers'] = path.resolve(dirname, 'node_modules', 'rlayers', 'dist');
+    config.resolve.alias["rlayers"] = path.resolve(
+      dirname,
+      "node_modules",
+      "rlayers",
+      "dist"
+    );
     return config;
   },
 };

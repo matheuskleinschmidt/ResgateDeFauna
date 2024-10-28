@@ -1,5 +1,7 @@
 import {getauxiliaryInfos} from '@/app/api/controllers/utils';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req) {
     let data = await getauxiliaryInfos()
     return new Response(JSON.stringify(data), {

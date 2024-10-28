@@ -13,12 +13,14 @@ import useGeolocation from "../../../components/useGeolocation";
 import { useRouter } from "next/navigation";
 import utils from "../../../utils/datas.js";
 
-export default function App({ params }) {
+export default function App() {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [filteredSpecies, setFilteredSpecies] = useState([]);
   const { getLocation, error } = useGeolocation();
   const router = useRouter();
   const { handleSubmit, setValue, control } = useForm();
+
+  let dataResponse = {};
 
   let calledBy = utils.calledBy;
   let procedureBy = utils.procedureBy;
@@ -77,123 +79,126 @@ export default function App({ params }) {
     if (isOptionsLoaded) {
       fetchRescueData();
     }
-  }, [params.id, isOptionsLoaded]);
+  }, [dataResponse.id, isOptionsLoaded]);
 
   const fetchRescueData = async () => {
-    try {
-      const baseUrl = window.location.origin;
-      const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
-      const response = await axios.get(apiUrl);
-      const dataResponse = response.data[0];
+    const rescueData = sessionStorage.getItem("selectedRescue");
+    if (rescueData) {
+      dataResponse = JSON.parse(rescueData);
 
-      setValue("Species", dataResponse.species.id.toString());
+      try {
+        setValue("Species", dataResponse.species.id.toString());
 
-      setSelectedGroup(dataResponse.species.AnimalGroupId.toString());
-      setValue("AnimalGroup", dataResponse.species.AnimalGroupId.toString());
+        setSelectedGroup(dataResponse.species.AnimalGroupId.toString());
+        setValue("AnimalGroup", dataResponse.species.AnimalGroupId.toString());
 
-      const dateString = dataResponse.fullDate.split("T")[0];
-      const dateValue = parseDate(dateString);
-      setValue("date", dateValue);
+        const dateString = dataResponse.fullDate.split("T")[0];
+        const dateValue = parseDate(dateString);
+        setValue("date", dateValue);
 
-      const timeString = dataResponse.fullDate.split("T")[1];
-      const timeParts = timeString.split(":");
-      const hours = parseInt(timeParts[0], 10);
-      const minutes = parseInt(timeParts[1], 10);
-      const timeValue = new Time(hours, minutes);
-      setValue("time", timeValue);
+        const timeString = dataResponse.fullDate.split("T")[1];
+        const timeParts = timeString.split(":");
+        const hours = parseInt(timeParts[0], 10);
+        const minutes = parseInt(timeParts[1], 10);
+        const timeValue = new Time(hours, minutes);
+        setValue("time", timeValue);
 
-      setValue(
-        "locationCoordinates",
-        `${
-          dataResponse.locationCoordinates != null
-            ? dataResponse.locationCoordinates.latitude
+        setValue(
+          "locationCoordinates",
+          `${
+            dataResponse.locationCoordinates != null
+              ? dataResponse.locationCoordinates.latitude
+              : ""
+          }, ${
+            dataResponse.locationCoordinates != null
+              ? dataResponse.locationCoordinates.longitude
+              : ""
+          }`
+        );
+        setValue("weight", dataResponse.weight);
+        setValue("adress", dataResponse.address);
+        setValue("occurrence", dataResponse.occurrence);
+        setValue("observation", dataResponse.observation);
+
+        setValue(
+          "releaseLocationCoordinates",
+          dataResponse.releaseLocationCoordinates
+            ? `${dataResponse.releaseLocationCoordinates.latitude}, ${dataResponse.releaseLocationCoordinates.longitude}`
             : ""
-        }, ${
-          dataResponse.locationCoordinates != null
-            ? dataResponse.locationCoordinates.longitude
-            : ""
-        }`
-      );
-      setValue("weight", dataResponse.weight);
-      setValue("adress", dataResponse.address);
-      setValue("occurrence", dataResponse.occurrence);
-      setValue("observation", dataResponse.observation);
-
-      setValue(
-        "releaseLocationCoordinates",
-        dataResponse.releaseLocationCoordinates
-          ? `${dataResponse.releaseLocationCoordinates.latitude}, ${dataResponse.releaseLocationCoordinates.longitude}`
-          : ""
-      );
-
-      setValue("height", dataResponse.measurement.height);
-      setValue("length", dataResponse.measurement.length);
-      setValue("width", dataResponse.measurement.width);
-
-      const normalizeString = (str) => str.toString().toLowerCase().trim();
-
-      const ageRangeName = dataResponse.ageRange?.name.toString() || null;
-      let ageKey = null;
-
-      if (ageRangeName && Array.isArray(options.ageRanges)) {
-        const ageItem = options.ageRanges.find(
-          (item) =>
-            normalizeString(item.label) === normalizeString(ageRangeName)
         );
-        ageKey = ageItem ? ageItem.key.toString() : null;
+
+        setValue("height", dataResponse.measurement.height);
+        setValue("length", dataResponse.measurement.length);
+        setValue("width", dataResponse.measurement.width);
+
+        const normalizeString = (str) => str.toString().toLowerCase().trim();
+
+        const ageRangeName = dataResponse.ageRange?.name.toString() || null;
+        let ageKey = null;
+
+        if (ageRangeName && Array.isArray(options.ageRanges)) {
+          const ageItem = options.ageRanges.find(
+            (item) =>
+              normalizeString(item.label) === normalizeString(ageRangeName)
+          );
+          ageKey = ageItem ? ageItem.key.toString() : null;
+        }
+        setValue("ageRange", ageKey);
+
+        const calledByName = dataResponse.calledBy?.name || null;
+        let calledByKey = null;
+
+        if (calledByName && Array.isArray(options.calledBy)) {
+          const calledByItem = options.calledBy.find(
+            (item) =>
+              normalizeString(item.label) === normalizeString(calledByName)
+          );
+          calledByKey = calledByItem ? calledByItem.key.toString() : null;
+        }
+        setValue("calledBy", calledByKey);
+
+        const procedureByName =
+          dataResponse.procedureOrientationBy?.name || null;
+        let procedureByKey = null;
+        if (procedureByName && Array.isArray(options.procedureBy)) {
+          const procedureByItem = options.procedureBy.find(
+            (item) =>
+              normalizeString(item.label) === normalizeString(procedureByName)
+          );
+          procedureByKey = procedureByItem
+            ? procedureByItem.key.toString()
+            : null;
+        }
+        setValue("procedureBy", procedureByKey);
+
+        const situationName = dataResponse.situation?.name || null;
+        let situationKey = null;
+
+        if (situationName && Array.isArray(options.situations)) {
+          const situationItem = options.situations.find(
+            (item) =>
+              normalizeString(item.label) === normalizeString(situationName)
+          );
+          situationKey = situationItem ? situationItem.key.toString() : null;
+        }
+        setValue("situation", situationKey);
+
+        const postRescueName = dataResponse.postRescue?.name || null;
+        let postRescueKey = null;
+
+        if (postRescueName && Array.isArray(options.postRescue)) {
+          const postRescueItem = options.postRescue.find(
+            (item) =>
+              normalizeString(item.label) === normalizeString(postRescueName)
+          );
+          postRescueKey = postRescueItem ? postRescueItem.key.toString() : null;
+        }
+        setValue("postRescue", postRescueKey);
+      } catch (error) {
+        console.error("Erro ao fazer a requisição:", error);
       }
-      setValue("ageRange", ageKey);
-
-      const calledByName = dataResponse.calledBy?.name || null;
-      let calledByKey = null;
-
-      if (calledByName && Array.isArray(options.calledBy)) {
-        const calledByItem = options.calledBy.find(
-          (item) =>
-            normalizeString(item.label) === normalizeString(calledByName)
-        );
-        calledByKey = calledByItem ? calledByItem.key.toString() : null;
-      }
-      setValue("calledBy", calledByKey);
-
-      const procedureByName = dataResponse.procedureOrientationBy?.name || null;
-      let procedureByKey = null;
-      if (procedureByName && Array.isArray(options.procedureBy)) {
-        const procedureByItem = options.procedureBy.find(
-          (item) =>
-            normalizeString(item.label) === normalizeString(procedureByName)
-        );
-        procedureByKey = procedureByItem
-          ? procedureByItem.key.toString()
-          : null;
-      }
-      setValue("procedureBy", procedureByKey);
-
-      const situationName = dataResponse.situation?.name || null;
-      let situationKey = null;
-
-      if (situationName && Array.isArray(options.situations)) {
-        const situationItem = options.situations.find(
-          (item) =>
-            normalizeString(item.label) === normalizeString(situationName)
-        );
-        situationKey = situationItem ? situationItem.key.toString() : null;
-      }
-      setValue("situation", situationKey);
-
-      const postRescueName = dataResponse.postRescue?.name || null;
-      let postRescueKey = null;
-
-      if (postRescueName && Array.isArray(options.postRescue)) {
-        const postRescueItem = options.postRescue.find(
-          (item) =>
-            normalizeString(item.label) === normalizeString(postRescueName)
-        );
-        postRescueKey = postRescueItem ? postRescueItem.key.toString() : null;
-      }
-      setValue("postRescue", postRescueKey);
-    } catch (error) {
-      console.error("Erro ao fazer a requisição:", error);
+    } else {
+      console.error("No data found in sessionStorage");
     }
   };
 
@@ -223,9 +228,13 @@ export default function App({ params }) {
 
   const onSubmit = async (data) => {
     const baseUrl = window.location.origin;
-    const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
+
+    //TODO verificar o pq o id não está sendo passado para o dataresponse
+    let id = JSON.parse(sessionStorage.getItem("selectedRescue"));
+    const apiUrl = `${baseUrl}/api/rescue/${id.id}`;
+
     try {
-      const response = await axios.put(apiUrl, data);
+      await axios.put(apiUrl, data);
       window.alert("Registro editado com sucesso!");
       router.push("/pages/rescue");
     } catch (error) {
@@ -239,7 +248,11 @@ export default function App({ params }) {
     );
     if (!confirmDelete) return;
     const baseUrl = window.location.origin;
-    const apiUrl = `${baseUrl}/api/rescue/${params.id}`;
+
+    //TODO verificar o pq o id não está sendo passado para o dataresponse
+    let id = JSON.parse(sessionStorage.getItem("selectedRescue"));
+    const apiUrl = `${baseUrl}/api/rescue/${id.id}`;
+
     try {
       await axios.delete(apiUrl);
       window.alert("Registro deletado com sucesso!");
@@ -254,7 +267,6 @@ export default function App({ params }) {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md"
     >
-      {/* Time Input */}
       <Controller
         name="time"
         control={control}
@@ -270,7 +282,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Date Picker */}
       <Controller
         name="date"
         control={control}
@@ -286,7 +297,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Location Coordinates */}
       <Controller
         name="locationCoordinates"
         control={control}
@@ -310,7 +320,6 @@ export default function App({ params }) {
         Obter Localização do Resgate
       </Button>
 
-      {/* Animal Group Selection */}
       <Controller
         name="AnimalGroup"
         control={control}
@@ -336,7 +345,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Species Selection */}
       <Controller
         name="Species"
         control={control}
@@ -365,7 +373,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Weight Input */}
       <Controller
         name="weight"
         control={control}
@@ -382,7 +389,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Measurements */}
       <h3>Medidas</h3>
       <h4>Em metros</h4>
       <Controller
@@ -431,7 +437,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Address Input */}
       <Controller
         name="adress"
         control={control}
@@ -447,7 +452,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Occurrence Description */}
       <Controller
         name="occurrence"
         control={control}
@@ -463,7 +467,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Called By Selection */}
       <Controller
         name="calledBy"
         control={control}
@@ -490,7 +493,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Procedure By Selection */}
       <Controller
         name="procedureBy"
         control={control}
@@ -517,7 +519,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Age Range Selection */}
       <Controller
         name="ageRange"
         control={control}
@@ -541,7 +542,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Situation Selection */}
       <Controller
         name="situation"
         control={control}
@@ -568,7 +568,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Post Rescue Selection */}
       <Controller
         name="postRescue"
         control={control}
@@ -595,7 +594,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Observation */}
       <Controller
         name="observation"
         control={control}
@@ -611,7 +609,6 @@ export default function App({ params }) {
         )}
       />
 
-      {/* Release Location Coordinates */}
       <Controller
         name="releaseLocationCoordinates"
         control={control}
@@ -633,7 +630,6 @@ export default function App({ params }) {
         Obter Localização da Soltura
       </Button>
 
-      {/* Delete and Submit Buttons */}
       <Button
         color="danger"
         className="w-full max-w-xs mb-4"

@@ -3,5 +3,21 @@
   "features": {
     "ghcr.io/devcontainers-extra/features/node-asdf:0": {},
     "ghcr.io/devcontainers-extra/features/jest:2": {},
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ahmadawais.shades-of-purple",
+        "SonarSource.sonarlint-vscode",
+        "mhutchie.git-graph",
+        "donjayamanne.githistory",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "eamodio.gitlens",
+        "PKief.material-icon-theme",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
   }
 }
