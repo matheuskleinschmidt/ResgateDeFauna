@@ -13,19 +13,19 @@ import {
 import moment from "moment";
 import "moment-timezone";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const timezone = "America/Sao_Paulo";
 
 const RescuePage = () => {
   const [rescues, setRescues] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchRescueData = async () => {
       try {
         const baseUrl = window.location.origin;
-
         const apiUrl = `${baseUrl}/api/rescue`;
-
         const response = await axios.get(apiUrl);
         setRescues(response.data);
       } catch (error) {
@@ -51,14 +51,12 @@ const RescuePage = () => {
                 <TableRow key={rescue.id}>
                   <TableCell>
                     <Link
-                      href={`/pages/rescue/${rescue.id}`}
-                      onClick={() => {
-                        if (typeof window !== "undefined") {
-                          sessionStorage.setItem(
-                            "selectedRescue",
-                            JSON.stringify(rescue)
-                          );
-                        }
+                      href={"/pages/rescue/modOffline"}
+                      onClick={(e) => {
+                        sessionStorage.setItem(
+                          "selectedRescue",
+                          JSON.stringify(rescue)
+                        );
                       }}
                     >
                       {rescue.species.commonName}
