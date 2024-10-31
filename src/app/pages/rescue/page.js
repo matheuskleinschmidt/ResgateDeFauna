@@ -14,13 +14,25 @@ import moment from "moment";
 import "moment-timezone";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 const timezone = "America/Sao_Paulo";
 
 const RescuePage = () => {
   const [rescues, setRescues] = useState([]);
   const router = useRouter();
+  const { data: session, status } = useSession();
 
+  // Check if the user is authenticated
+  useEffect(() => {
+    if (status === "loading") return; // Do nothing while loading
+    if (!session) {
+      router.push("/signin");
+    }
+  }, [session, status, router]);
+
+  // Fetch rescue data only if the user is authenticated
   useEffect(() => {
     const fetchRescueData = async () => {
       try {
@@ -33,8 +45,18 @@ const RescuePage = () => {
       }
     };
 
-    fetchRescueData();
-  }, []);
+    if (session) {
+      fetchRescueData();
+    }
+  }, [session]);
+
+  if (status === "loading") {
+    return <div>Carregando...</div>; // Display a loading indicator
+  }
+
+  if (!session) {
+    return null; // Return null while redirecting
+  }
 
   return (
     <div className="responsive-table">
@@ -52,7 +74,7 @@ const RescuePage = () => {
                   <TableCell>
                     <Link
                       href={"/pages/rescue/modOffline"}
-                      onClick={(e) => {
+                      onClick={() => {
                         sessionStorage.setItem(
                           "selectedRescue",
                           JSON.stringify(rescue)
@@ -78,6 +100,9 @@ const RescuePage = () => {
             : null}
         </TableBody>
       </Table>
+      <button onClick={() => signOut({ callbackUrl: "/" })}>
+      Sair
+    </button>
     </div>
   );
 };

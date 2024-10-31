@@ -1,4 +1,4 @@
-import { Model, DataTypes, Sequelize, ForeignKeyConstraintError } from "sequelize";
+import { Model, DataTypes, Sequelize } from "sequelize";
 import sequelize from "../../../db_connection.js";
 import Rescues from "@/app/api/models/Rescues";
 

@@ -1,0 +1,13 @@
+// middleware.js
+
+import { withAuth } from "next-auth/middleware";
+
+export default withAuth({
+  callbacks: {
+    authorized: ({ token }) => !!token,
+  },
+});
+
+export const config = {
+  matcher: ["/((?!auth|_next|api).*)"] , // Add your protected routes
+};
