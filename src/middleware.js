@@ -9,6 +9,5 @@ export default withAuth({
 });
 
 export const config = {
-  matcher: ["/((?!auth/|auth|_next|api).*)"], 
+  matcher: [ "/((?!auth|api/auth|_next|favicon.ico|manifest.json).*)",], 
 };
-
