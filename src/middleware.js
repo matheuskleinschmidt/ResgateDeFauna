@@ -9,5 +9,6 @@ export default withAuth({
 });
 
 export const config = {
-  matcher: ["/((?!auth|_next|api).*)"] , // Add your protected routes
+  matcher: ["/((?!auth/|auth|_next|api).*)"], 
 };
+
