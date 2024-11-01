@@ -12,27 +12,13 @@ import {
 } from "@nextui-org/table";
 import moment from "moment";
 import "moment-timezone";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
+import Link from "next/link"; 
 
 const timezone = "America/Sao_Paulo";
 
 const RescuePage = () => {
   const [rescues, setRescues] = useState([]);
-  const router = useRouter();
-  const { data: session, status } = useSession();
 
-  // Check if the user is authenticated
-  useEffect(() => {
-    if (status === "loading") return; // Do nothing while loading
-    if (!session) {
-      router.push("/signin");
-    }
-  }, [session, status, router]);
-
-  // Fetch rescue data only if the user is authenticated
   useEffect(() => {
     const fetchRescueData = async () => {
       try {
@@ -44,18 +30,11 @@ const RescuePage = () => {
         console.error("Erro ao fazer a requisição:", error);
       }
     };
-
-    if (session) {
       fetchRescueData();
-    }
-  }, [session]);
+  }, []);
 
   if (status === "loading") {
     return <div>Carregando...</div>; // Display a loading indicator
-  }
-
-  if (!session) {
-    return null; // Return null while redirecting
   }
 
   return (
@@ -100,9 +79,6 @@ const RescuePage = () => {
             : null}
         </TableBody>
       </Table>
-      <button onClick={() => signOut({ callbackUrl: "/" })}>
-      Sair
-    </button>
     </div>
   );
 };
