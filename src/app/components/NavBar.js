@@ -1,6 +1,6 @@
 "use client";
 
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -13,6 +13,7 @@ import {
 } from "@nextui-org/react";
 import { AcmeLogo } from "./AcmeLogo.jsx";
 import axios from "axios";
+import { signOut } from "next-auth/react";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,24 +23,26 @@ export default function App() {
     { label: "Adicionar Resgate", href: "/pages/rescue/addRescue" },
   ];
 
-  
   function transformArray(arr) {
-    return arr.map(item => ({
-      key: String(item.id), 
+    return arr.map((item) => ({
+      key: String(item.id),
       label: item.name,
     }));
   }
-  
+
   useEffect(() => {
-    const utils = localStorage.getItem('utils');
-    
+    const utils = localStorage.getItem("utils");
+
     if (!utils) {
-      axios.get(`${window.location.origin}/api/dateUtil/auxiliaryInfos`)
+      axios
+        .get(`${window.location.origin}/api/dateUtil/auxiliaryInfos`)
         .then((response) => {
           const data = response.data;
-          
+
           const calledBys = transformArray(data.calledBys);
-          const procedureOrientationBys = transformArray(data.procedureOrientationBys);
+          const procedureOrientationBys = transformArray(
+            data.procedureOrientationBys
+          );
           const ageRanges = transformArray(data.ageRanges);
           const situations = transformArray(data.situations);
           const postRescues = transformArray(data.postRescues);
@@ -51,27 +54,40 @@ export default function App() {
             ageRanges,
             situations,
             postRescues,
-            status
+            status,
           };
-  
-          localStorage.setItem('utils', JSON.stringify(transformedData));
+
+          localStorage.setItem("utils", JSON.stringify(transformedData));
         })
         .catch((error) => {
           console.error("Erro ao buscar dados:", error);
         });
     }
   }, []);
-  
+
   useEffect(() => {
-    const speciesAndAnimalGroups = localStorage.getItem('speciesAndAnimalGroups');
+    const speciesAndAnimalGroups = localStorage.getItem(
+      "speciesAndAnimalGroups"
+    );
     if (!speciesAndAnimalGroups) {
-      axios.get(`${window.location.origin}/api/dateUtil/speciesAndAnimalGroups`)
-        .then((data) => localStorage.setItem('speciesAndAnimalGroups', JSON.stringify(data.data)));
+      axios
+        .get(`${window.location.origin}/api/dateUtil/speciesAndAnimalGroups`)
+        .then((data) =>
+          localStorage.setItem(
+            "speciesAndAnimalGroups",
+            JSON.stringify(data.data)
+          )
+        );
     }
   }, []);
- 
+
   return (
-    <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} className="mb-4">
+    <Navbar
+      isBordered
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+      className="mb-4"
+    >
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -114,6 +130,11 @@ export default function App() {
             </Link>
           </NavbarMenuItem>
         ))}
+        <NavbarMenuItem>
+          <Link className="w-full" size="lg">
+            <button onClick={() => signOut()}>Sair</button>
+          </Link>
+        </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>
   );
