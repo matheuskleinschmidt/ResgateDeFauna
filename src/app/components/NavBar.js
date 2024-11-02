@@ -30,56 +30,73 @@ export default function App() {
     }));
   }
 
+  const fetchUtils = async () => {
+    try {
+      const response = await axios.get(
+        `${window.location.origin}/api/dateUtil/auxiliaryInfos`
+      );
+      const data = response.data;
+
+      const calledBys = transformArray(data.calledBys);
+      const procedureOrientationBys = transformArray(
+        data.procedureOrientationBys
+      );
+      const ageRanges = transformArray(data.ageRanges);
+      const situations = transformArray(data.situations);
+      const postRescues = transformArray(data.postRescues);
+      const status = transformArray(data.status);
+
+      const transformedData = {
+        calledBys,
+        procedureOrientationBys,
+        ageRanges,
+        situations,
+        postRescues,
+        status,
+      };
+
+      localStorage.setItem("utils", JSON.stringify(transformedData));
+    } catch (error) {
+      console.error("Erro ao buscar dados utils:", error);
+    }
+  };
+
+  const fetchSpeciesAndAnimalGroups = async () => {
+    try {
+      const response = await axios.get(
+        `${window.location.origin}/api/dateUtil/speciesAndAnimalGroups`
+      );
+      localStorage.setItem(
+        "speciesAndAnimalGroups",
+        JSON.stringify(response.data)
+      );
+    } catch (error) {
+      console.error("Erro ao buscar speciesAndAnimalGroups:", error);
+    }
+  };
+
   useEffect(() => {
     const utils = localStorage.getItem("utils");
-
     if (!utils) {
-      axios
-        .get(`${window.location.origin}/api/dateUtil/auxiliaryInfos`)
-        .then((response) => {
-          const data = response.data;
-
-          const calledBys = transformArray(data.calledBys);
-          const procedureOrientationBys = transformArray(
-            data.procedureOrientationBys
-          );
-          const ageRanges = transformArray(data.ageRanges);
-          const situations = transformArray(data.situations);
-          const postRescues = transformArray(data.postRescues);
-          const status = transformArray(data.status);
-
-          const transformedData = {
-            calledBys,
-            procedureOrientationBys,
-            ageRanges,
-            situations,
-            postRescues,
-            status,
-          };
-
-          localStorage.setItem("utils", JSON.stringify(transformedData));
-        })
-        .catch((error) => {
-          console.error("Erro ao buscar dados:", error);
-        });
+      fetchUtils();
     }
-  }, []);
 
-  useEffect(() => {
     const speciesAndAnimalGroups = localStorage.getItem(
       "speciesAndAnimalGroups"
     );
     if (!speciesAndAnimalGroups) {
-      axios
-        .get(`${window.location.origin}/api/dateUtil/speciesAndAnimalGroups`)
-        .then((data) =>
-          localStorage.setItem(
-            "speciesAndAnimalGroups",
-            JSON.stringify(data.data)
-          )
-        );
+      fetchSpeciesAndAnimalGroups();
     }
   }, []);
+
+  const handleRefresh = async () => {
+    localStorage.removeItem("utils");
+    localStorage.removeItem("speciesAndAnimalGroups");
+
+    await fetchUtils();
+    await fetchSpeciesAndAnimalGroups();
+
+  };
 
   return (
     <Navbar
@@ -130,6 +147,11 @@ export default function App() {
             </Link>
           </NavbarMenuItem>
         ))}
+        <NavbarMenuItem>
+          <Link className="w-full" size="lg">
+            <button onClick={handleRefresh}>Renovar cache</button>
+          </Link>
+        </NavbarMenuItem>
         <NavbarMenuItem>
           <Link className="w-full" size="lg">
             <button onClick={() => signOut()}>Sair</button>
