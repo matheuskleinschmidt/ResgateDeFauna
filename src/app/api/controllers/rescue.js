@@ -18,6 +18,12 @@ export async function getRescuesWithStrings(id) {
         },
         {
           model: Species,
+          include: [
+            {
+              model: AnimalGroups,
+              attributes: ['id', 'groupName'] 
+            }
+          ]
         },
         {
           model: CalledBys,
