@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -8,7 +8,6 @@ import {
   NavbarMenuItem,
   NavbarMenu,
   NavbarContent,
-  NavbarItem,
   Link,
 } from "@nextui-org/react";
 import { AcmeLogo } from "./AcmeLogo.jsx";
@@ -23,14 +22,14 @@ export default function App() {
     { label: "Adicionar Resgate", href: "/pages/rescue/addRescue" },
   ];
 
-  function transformArray(arr) {
+  const transformArray = (arr) => {
     return arr.map((item) => ({
       key: String(item.id),
       label: item.name,
     }));
-  }
+  };
 
-  const fetchUtils = async () => {
+  const fetchUtils = useCallback(async () => {
     try {
       const response = await axios.get(
         `${window.location.origin}/api/dateUtil/auxiliaryInfos`
@@ -38,9 +37,7 @@ export default function App() {
       const data = response.data;
 
       const calledBys = transformArray(data.calledBys);
-      const procedureOrientationBys = transformArray(
-        data.procedureOrientationBys
-      );
+      const procedureOrientationBys = transformArray(data.procedureOrientationBys);
       const ageRanges = transformArray(data.ageRanges);
       const situations = transformArray(data.situations);
       const postRescues = transformArray(data.postRescues);
@@ -59,9 +56,9 @@ export default function App() {
     } catch (error) {
       console.error("Erro ao buscar dados utils:", error);
     }
-  };
+  }, []); 
 
-  const fetchSpeciesAndAnimalGroups = async () => {
+  const fetchSpeciesAndAnimalGroups = useCallback(async () => {
     try {
       const response = await axios.get(
         `${window.location.origin}/api/dateUtil/speciesAndAnimalGroups`
@@ -73,7 +70,7 @@ export default function App() {
     } catch (error) {
       console.error("Erro ao buscar speciesAndAnimalGroups:", error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     const utils = localStorage.getItem("utils");
@@ -81,13 +78,11 @@ export default function App() {
       fetchUtils();
     }
 
-    const speciesAndAnimalGroups = localStorage.getItem(
-      "speciesAndAnimalGroups"
-    );
+    const speciesAndAnimalGroups = localStorage.getItem("speciesAndAnimalGroups");
     if (!speciesAndAnimalGroups) {
       fetchSpeciesAndAnimalGroups();
     }
-  }, []);
+  }, [fetchUtils, fetchSpeciesAndAnimalGroups]);
 
   const handleRefresh = async () => {
     localStorage.removeItem("utils");
@@ -95,58 +90,47 @@ export default function App() {
 
     await fetchUtils();
     await fetchSpeciesAndAnimalGroups();
-
   };
 
   return (
     <Navbar
-    isBordered
-    isMenuOpen={isMenuOpen}
-    onMenuOpenChange={setIsMenuOpen}
-    className="mb-4"
-  >
-    <NavbarContent
-      justify="start"
-      align="center"
-      css={{ flex: 1 }}
+      isBordered
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+      className="mb-4"
     >
-      <NavbarMenuToggle
-        aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
-      />
-    </NavbarContent>
+      <NavbarContent justify="start" align="center" css={{ flex: 1 }}>
+        <NavbarMenuToggle aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"} />
+      </NavbarContent>
 
-    <NavbarContent
-      justify="end"
-      align="center"
-      css={{ flex: 1 }}
-    >
-      <NavbarBrand>
-        <AcmeLogo />
-        <Link color="foreground" href="/">
-          <p className="font-bold text-inherit">Fujama</p>
-        </Link>
-      </NavbarBrand>
-    </NavbarContent>
+      <NavbarContent justify="end" align="center" css={{ flex: 1 }}>
+        <NavbarBrand>
+          <AcmeLogo />
+          <Link color="foreground" href="/">
+            <p className="font-bold text-inherit">Fujama</p>
+          </Link>
+        </NavbarBrand>
+      </NavbarContent>
 
-    <NavbarMenu>
-      {menuItems.map((item, index) => (
-        <NavbarMenuItem key={`${item.label}-${index}`}>
-          <Link className="w-full" href={item.href} size="lg">
-            {item.label}
+      <NavbarMenu>
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item.label}-${index}`}>
+            <Link className="w-full" href={item.href} size="lg">
+              {item.label}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+        <NavbarMenuItem>
+          <Link className="w-full" size="lg">
+            <button onClick={handleRefresh}>Renovar cache</button>
           </Link>
         </NavbarMenuItem>
-      ))}
-      <NavbarMenuItem>
-        <Link className="w-full" size="lg">
-          <button onClick={handleRefresh}>Renovar cache</button>
-        </Link>
-      </NavbarMenuItem>
-      <NavbarMenuItem>
-        <Link className="w-full" size="lg">
-          <button onClick={() => signOut()}>Sair</button>
-        </Link>
-      </NavbarMenuItem>
-    </NavbarMenu>
-  </Navbar>
+        <NavbarMenuItem>
+          <Link className="w-full" size="lg">
+            <button onClick={() => signOut()}>Sair</button>
+          </Link>
+        </NavbarMenuItem>
+      </NavbarMenu>
+    </Navbar>
   );
 }
