@@ -1,5 +1,3 @@
-// lib/zod.js
-
 import { z } from "zod";
 
 export const signInSchema = z.object({

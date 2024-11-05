@@ -1,5 +1,3 @@
-// components/LoginForm.jsx
-
 "use client";
 
 import { useState } from "react";
@@ -37,7 +35,7 @@ export function LoginForm() {
     if (res.error) {
       setError(res.error);
     } else {
-      router.push("/"); // Redireciona para a página inicial ou dashboard
+      router.push("/");
     }
   };
 

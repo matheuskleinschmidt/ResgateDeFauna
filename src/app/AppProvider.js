@@ -1,4 +1,4 @@
-"use client"; // This directive makes this a client component
+"use client";
 
 import { SessionProvider } from "next-auth/react";
 

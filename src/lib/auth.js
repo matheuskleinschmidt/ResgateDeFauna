@@ -1,41 +1,35 @@
-// lib/auth.js
-
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import { ZodError } from "zod";
 import { signInSchema } from "./zod";
-import User from "@/app/api/models/users"; // Adjust the path to your User model
+import User from "@/app/api/models/users";
 
 export const authOptions = {
 
   providers: [
     CredentialsProvider({
       name: "Credentials",
-      //credentials: {}, // Empty object to avoid exposing fields
+      //credentials: {},
       authorize: async (credentials) => {
         if (!credentials) {
           return null;
         }
       
         try {
-          // Validate input data using Zod
           const { email, password } = signInSchema.parse(credentials);
       
-          // Find the user in the database
           const user = await User.findOne({ where: { email } });
       
           if (!user) {
             return null;
           }
       
-          // Compare the password with the hashed password in the database
           const isValidPassword = await bcrypt.compare(password, user.password);
       
           if (!isValidPassword) {
             return null;
           }
       
-          // Return user object (omit sensitive fields)
           return {
             id: user.id,
             name: user.name,
@@ -55,7 +49,7 @@ export const authOptions = {
     }),
   ],
     pages: {
-    signIn: "/auth", // Caminho para a sua página de login personalizada
+    signIn: "/auth",
   },
   session: {
     strategy: "jwt",

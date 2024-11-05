@@ -1,5 +1,3 @@
-// components/SignIn.jsx
-
 "use client";
 
 import { useState } from "react";
@@ -25,7 +23,7 @@ export default function SignIn() {
     if (res.error) {
       setError(res.error);
     } else {
-      router.push("/"); // Redirect to home page or dashboard
+      router.push("/");
     }
   };
 
