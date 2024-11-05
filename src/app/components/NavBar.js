@@ -1,6 +1,6 @@
 "use client";
 
-import {useState, useEffect} from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -8,11 +8,11 @@ import {
   NavbarMenuItem,
   NavbarMenu,
   NavbarContent,
-  NavbarItem,
   Link,
 } from "@nextui-org/react";
 import { AcmeLogo } from "./AcmeLogo.jsx";
 import axios from "axios";
+import { signOut } from "next-auth/react";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,88 +22,94 @@ export default function App() {
     { label: "Adicionar Resgate", href: "/pages/rescue/addRescue" },
   ];
 
-  
-  function transformArray(arr) {
-    return arr.map(item => ({
-      key: String(item.id), 
+  const transformArray = (arr) => {
+    return arr.map((item) => ({
+      key: String(item.id),
       label: item.name,
     }));
-  }
-  
+  };
+
+  const fetchUtils = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `${window.location.origin}/api/dateUtil/auxiliaryInfos`
+      );
+      const data = response.data;
+
+      const calledBys = transformArray(data.calledBys);
+      const procedureOrientationBys = transformArray(data.procedureOrientationBys);
+      const ageRanges = transformArray(data.ageRanges);
+      const situations = transformArray(data.situations);
+      const postRescues = transformArray(data.postRescues);
+      const status = transformArray(data.status);
+
+      const transformedData = {
+        calledBys,
+        procedureOrientationBys,
+        ageRanges,
+        situations,
+        postRescues,
+        status,
+      };
+
+      localStorage.setItem("utils", JSON.stringify(transformedData));
+    } catch (error) {
+      console.error("Erro ao buscar dados utils:", error);
+    }
+  }, []); 
+
+  const fetchSpeciesAndAnimalGroups = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `${window.location.origin}/api/dateUtil/speciesAndAnimalGroups`
+      );
+      localStorage.setItem(
+        "speciesAndAnimalGroups",
+        JSON.stringify(response.data)
+      );
+    } catch (error) {
+      console.error("Erro ao buscar speciesAndAnimalGroups:", error);
+    }
+  }, []);
+
   useEffect(() => {
-    const utils = localStorage.getItem('utils');
-    
+    const utils = localStorage.getItem("utils");
     if (!utils) {
-      axios.get(`${window.location.origin}/api/dateUtil/auxiliaryInfos`)
-        .then((response) => {
-          const data = response.data;
-          
-          const calledBys = transformArray(data.calledBys);
-          const procedureOrientationBys = transformArray(data.procedureOrientationBys);
-          const ageRanges = transformArray(data.ageRanges);
-          const situations = transformArray(data.situations);
-          const postRescues = transformArray(data.postRescues);
-          const status = transformArray(data.status);
-
-          const transformedData = {
-            calledBys,
-            procedureOrientationBys,
-            ageRanges,
-            situations,
-            postRescues,
-            status
-          };
-  
-          localStorage.setItem('utils', JSON.stringify(transformedData));
-        })
-        .catch((error) => {
-          console.error("Erro ao buscar dados:", error);
-        });
+      fetchUtils();
     }
-  }, []);
-  
-  useEffect(() => {
-    const speciesAndAnimalGroups = localStorage.getItem('speciesAndAnimalGroups');
+
+    const speciesAndAnimalGroups = localStorage.getItem("speciesAndAnimalGroups");
     if (!speciesAndAnimalGroups) {
-      axios.get(`${window.location.origin}/api/dateUtil/speciesAndAnimalGroups`)
-        .then((data) => localStorage.setItem('speciesAndAnimalGroups', JSON.stringify(data.data)));
+      fetchSpeciesAndAnimalGroups();
     }
-  }, []);
- 
+  }, [fetchUtils, fetchSpeciesAndAnimalGroups]);
+
+  const handleRefresh = async () => {
+    localStorage.removeItem("utils");
+    localStorage.removeItem("speciesAndAnimalGroups");
+
+    await fetchUtils();
+    await fetchSpeciesAndAnimalGroups();
+  };
+
   return (
-    <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} className="mb-4">
-      <NavbarContent className="sm:hidden" justify="start">
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        />
+    <Navbar
+      isBordered
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+      className="mb-4"
+    >
+      <NavbarContent justify="start" align="center" css={{ flex: 1 }}>
+        <NavbarMenuToggle aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"} />
       </NavbarContent>
 
-      <NavbarContent className="sm:hidden pr-3" justify="center">
+      <NavbarContent justify="end" align="center" css={{ flex: 1 }}>
         <NavbarBrand>
           <AcmeLogo />
           <Link color="foreground" href="/">
             <p className="font-bold text-inherit">Fujama</p>
           </Link>
         </NavbarBrand>
-      </NavbarContent>
-
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarBrand>
-          <AcmeLogo />
-          <Link color="foreground" href="/">
-            <p className="font-bold text-inherit">Fujama</p>
-          </Link>
-        </NavbarBrand>
-        <NavbarItem>
-          <Link color="foreground" href="/pages/rescue">
-            Resgates
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="/pages/rescue/addRescue">
-            Adicionar Resgate
-          </Link>
-        </NavbarItem>
       </NavbarContent>
 
       <NavbarMenu>
@@ -114,6 +120,16 @@ export default function App() {
             </Link>
           </NavbarMenuItem>
         ))}
+        <NavbarMenuItem>
+          <Link className="w-full" size="lg">
+            <button onClick={handleRefresh}>Renovar cache</button>
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link className="w-full" size="lg">
+            <button onClick={() => signOut()}>Sair</button>
+          </Link>
+        </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>
   );
