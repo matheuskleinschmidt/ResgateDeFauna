@@ -7,7 +7,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8']
 
-export default function ProcedureOrientationChart() {
+function getNestedValue(obj, path) {
+  return path.split('.').reduce((acc, part) => acc && acc[part], obj)
+}
+
+export default function PieChartComponent({ Title,Description,propertyPath }) {
   const [rescues, setRescues] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -59,21 +63,21 @@ export default function ProcedureOrientationChart() {
           return monthYear === selectedMonth
         })
 
-    const groupedData = filteredRescues.reduce((acc, { procedureOrientationBy }) => {
-      const procedureName = procedureOrientationBy?.name || 'Não informado'
-      acc[procedureName] = (acc[procedureName] || 0) + 1
+    const groupedData = filteredRescues.reduce((acc, item) => {
+      const propertyValue = getNestedValue(item, propertyPath) || 'Não informado'
+      acc[propertyValue] = (acc[propertyValue] || 0) + 1
       return acc
     }, {})
 
     return Object.entries(groupedData).map(([name, value]) => ({ name, value }))
-  }, [rescues, selectedMonth])
+  }, [rescues, selectedMonth, propertyPath])
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload?.length) {
       const { name, value } = payload[0].payload
       return (
         <div className="bg-white p-2 border border-gray-300 rounded shadow">
-          <p>{`Procedimento: ${name}`}</p>
+          <p>{`Propriedade: ${name}`}</p>
           <p>{`Quantidade: ${value}`}</p>
         </div>
       )
@@ -94,8 +98,8 @@ export default function ProcedureOrientationChart() {
   return (
     <Card className="w-full max-w-4xl">
       <CardHeader>
-        <CardTitle>Distribuição de Procedimentos por Mês</CardTitle>
-        <CardDescription>Baseado na propriedade procedureOrientationBy.name</CardDescription>
+        <CardTitle>{Title}</CardTitle>
+        <CardDescription>{Description}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="mb-4 flex items-center">
