@@ -1,7 +1,6 @@
 "use client"
 
-import { useState, useEffect, useMemo } from 'react'
-import axios from 'axios'
+import { useState, useMemo } from 'react'
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -11,28 +10,8 @@ function getNestedValue(obj, path) {
   return path.split('.').reduce((acc, part) => acc && acc[part], obj)
 }
 
-export default function PieChartComponent({ Title,Description,propertyPath }) {
-  const [rescues, setRescues] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+export default function PieChartComponent({ rescues, Title, Description, propertyPath }) {
   const [selectedMonth, setSelectedMonth] = useState('Todos')
-
-  useEffect(() => {
-    const fetchRescueData = async () => {
-      try {
-        const apiUrl = `${window.location.origin}/api/rescue`
-        const response = await axios.get(apiUrl)
-        setRescues(response.data)
-      } catch (err) {
-        console.error("Erro ao fazer a requisição:", err)
-        setError("Falha ao carregar os dados.")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchRescueData()
-  }, [])
 
   const availableMonths = useMemo(() => {
     const monthsSet = new Set(
@@ -84,16 +63,6 @@ export default function PieChartComponent({ Title,Description,propertyPath }) {
     }
     return null
   }
-
-  if (loading) return (
-    <Card className="w-full max-w-4xl">
-      <CardHeader>
-        <CardTitle>Carregando...</CardTitle>
-      </CardHeader>
-    </Card>
-  ) 
-
-  if (error) return <div>{error}</div>
 
   return (
     <Card className="w-full max-w-4xl">
