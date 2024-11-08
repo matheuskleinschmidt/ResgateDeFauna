@@ -10,7 +10,7 @@ function getNestedValue(obj, path) {
   return path.split('.').reduce((acc, part) => acc && acc[part], obj)
 }
 
-export default function PieChartComponent({ rescues, Title, Description, propertyPath }) {
+export default function PieChartComponent({ rescues, title, description, propertyPath }) {
   const [selectedMonth, setSelectedMonth] = useState('Todos')
 
   const availableMonths = useMemo(() => {
@@ -67,8 +67,8 @@ export default function PieChartComponent({ rescues, Title, Description, propert
   return (
     <Card className="w-full max-w-4xl">
       <CardHeader>
-        <CardTitle>{Title}</CardTitle>
-        <CardDescription>{Description}</CardDescription>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="mb-4 flex items-center">
