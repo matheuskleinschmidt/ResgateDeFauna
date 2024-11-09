@@ -20,6 +20,9 @@ export default function App() {
   const menuItems = [
     { label: "Resgates", href: "/pages/rescue" },
     { label: "Adicionar Resgate", href: "/pages/rescue/addRescue" },
+    { label: "Mapas", href: "/pages/reports/maps" },
+    { label: "Gráficos", href: "/pages/reports/charts" },
+    { label: "Configurações", href: "/pages/configurations" },
   ];
 
   const transformArray = (arr) => {
