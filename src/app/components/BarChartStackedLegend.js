@@ -5,7 +5,6 @@ import { Bar, BarChart, XAxis, YAxis, Tooltip, Legend } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
 
-// Função auxiliar para acessar propriedades aninhadas com base no caminho fornecido
 const getValueByPath = (obj, path) => {
   return path.split('.').reduce((acc, part) => acc && acc[part], obj)
 }

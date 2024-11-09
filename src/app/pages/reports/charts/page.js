@@ -5,6 +5,7 @@ import axios from "axios";
 import PieChart from "@/app/components/PieChart";
 import AreaChartStacked from "@/app/components/AreaChartStacked";
 import BarChartStackedLegend from "@/app/components/BarChartStackedLegend";
+import LineChartMultiple from "@/app/components/LineChartMultiple";
 import { Spinner } from "@nextui-org/react";
 
 export default function Chart() {
@@ -43,6 +44,22 @@ export default function Chart() {
 
   return (
     <div className="flex flex-wrap justify-center min-h-screen gap-4 p-4">
+      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[380px]">
+        <LineChartMultiple
+          title="Grupos de animais resgatados por mês"
+          description=""
+          rescues={rescues}
+          propertyPath="species.commonName"
+        />
+      </div>
+      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[380px]">
+        <LineChartMultiple
+          title="Grupos de animais resgatados por mês"
+          description=""
+          rescues={rescues}
+          propertyPath="species.AnimalGroup.groupName"
+        />
+      </div>
       <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[380px]">
         <BarChartStackedLegend
           title="Grupos de animais resgatados por mês"
