@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import MonthRescues from "@/app/components/MonthRescues";
 import PieChart from "@/app/components/PieChart";
-import AnimalRecordsChart from "@/app/components/AreaChartStacked";
+import AreaChartStacked from "@/app/components/AreaChartStacked";
+import BarChartStackedLegend from "@/app/components/BarChartStackedLegend";
+import { Spinner } from "@nextui-org/react";
 
 export default function Chart() {
   const [rescues, setRescues] = useState([]);
@@ -30,9 +31,9 @@ export default function Chart() {
 
   if (loading) {
     return (
-      <div className="w-full max-w-4xl">
-        <h1>Carregando...</h1>
-      </div>
+      <div className="flex h-screen w-full items-center justify-center px-4">
+      <Spinner size="lg" />
+    </div>
     );
   }
 
@@ -42,22 +43,23 @@ export default function Chart() {
 
   return (
     <div className="flex flex-wrap justify-center min-h-screen gap-4 p-4">
-      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
-        <AnimalRecordsChart
+      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[380px]">
+        <BarChartStackedLegend
           title="Grupos de animais resgatados por mês"
           description=""
-          data={rescues}
+          rescues={rescues}
+          propertyPath="species.commonName"
+        />
+      </div>
+      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[380px]">
+        <BarChartStackedLegend
+          title="Grupos de animais resgatados por mês"
+          description=""
+          rescues={rescues}
           propertyPath="species.AnimalGroup.groupName"
         />
       </div>
       <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
-        <MonthRescues 
-                  title="Grupos de animais resgatados por mês"
-                  description=""
-                  rescues={rescues}
-                  propertyPath="species.AnimalGroup.groupName"/>
-      </div>
-      <div className="w-full max-w-xl flex-1 min-w-[300px] min-h-[200px]">
         <PieChart
           title="Registros filtrados por tipo de chamado"
           description=""
@@ -65,7 +67,7 @@ export default function Chart() {
           rescues={rescues}
         />
       </div>
-      <div className="w-full max-w-xl flex-1 min-w-[300px] min-h-[200px]">
+      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
         <PieChart
           title="Registros filtrados por idade"
           description=""
@@ -73,7 +75,7 @@ export default function Chart() {
           rescues={rescues}
         />
       </div>
-      <div className="w-full max-w-xl flex-1 min-w-[300px] min-h-[200px]">
+      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
         <PieChart
           title="Registros filtrados por tipo de orientação"
           description=""
@@ -81,7 +83,7 @@ export default function Chart() {
           rescues={rescues}
         />
       </div>
-      <div className="w-full max-w-xl flex-1 min-w-[300px] min-h-[200px]">
+      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
         <PieChart
           title="Registros filtrados por situação dos animais"
           description=""
@@ -89,12 +91,20 @@ export default function Chart() {
           rescues={rescues}
         />
       </div>
-      <div className="w-full max-w-xl flex-1 min-w-[300px] min-h-[200px]">
+      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
         <PieChart
           title="Registros filtrados por tipo de Pós-resgate"
           description=""
           propertyPath="postRescue.name"
           rescues={rescues}
+        />
+      </div>
+      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
+        <AreaChartStacked
+          title="Grupos de animais resgatados por mês"
+          description=""
+          data={rescues}
+          propertyPath="species.AnimalGroup.groupName"
         />
       </div>
     </div>

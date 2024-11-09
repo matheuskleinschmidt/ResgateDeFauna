@@ -65,7 +65,7 @@ export default function PieChartComponent({ rescues, title, description, propert
   }
 
   return (
-    <Card className="w-full max-w-4xl">
+    <Card>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

@@ -1,15 +1,19 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { useMemo } from 'react'
 import { Bar, BarChart, XAxis, YAxis, Tooltip, Legend } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
-import axios from "axios"
 
-const groupRecordsByDateAndGroup = (records) => {
+// Função auxiliar para acessar propriedades aninhadas com base no caminho fornecido
+const getValueByPath = (obj, path) => {
+  return path.split('.').reduce((acc, part) => acc && acc[part], obj)
+}
+
+const groupRecordsByDateAndGroup = (records, propertyPath) => {
   const grouped = records.reduce((acc, record) => {
     const date = new Date(record.fullDate).toISOString().split('T')[0]
-    const groupName = record.species?.AnimalGroup?.groupName || 'Unknown'
+    const groupName = getValueByPath(record, propertyPath) || 'Unknown'
     
     if (!acc[date]) {
       acc[date] = { date }
@@ -26,28 +30,13 @@ const groupRecordsByDateAndGroup = (records) => {
   return Object.values(grouped)
 }
 
-export default function AnimalRecordsChart() {
-  const [rescues, setRescues] = useState([])
-  const [groups, setGroups] = useState([])
-
-  useEffect(() => {
-    const fetchRescueData = async () => {
-      try {
-        const baseUrl = window.location.origin
-        const apiUrl = `${baseUrl}/api/rescue`
-        const response = await axios.get(apiUrl)
-        const groupedData = groupRecordsByDateAndGroup(response.data)
-        setRescues(groupedData)
-        
-        const uniqueGroups = Array.from(new Set(response.data.map(record => record.species?.AnimalGroup?.groupName || 'Unknown')))
-        setGroups(uniqueGroups)
-      } catch (error) {
-        console.error("Erro ao fazer a requisição:", error)
-      }
-    }
-
-    fetchRescueData()
-  }, [])
+export default function AnimalRecordsChart({ rescues, propertyPath, title, description }) {
+  const groupedData = useMemo(() => groupRecordsByDateAndGroup(rescues, propertyPath), [rescues, propertyPath])
+  
+  const groups = useMemo(
+    () => Array.from(new Set(rescues.map(record => getValueByPath(record, propertyPath) || 'Unknown'))),
+    [rescues, propertyPath]
+  )
 
   const colors = [
     "#8884d8",
@@ -63,10 +52,10 @@ export default function AnimalRecordsChart() {
   ]
 
   return (
-    <Card className="w-full max-w-3xl">
+    <Card>
       <CardHeader>
-        <CardTitle>Registros de Animais por Data e Grupo</CardTitle>
-        <CardDescription>Número de registros agrupados por data e grupo animal</CardDescription>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -80,7 +69,7 @@ export default function AnimalRecordsChart() {
             }, {})
           }
         >
-          <BarChart data={rescues} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+          <BarChart data={groupedData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
             <XAxis dataKey="date" />
             <YAxis />
             <Tooltip content={<ChartTooltipContent />} />
