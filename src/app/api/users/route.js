@@ -1,5 +1,6 @@
 import { getUsers, createOrUpdateUser } from '@/app/api/controllers/users';
 
+export const dynamic = 'force-dynamic';
 
 export async function GET(req) {
   const rescues = await getUsers()
