@@ -16,10 +16,15 @@ import {
   RStyle,
 } from "rlayers";
 import { Card, CardHeader, CardBody, Divider, CardFooter } from "@nextui-org/react";
+import Link from "next/link";
+
+
 
 import dynamic from "next/dynamic";
 
 const Map = dynamic(() => import("@/app/components/map"), { ssr: false });
+
+//TODO - Refatorar para um COLOCAR ICONE EM VEZ DE ID
 
 export function Browser({ children }) {
   const [hasMounted, setHasMounted] = React.useState(false);
@@ -93,7 +98,7 @@ export default function Home() {
           <div className="flex flex-col">
             <h1 className="text-md">Locais de resgates</h1>
             <p className="text-small text-default-500">
-              Clique no ícone para ampliar
+              Clique no ícone para ampliar ou na legenda para acessar o resgate
             </p>
           </div>
         </CardHeader>
@@ -137,12 +142,23 @@ export default function Home() {
                           anchor={[0.5, 0.1]}
                         />
                       </RStyle.RStyle>
+                      <Link
+                        href={"/pages/rescue/modOffline"}
+                        onClick={() => {
+                          sessionStorage.setItem(
+                            "selectedRescue",
+                            JSON.stringify(rescue)
+                          );
+                        }}
+                      >
                       <ROverlay className="example-overlay">
                         <br />
                         <em className="bg-white/70 rounded">
-                          &#11017; {rescue.species.commonName || "Resgate"}
+                          &#11017; {rescue.species.commonName || "Resgate"} 
+                      
                         </em>
                       </ROverlay>
+                      </Link>
                     </RFeature>
                   ))
                 ) : (
@@ -188,7 +204,7 @@ export default function Home() {
           <div className="flex flex-col">
             <h1 className="text-md">Locais de Soltura</h1>
             <p className="text-small text-default-500">
-              Clique no ícone para ampliar
+            Clique no ícone para ampliar ou na legenda para acessar o resgate
             </p>
           </div>
         </CardHeader>
@@ -241,12 +257,23 @@ export default function Home() {
                             anchor={[0.5, 0.1]}
                           />
                         </RStyle.RStyle>
-                        <ROverlay className="example-overlay">
-                          <br />
-                          <em className="bg-white/70 rounded">
-                            &#11017; {rescue.species.commonName || "Resgate"}
-                          </em>
-                        </ROverlay>
+                        <Link
+                        href={"/pages/rescue/modOffline"}
+                        onClick={() => {
+                          sessionStorage.setItem(
+                            "selectedRescue",
+                            JSON.stringify(rescue)
+                          );
+                        }}
+                      >
+                      <ROverlay className="example-overlay">
+                        <br />
+                        <em className="bg-white/70 rounded">
+                          &#11017; {rescue.species.commonName || "Resgate"} 
+                      
+                        </em>
+                      </ROverlay>
+                      </Link>
                       </RFeature>
                     ))
                 ) : (
@@ -292,7 +319,6 @@ export default function Home() {
           <div className="flex flex-col">
             <h1 className="text-md">Mapa de onde foi pego o animal para onde foi solto</h1>
             <p className="text-small text-default-500">
-              Clique no ícone para ampliar
             </p>
           </div>
         </CardHeader>
@@ -300,6 +326,11 @@ export default function Home() {
         <CardBody>
           <Map rescues={rescues} />
         </CardBody>
+        <CardFooter className="flex-col items-start gap-2 text-sm">
+        <div className="flex gap-2 font-medium leading-none">
+          A Flecha está apontando para o local de soltura
+        </div>
+      </CardFooter>
       </Card>
     </div>
   );

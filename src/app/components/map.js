@@ -8,6 +8,7 @@ import {
 } from 'rlayers';
 import { fromLonLat } from 'ol/proj';
 import { LineString, Point } from 'ol/geom';
+import { Fill, Stroke } from 'ol/style';
 import 'ol/ol.css';
 
 function isValidCoordinates(coords) {
@@ -27,18 +28,20 @@ function calculateAngle(fromCoords, toCoords) {
   return Math.atan2(dy, dx);
 }
 
-const arrowIcon = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-    <polygon points="0,5 15,10 0,15" fill="red" />
-  </svg>
-`);
+const arrowIcon =
+  'data:image/svg+xml;utf8,' +
+  encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+      <polygon points="0,5 15,10 0,15" fill="red" />
+    </svg>
+  `);
 
 function MapComponent({ rescues }) {
   if (!rescues || rescues.length === 0) {
     return <div>Carregando mapa...</div>;
   }
 
-  const initialRescue = rescues.find(item =>
+  const initialRescue = rescues.find((item) =>
     isValidCoordinates(item.locationCoordinates)
   );
 
@@ -67,14 +70,16 @@ function MapComponent({ rescues }) {
       const toProjected = fromLonLat(to);
 
       const midpoint = getMidpoint(fromProjected, toProjected);
-
       const angle = calculateAngle(fromProjected, toProjected);
+
+      const line = new LineString([fromProjected, toProjected]);
+      const distance = line.getLength();
 
       return (
         <React.Fragment key={item.id}>
-          <RFeature geometry={new LineString([fromProjected, toProjected])}>
+          <RFeature geometry={line}>
             <RStyle.RStyle>
-              <RStyle.RStroke color="black" lineCap='butt' width={2} />
+              <RStyle.RStroke color="black" lineCap="butt" width={2} />
             </RStyle.RStyle>
           </RFeature>
 
@@ -86,6 +91,17 @@ function MapComponent({ rescues }) {
                 rotateWithView={false}
                 rotation={-angle}
                 scale={1}
+              />
+            </RStyle.RStyle>
+          </RFeature>
+
+          <RFeature geometry={new Point(midpoint)}>
+            <RStyle.RStyle>
+              <RStyle.RText
+                text={`${Math.round(distance)} m`}
+                offsetY={-20}
+                fill={new Fill({ color: 'black' })}
+                stroke={new Stroke({ color: 'white', width: 2 })}
               />
             </RStyle.RStyle>
           </RFeature>
@@ -102,9 +118,7 @@ function MapComponent({ rescues }) {
       initial={{ center: fromLonLat(initialCoords), zoom: 14 }}
     >
       <ROSM />
-      <RLayerVector>
-        {rescues.map(createFeatures)}
-      </RLayerVector>
+      <RLayerVector>{rescues.map(createFeatures)}</RLayerVector>
     </RMap>
   );
 }
