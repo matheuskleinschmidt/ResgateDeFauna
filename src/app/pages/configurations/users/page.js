@@ -194,11 +194,11 @@ const UserForm = ({ user, onSubmit, onClose }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmitForm)}>
-      <Input {...register('name')} label="Nome" placeholder="Nome" />
-      <Input {...register('email')} label="Email" placeholder="Email" />
-      <Input {...register('password')} label="Senha" placeholder="Senha" type="password" />
-      <Input {...register('role')} label="Função" placeholder="Função" />
-      <Button type="submit">Salvar</Button>
+      <Input className="mb-4" {...register('name')} label="Nome" placeholder="Nome" />
+      <Input className="mb-4" {...register('email')} label="Email" placeholder="Email" />
+      <Input className="mb-4" {...register('password')} label="Senha" placeholder="Senha" type="password" />
+      <Input className="mb-4" {...register('role')} label="Função" placeholder="Função" />
+      <Button type="submit" className="mb-4">Salvar</Button>
     </form>
   );
 };
