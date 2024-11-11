@@ -19,6 +19,7 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/table";
+import { Spinner } from "@nextui-org/react";
 import { useForm } from 'react-hook-form';
 
 const AnimalGroupList = () => {
@@ -66,7 +67,11 @@ const AnimalGroupList = () => {
     fetchAnimalGroups();
   };
 
-  if (loading) return <p>Carregando...</p>;
+  if (loading) return (
+    <div className="flex h-screen w-full items-center justify-center px-4">
+    <Spinner size="lg" />
+  </div>
+  );
 
   return (
     <div>
