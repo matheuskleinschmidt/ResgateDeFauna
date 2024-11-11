@@ -7,14 +7,19 @@ import "ol/ol.css";
 import { fromLonLat } from "ol/proj";
 import { Point } from "ol/geom";
 import axios from "axios";
-import { RMap, ROSM, RLayerVector, RFeature, ROverlay, RStyle } from "rlayers";
-import { Card, CardHeader, CardBody, Divider } from "@nextui-org/react";
-// import Map from "@/app/components/map";
+import {
+  RMap,
+  ROSM,
+  RLayerVector,
+  RFeature,
+  ROverlay,
+  RStyle,
+} from "rlayers";
+import { Card, CardHeader, CardBody, Divider, CardFooter } from "@nextui-org/react";
 
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
-const Map = dynamic(() => import('@/app/components/map'), { ssr: false });
-
+const Map = dynamic(() => import("@/app/components/map"), { ssr: false });
 
 export function Browser({ children }) {
   const [hasMounted, setHasMounted] = React.useState(false);
@@ -56,6 +61,31 @@ export default function Home() {
         ]
       : [-48.8177664, -26.3225344];
 
+  function getIconSrc(animalGroupId) {
+    switch (animalGroupId) {
+      case 1:
+        return "/mammal.svg";
+      case 2:
+        return "/reptile.svg";
+      case 3:
+        return "/bird.svg";
+      case 4:
+        return "/fish.svg";
+      case 5:
+        return "/amphibian.svg";
+      default:
+        return "/location.svg";
+    }
+  }
+
+  const animalGroups = [
+    { id: 1, name: 'Mamífero', svg: '/mammal.svg' },
+    { id: 2, name: 'Réptil', svg: '/reptile.svg' },
+    { id: 3, name: 'Ave', svg: '/bird.svg' },
+    { id: 4, name: 'Peixe', svg: '/fish.svg' },
+    { id: 5, name: 'Anfíbio', svg: '/amphibian.svg' },
+  ];
+
   return (
     <div>
       <Card className="m-2">
@@ -63,7 +93,7 @@ export default function Home() {
           <div className="flex flex-col">
             <h1 className="text-md">Locais de resgates</h1>
             <p className="text-small text-default-500">
-              Clique no icone para ampliar
+              Clique no ícone para ampliar
             </p>
           </div>
         </CardHeader>
@@ -80,9 +110,6 @@ export default function Home() {
             >
               <ROSM />
               <RLayerVector zIndex={10}>
-                <RStyle.RStyle>
-                  <RStyle.RIcon src="/location.svg" anchor={[0.5, 0.8]} />
-                </RStyle.RStyle>
                 {rescues.length > 0 ? (
                   rescues.map((rescue) => (
                     <RFeature
@@ -104,6 +131,12 @@ export default function Home() {
                           })
                       }
                     >
+                      <RStyle.RStyle>
+                        <RStyle.RIcon
+                          src={getIconSrc(rescue.species.AnimalGroup.id)}
+                          anchor={[0.5, 0.1]}
+                        />
+                      </RStyle.RStyle>
                       <ROverlay className="example-overlay">
                         <br />
                         <em className="bg-white/70 rounded">
@@ -114,7 +147,9 @@ export default function Home() {
                   ))
                 ) : (
                   <RFeature
-                    geometry={new Point(fromLonLat([-48.8177664, -26.3225344]))}
+                    geometry={new Point(
+                      fromLonLat([-48.8177664, -26.3225344])
+                    )}
                   >
                     <ROverlay className="example-overlay">
                       <br />
@@ -128,6 +163,25 @@ export default function Home() {
             </RMap>
           </Browser>
         </CardBody>
+        <CardFooter className="flex-col items-start gap-2 text-sm">
+        <div className="flex gap-2 font-medium leading-none">
+          Legenda
+        </div>
+      <div className="m-2">
+        <div className="flex flex-wrap">
+          {animalGroups.map((group) => (
+            <div key={group.id} className="flex items-center m-2">
+              <img src={group.svg} alt={group.name} className="w-6 h-6 mr-2" />
+              <span>{group.name}</span>
+            </div>
+          ))}
+          <div className="flex items-center m-2">
+            <img src="/location.svg" alt="Outros" className="w-6 h-6 mr-2" />
+            <span>Outros</span>
+          </div>
+        </div>
+      </div>
+      </CardFooter>
       </Card>
       <Card className="m-2">
         <CardHeader>
@@ -151,16 +205,13 @@ export default function Home() {
             >
               <ROSM />
               <RLayerVector zIndex={10}>
-                <RStyle.RStyle>
-                  <RStyle.RIcon src="/location.svg" anchor={[0.5, 0.8]} />
-                </RStyle.RStyle>
                 {rescues.length > 0 ? (
                   rescues
                     .filter(
                       (rescue) =>
                         rescue.releaseLocationCoordinates &&
-                        typeof rescue.releaseLocationCoordinates.longitude ===
-                          "number" &&
+                        typeof rescue.releaseLocationCoordinates
+                          .longitude === "number" &&
                         typeof rescue.releaseLocationCoordinates.latitude ===
                           "number"
                     )
@@ -184,6 +235,12 @@ export default function Home() {
                             })
                         }
                       >
+                        <RStyle.RStyle>
+                          <RStyle.RIcon
+                            src={getIconSrc(rescue.species.AnimalGroup.id)}
+                            anchor={[0.5, 0.1]}
+                          />
+                        </RStyle.RStyle>
                         <ROverlay className="example-overlay">
                           <br />
                           <em className="bg-white/70 rounded">
@@ -194,7 +251,9 @@ export default function Home() {
                     ))
                 ) : (
                   <RFeature
-                    geometry={new Point(fromLonLat([-48.8177664, -26.3225344]))}
+                    geometry={new Point(
+                      fromLonLat([-48.8177664, -26.3225344])
+                    )}
                   >
                     <ROverlay className="example-overlay">
                       <br />
@@ -208,11 +267,30 @@ export default function Home() {
             </RMap>
           </Browser>
         </CardBody>
+        <CardFooter className="flex-col items-start gap-2 text-sm">
+        <div className="flex gap-2 font-medium leading-none">
+          Legenda
+        </div>
+      <div className="m-2">
+        <div className="flex flex-wrap">
+          {animalGroups.map((group) => (
+            <div key={group.id} className="flex items-center m-2">
+              <img src={group.svg} alt={group.name} className="w-6 h-6 mr-2" />
+              <span>{group.name}</span>
+            </div>
+          ))}
+          <div className="flex items-center m-2">
+            <img src="/location.svg" alt="Outros" className="w-6 h-6 mr-2" />
+            <span>Outros</span>
+          </div>
+        </div>
+      </div>
+      </CardFooter>
       </Card>
       <Card className="m-2">
         <CardHeader>
           <div className="flex flex-col">
-            <h1 className="text-md">Mapa</h1>
+            <h1 className="text-md">Mapa de onde foi pego o animal para onde foi solto</h1>
             <p className="text-small text-default-500">
               Clique no ícone para ampliar
             </p>
