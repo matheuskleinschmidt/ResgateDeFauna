@@ -1,7 +1,11 @@
+'use client';
 import React from "react";
 import { Card, CardBody, Link } from "@nextui-org/react";
+import { useSession } from 'next-auth/react';
 
-export default function configurationsPage() {
+export default function ConfigurationsPage() {
+  const { data: session } = useSession();
+
   return (
     <div>
       <div className="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md">
@@ -19,6 +23,15 @@ export default function configurationsPage() {
             </Link>
           </CardBody>
         </Card>
+        {session?.user?.role === 'admin' && (
+          <Card className="w-full max-w-xs mb-4">
+            <CardBody>
+              <Link href="/pages/configurations/users">
+                <p>Usuarios</p>
+              </Link>
+            </CardBody>
+          </Card>
+        )}
       </div>
     </div>
   );
