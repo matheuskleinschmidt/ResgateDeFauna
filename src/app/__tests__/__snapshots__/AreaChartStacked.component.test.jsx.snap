@@ -1,0 +1,73 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Component > deve corresponder ao snapshot 1`] = `
+<div>
+  <div
+    data-testid="card"
+  >
+    <div
+      data-testid="card-header"
+    >
+      <h2
+        data-testid="card-title"
+      >
+        Teste de Componente
+      </h2>
+      <p
+        data-testid="card-description"
+      >
+        Este é um teste para o componente de gráfico.
+      </p>
+    </div>
+    <div
+      data-testid="card-content"
+    >
+      <div
+        data-testid="chart-container"
+      >
+        <div
+          data-testid="responsive-container"
+        >
+          <div
+            data-testid="area-chart"
+          >
+            <div
+              data-testid="cartesian-grid"
+            />
+            <div
+              data-testid="x-axis"
+            />
+            <div
+              data-testid="chart-tooltip"
+            />
+            <div
+              data-testid="area"
+              style="fill: hsl(var(--chart-1)); stroke: hsl(var(--chart-1));"
+            >
+              Area
+            </div>
+            <div
+              data-testid="area"
+              style="fill: hsl(var(--chart-2)); stroke: hsl(var(--chart-2));"
+            >
+              Area
+            </div>
+            <div
+              data-testid="area"
+              style="fill: hsl(var(--chart-3)); stroke: hsl(var(--chart-3));"
+            >
+              Area
+            </div>
+            <div
+              data-testid="area"
+              style="fill: hsl(var(--chart-4)); stroke: hsl(var(--chart-4));"
+            >
+              Area
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

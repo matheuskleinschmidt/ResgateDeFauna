@@ -1,0 +1,79 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AnimalRecordsChart > deve corresponder ao snapshot 1`] = `
+<div>
+  <div
+    data-testid="card"
+  >
+    <div
+      data-testid="card-header"
+    >
+      <h2
+        data-testid="card-title"
+      >
+        Relatório de Animais Resgatados
+      </h2>
+      <p
+        data-testid="card-description"
+      >
+        Gráfico mostrando a quantidade de animais resgatados por espécie e data.
+      </p>
+    </div>
+    <div
+      data-testid="card-content"
+    >
+      <div
+        data-testid="chart-container"
+      >
+        <div
+          data="[object Object],[object Object],[object Object],[object Object],[object Object]"
+          data-testid="bar-chart"
+          margin="[object Object]"
+        >
+          <div
+            data-testid="x-axis"
+            datakey="date"
+          />
+          <div
+            data-testid="y-axis"
+          />
+          <div
+            data-testid="tooltip"
+          />
+          <div
+            data-testid="legend"
+          />
+          <div
+            data-fill="#8884d8"
+            data-key="Dog"
+            data-testid="bar"
+          >
+            Bar
+          </div>
+          <div
+            data-fill="#82ca9d"
+            data-key="Cat"
+            data-testid="bar"
+          >
+            Bar
+          </div>
+          <div
+            data-fill="#ffc658"
+            data-key="Rabbit"
+            data-testid="bar"
+          >
+            Bar
+          </div>
+          <div
+            data-fill="#ff8042"
+            data-key="Unknown"
+            data-testid="bar"
+          >
+            Bar
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
