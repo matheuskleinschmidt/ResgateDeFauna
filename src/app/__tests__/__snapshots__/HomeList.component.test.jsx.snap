@@ -1,0 +1,78 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App Component > deve corresponder ao snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col items-center justify-center max-w-full px-4 mx-auto sm:max-w-md"
+  >
+    <div
+      class="w-full max-w-xs mb-4"
+      data-testid="card"
+    >
+      <div
+        data-testid="card-body"
+      >
+        <a
+          data-testid="link"
+          href="/pages/rescue/addRescue"
+        >
+          <p>
+            Adicionar resgate
+          </p>
+        </a>
+      </div>
+    </div>
+    <div
+      class="w-full max-w-xs mb-4"
+      data-testid="card"
+    >
+      <div
+        data-testid="card-body"
+      >
+        <a
+          data-testid="link"
+          href="/pages/rescue"
+        >
+          <p>
+            Listar resgates
+          </p>
+        </a>
+      </div>
+    </div>
+    <div
+      class="w-full max-w-xs mb-4"
+      data-testid="card"
+    >
+      <div
+        data-testid="card-body"
+      >
+        <a
+          data-testid="link"
+          href="/pages/reports"
+        >
+          <p>
+            Relatórios
+          </p>
+        </a>
+      </div>
+    </div>
+    <div
+      class="w-full max-w-xs mb-4"
+      data-testid="card"
+    >
+      <div
+        data-testid="card-body"
+      >
+        <a
+          data-testid="link"
+          href="/pages/configurations"
+        >
+          <p>
+            Configurações
+          </p>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

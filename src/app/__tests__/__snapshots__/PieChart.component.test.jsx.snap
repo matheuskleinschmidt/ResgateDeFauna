@@ -1,0 +1,103 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PieChartComponent > deve corresponder ao snapshot 1`] = `
+<div>
+  <div
+    data-testid="card"
+  >
+    <div
+      data-testid="card-header"
+    >
+      <h2
+        data-testid="card-title"
+      >
+        Distribuição de Categorias
+      </h2>
+      <p
+        data-testid="card-description"
+      >
+        Gráfico de pizza mostrando a distribuição de categorias por mês.
+      </p>
+    </div>
+    <div
+      data-testid="card-content"
+    >
+      <div
+        class="mb-4 flex items-center"
+      >
+        <label
+          class="mr-2 font-medium"
+          for="monthFilter"
+        >
+          Filtrar por Mês:
+        </label>
+        <select
+          class="p-2 border border-gray-300 rounded"
+          id="monthFilter"
+        >
+          <option
+            value="Todos"
+          >
+            Todos
+          </option>
+          <option
+            value="1/2023"
+          >
+            1/2023
+          </option>
+          <option
+            value="2/2023"
+          >
+            2/2023
+          </option>
+          <option
+            value="3/2023"
+          >
+            3/2023
+          </option>
+        </select>
+      </div>
+      <div
+        class="h-96"
+      >
+        <div
+          data-testid="responsive-container"
+        >
+          <div
+            data-testid="pie-chart"
+          >
+            <div
+              data-cx="50%"
+              data-cy="50%"
+              data-data="[{"name":"A","value":2},{"name":"B","value":2},{"name":"C","value":1}]"
+              data-datakey="value"
+              data-namekey="name"
+              data-outerradius="80"
+              data-testid="pie"
+            >
+              <div
+                data-fill="#0088FE"
+                data-testid="cell"
+              />
+              <div
+                data-fill="#00C49F"
+                data-testid="cell"
+              />
+              <div
+                data-fill="#FFBB28"
+                data-testid="cell"
+              />
+            </div>
+            <div
+              data-testid="tooltip"
+            />
+            <div
+              data-testid="legend"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

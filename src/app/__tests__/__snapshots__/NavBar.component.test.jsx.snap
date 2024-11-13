@@ -1,0 +1,146 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App Component > deve corresponder ao snapshot 1`] = `
+<div>
+  <div
+    class="mb-4"
+    data-testid="navbar"
+  >
+    <div
+      data-align="center"
+      data-justify="start"
+      data-testid="navbar-content"
+      style="flex: 1;"
+    >
+      <button
+        aria-label="Abrir menu"
+        data-testid="navbar-menu-toggle"
+      />
+    </div>
+    <div
+      data-align="center"
+      data-justify="end"
+      data-testid="navbar-content"
+      style="flex: 1;"
+    >
+      <div
+        data-testid="navbar-brand"
+      >
+        <svg
+          fill="none"
+          height="36"
+          viewBox="0 0 32 32"
+          width="36"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
+            fill="currentColor"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <a
+          data-testid="link"
+          href="/"
+        >
+          <p
+            class="font-bold text-inherit"
+          >
+            Fujama
+          </p>
+        </a>
+      </div>
+    </div>
+    <div
+      data-testid="navbar-menu"
+    >
+      <div
+        data-testid="navbar-menu-item"
+      >
+        <a
+          class="w-full"
+          data-size="lg"
+          data-testid="link"
+          href="/pages/rescue"
+        >
+          Resgates
+        </a>
+      </div>
+      <div
+        data-testid="navbar-menu-item"
+      >
+        <a
+          class="w-full"
+          data-size="lg"
+          data-testid="link"
+          href="/pages/rescue/addRescue"
+        >
+          Adicionar Resgate
+        </a>
+      </div>
+      <div
+        data-testid="navbar-menu-item"
+      >
+        <a
+          class="w-full"
+          data-size="lg"
+          data-testid="link"
+          href="/pages/reports/maps"
+        >
+          Mapas
+        </a>
+      </div>
+      <div
+        data-testid="navbar-menu-item"
+      >
+        <a
+          class="w-full"
+          data-size="lg"
+          data-testid="link"
+          href="/pages/reports/charts"
+        >
+          Gráficos
+        </a>
+      </div>
+      <div
+        data-testid="navbar-menu-item"
+      >
+        <a
+          class="w-full"
+          data-size="lg"
+          data-testid="link"
+          href="/pages/configurations"
+        >
+          Configurações
+        </a>
+      </div>
+      <div
+        data-testid="navbar-menu-item"
+      >
+        <a
+          class="w-full"
+          data-size="lg"
+          data-testid="link"
+        >
+          <button>
+            Renovar cache
+          </button>
+        </a>
+      </div>
+      <div
+        data-testid="navbar-menu-item"
+      >
+        <a
+          class="w-full"
+          data-size="lg"
+          data-testid="link"
+        >
+          <button>
+            Sair
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
