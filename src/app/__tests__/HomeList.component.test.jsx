@@ -1,9 +1,7 @@
-// src/app/__tests__/App.component.test.jsx
 import { render, screen } from '@testing-library/react';
-import App from '@/app/components/HomeList'; // Ajuste o caminho conforme necessário
+import App from '@/app/components/HomeList';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock dos componentes do @nextui-org/react
 vi.mock('@nextui-org/react', () => ({
   Card: ({ children, className }) => <div data-testid="card" className={className}>{children}</div>,
   CardBody: ({ children }) => <div data-testid="card-body">{children}</div>,
@@ -18,11 +16,9 @@ describe('App Component', () => {
   it('deve renderizar todos os cards com os links corretos', () => {
     render(<App />);
 
-    // Verifica se quatro cards são renderizados
     const cards = screen.getAllByTestId('card');
     expect(cards).toHaveLength(4);
 
-    // Define os textos e hrefs esperados
     const expectedLinks = [
       { text: 'Adicionar resgate', href: '/pages/rescue/addRescue' },
       { text: 'Listar resgates', href: '/pages/rescue' },
@@ -30,7 +26,6 @@ describe('App Component', () => {
       { text: 'Configurações', href: '/pages/configurations' },
     ];
 
-    // Verifica cada link
     expectedLinks.forEach(({ text, href }) => {
       const linkElement = screen.getByText(text);
       expect(linkElement).toBeInTheDocument();
@@ -44,7 +39,6 @@ describe('App Component', () => {
     const links = screen.getAllByTestId('link');
     expect(links).toHaveLength(4);
 
-    // Define os textos e hrefs esperados
     const expectedLinks = [
       { text: 'Adicionar resgate', href: '/pages/rescue/addRescue' },
       { text: 'Listar resgates', href: '/pages/rescue' },
@@ -52,7 +46,6 @@ describe('App Component', () => {
       { text: 'Configurações', href: '/pages/configurations' },
     ];
 
-    // Verifica cada link
     expectedLinks.forEach(({ text, href }) => {
       const linkElement = screen.getByText(text).closest('a');
       expect(linkElement).toBeInTheDocument();
