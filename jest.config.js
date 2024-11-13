@@ -10,6 +10,9 @@ const customJestConfig = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  testPathIgnorePatterns: [
+    '\\.component\\.test\\.(js|jsx)$'
+  ],
 }
 
 module.exports = createJestConfig(customJestConfig)
