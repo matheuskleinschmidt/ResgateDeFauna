@@ -1,9 +1,7 @@
-// src/app/__tests__/AnimalRecordsChart.component.test.jsx
 import { render, screen } from '@testing-library/react';
-import AnimalRecordsChart from '@/app/components/BarChartStackedLegend'; // Ajuste o caminho conforme necessário
+import AnimalRecordsChart from '@/app/components/BarChartStackedLegend';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Mock dos componentes personalizados
 vi.mock('@/components/ui/card', () => ({
   Card: ({ children }) => <div data-testid="card">{children}</div>,
   CardHeader: ({ children }) => <div data-testid="card-header">{children}</div>,
@@ -21,7 +19,6 @@ vi.mock('@/components/ui/chart', () => ({
   ChartTooltipContent: () => <div data-testid="chart-tooltip-content"></div>,
 }));
 
-// Mock dos componentes do Recharts
 vi.mock('recharts', () => {
   const OriginalRecharts = vi.importActual('recharts');
   return {
@@ -40,13 +37,12 @@ vi.mock('recharts', () => {
   };
 });
 
-// Dados de teste
 const mockRescues = [
   { fullDate: '2023-01-15', animal: { species: 'Dog' } },
   { fullDate: '2023-01-20', animal: { species: 'Cat' } },
   { fullDate: '2023-02-10', animal: { species: 'Dog' } },
   { fullDate: '2023-02-15', animal: { species: 'Rabbit' } },
-  { fullDate: '2023-03-05', animal: null }, // Animal indefinido
+  { fullDate: '2023-03-05', animal: null },
 ];
 
 const propertyPath = 'animal.species';
@@ -68,11 +64,9 @@ describe('AnimalRecordsChart', () => {
       />
     );
 
-    // Verifica se o título e a descrição são renderizados
     expect(screen.getByTestId('card-title')).toHaveTextContent(title);
     expect(screen.getByTestId('card-description')).toHaveTextContent(description);
 
-    // Verifica se os componentes do gráfico são renderizados
     expect(screen.getByTestId('bar-chart')).toBeInTheDocument();
     expect(screen.getByTestId('responsive-container')).toBeInTheDocument();
     expect(screen.getByTestId('x-axis')).toBeInTheDocument();
@@ -91,12 +85,9 @@ describe('AnimalRecordsChart', () => {
       />
     );
 
-    // Verifica se as barras correspondem às espécies únicas
-    // No mockRescues temos 'Dog', 'Cat', 'Rabbit' e 'Unknown'
     const bars = screen.getAllByTestId('bar');
     expect(bars).toHaveLength(4);
 
-    // Verifica se cada barra tem o data-key correto
     const expectedKeys = ['Dog', 'Cat', 'Rabbit', 'Unknown'];
     bars.forEach((bar, index) => {
       expect(bar).toHaveAttribute('data-key', expectedKeys[index]);
@@ -113,7 +104,6 @@ describe('AnimalRecordsChart', () => {
       />
     );
 
-    // Verifica se o gráfico ainda é renderizado, mas sem barras
     expect(screen.getByTestId('bar-chart')).toBeInTheDocument();
     expect(screen.queryAllByTestId('bar')).toHaveLength(0);
   });
@@ -121,7 +111,7 @@ describe('AnimalRecordsChart', () => {
   it('deve lidar com valores nulos ou indefinidos no propertyPath', () => {
     const dataWithNulls = [
       { fullDate: '2023-01-15', animal: null },
-      { fullDate: '2023-01-20' }, // animal indefinido
+      { fullDate: '2023-01-20' }, 
       { fullDate: '2023-02-10', animal: { species: 'Dog' } },
     ];
 
@@ -134,7 +124,6 @@ describe('AnimalRecordsChart', () => {
       />
     );
 
-    // Espera-se que haja duas barras: 'Unknown' e 'Dog'
     const bars = screen.getAllByTestId('bar');
     expect(bars).toHaveLength(2);
 
@@ -154,7 +143,6 @@ describe('AnimalRecordsChart', () => {
       />
     );
 
-    // As cores devem seguir a ordem definida no array colors
     const colors = [
       "#8884d8",
       "#82ca9d",

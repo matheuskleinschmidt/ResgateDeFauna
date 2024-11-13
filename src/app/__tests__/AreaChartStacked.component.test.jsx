@@ -32,7 +32,6 @@ vi.mock('recharts', () => {
   };
 });
 
-// Dados de teste
 const mockData = [
   { fullDate: '2023-01-15', category: 'A' },
   { fullDate: '2023-01-20', category: 'B' },
