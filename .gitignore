@@ -46,6 +46,7 @@ public/swe-worker-*.js
 public/sw.js.map
 public/workbox-*.js.map
 
+newrelic_agent.log
 
 .early.coverage
 
