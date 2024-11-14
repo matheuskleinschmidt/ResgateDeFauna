@@ -1,6 +1,5 @@
 const path = require("path");
-
-/** @type {import('next').NextConfig} */
+'use strict'
 
 const withPWA = require("@ducanh2912/next-pwa").default({
   dest: "public",
@@ -67,20 +66,27 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   },
 });
 
+const nrExternals = require('@newrelic/next/load-externals');
+
 const dirname = __dirname;
 
 const nextConfig = {
   experimental: {
-    serverComponentsExternalPackages: ["sequelize"],
+    serverComponentsExternalPackages: ["sequelize", "newrelic"],
     esmExternals: true,
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     config.resolve.alias["rlayers"] = path.resolve(
       dirname,
       "node_modules",
       "rlayers",
       "dist"
     );
+
+    if (isServer) {
+      nrExternals(config);
+    }
+
     return config;
   },
 };
