@@ -1,4 +1,4 @@
-require("newrelic")
+import * as newrelic from "newrelic";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import  Provider  from "./Provider";
