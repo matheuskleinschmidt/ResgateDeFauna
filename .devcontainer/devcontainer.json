@@ -3,6 +3,7 @@
   "features": {
     "ghcr.io/devcontainers-extra/features/node-asdf:0": {},
     "ghcr.io/devcontainers-extra/features/jest:2": {},
+    "ghcr.io/devcontainers-extra/features/heroku-cli:1": {},
   },
   "customizations": {
     "vscode": {
