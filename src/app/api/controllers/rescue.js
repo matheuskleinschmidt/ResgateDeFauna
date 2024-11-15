@@ -126,16 +126,16 @@ function buildMeasurement(data) {
 
 function buildRescueData(data, fullDate, measurement, locationCoordinates, releaseLocationCoordinates) {
   return {
-    speciesId: data.Species ? parseInt(data.Species, 10) || null : null,
+    speciesId: parseId(data.Species),
     fullDate,
     weight: parseFloat(data.weight) || 0,
     measurement,
     occurrence: data.occurrence || '',
-    calledById: data.calledBy ? parseInt(data.calledBy, 10) || null : null,
-    procedureOrientationById: data.procedureBy ? parseInt(data.procedureBy, 10) || null : null,
-    ageRangeId: data.ageRange !== null ? parseInt(data.ageRange, 10) || null : null,
-    situationId: data.situation ? parseInt(data.situation, 10) || null : null,
-    postRescueId: data.postRescue ? parseInt(data.postRescue, 10) || null : null,
+    calledById: parseId(data.calledBy),
+    procedureOrientationById: parseId(data.procedureBy),
+    ageRangeId: parseId(data.ageRange),
+    situationId: parseId(data.situation),
+    postRescueId: parseId(data.postRescue),
     observation: data.observation || '',
     address: data.address || '',
     userId: null, 
@@ -145,8 +145,11 @@ function buildRescueData(data, fullDate, measurement, locationCoordinates, relea
   };
 }
 
+function parseId(value) {
+  return value ? parseInt(value, 10) || null : null;
+}
+
 export async function createOrUpdateRescueRecord(id, data) {
-  console.log('data', data);
   try {
     const { date = {}, time = {} } = data;
     const fullDate = buildFullDate(date, time);
