@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
+import PropTypes from "prop-types"
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 
 import {
@@ -18,7 +19,7 @@ import {
 
 const getValueByPath = (obj, path) => {
   return path.split('.').reduce((acc, part) => {
-    if (acc && acc[part] !== undefined && acc[part] !== null) {
+    if (acc?.[part] != null) {
       return acc[part]
     }
     return undefined
@@ -64,7 +65,7 @@ export default function Component({ rescues, propertyPath, title, description })
 
     const chartData = []
     Object.keys(dataByMonth)
-      .sort()
+      .sort((a, b) => a.localeCompare(b))
       .forEach((month) => {
         const monthData = { month }
         speciesList.forEach((name) => {
@@ -75,6 +76,13 @@ export default function Component({ rescues, propertyPath, title, description })
 
     return { chartData, chartConfig, speciesList }
   }, [rescues, propertyPath])
+
+  Component.propTypes = {
+    rescues: PropTypes.array.isRequired,
+    propertyPath: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+  }
 
   return (
     <Card>
@@ -131,7 +139,10 @@ export default function Component({ rescues, propertyPath, title, description })
             </div>
           </div>
         </div>
-      </CardFooter> */}
+        </Card>
+      )
+    }
+  */}
     </Card>
   )
 }

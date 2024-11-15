@@ -4,6 +4,7 @@ import React, { useMemo } from 'react'
 import { Bar, BarChart, XAxis, YAxis, Tooltip, Legend } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
+import PropTypes from "prop-types"
 
 const getValueByPath = (obj, path) => {
   return path.split('.').reduce((acc, part) => acc && acc[part], obj)
@@ -49,6 +50,13 @@ export default function AnimalRecordsChart({ rescues, propertyPath, title, descr
     "#a28fd0",
     "#ffbb28"
   ]
+
+  AnimalRecordsChart.propTypes = {
+    rescues: PropTypes.array.isRequired,
+    propertyPath: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+  }
 
   return (
     <Card>
