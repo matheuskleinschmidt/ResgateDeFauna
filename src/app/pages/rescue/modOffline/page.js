@@ -116,7 +116,7 @@ export default function App() {
           }`
         );
         setValue("weight", dataResponse.weight);
-        setValue("adress", dataResponse.address);
+        setValue("address", dataResponse.address);
         setValue("occurrence", dataResponse.occurrence);
         setValue("observation", dataResponse.observation);
 
@@ -438,7 +438,7 @@ export default function App() {
       />
 
       <Controller
-        name="adress"
+        name="address"
         control={control}
         defaultValue={null}
         render={({ field }) => (
