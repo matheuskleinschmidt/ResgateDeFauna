@@ -13,13 +13,14 @@ import {
 import { Spinner } from "@nextui-org/react";
 import moment from "moment";
 import "moment-timezone";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const timezone = "America/Sao_Paulo";
 
 const RescuePage = () => {
   const [rescues, setRescues] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter(); 
 
   useEffect(() => {
     const fetchRescueData = async () => {
@@ -36,6 +37,11 @@ const RescuePage = () => {
     };
     fetchRescueData();
   }, []);
+
+  const handleRowClick = (rescue) => {
+    sessionStorage.setItem("selectedRescue", JSON.stringify(rescue));
+    router.push("/pages/rescue/modOffline");
+  };
 
   return (
     <div className="responsive-table" style={{ position: "relative", minHeight: "200px" }}>
@@ -54,19 +60,14 @@ const RescuePage = () => {
           <TableBody emptyContent={"Não há registros salvos."}>
             {Array.isArray(rescues) && rescues.length > 0
               ? rescues.map((rescue) => (
-                  <TableRow key={rescue.id}>
+                  <TableRow
+                    key={rescue.id}
+                    onClick={() => handleRowClick(rescue)}
+                    style={{ cursor: "pointer" }}
+                    className="table-row-hover"
+                  >
                     <TableCell>
-                      <Link
-                        href={"/pages/rescue/modOffline"}
-                        onClick={() => {
-                          sessionStorage.setItem(
-                            "selectedRescue",
-                            JSON.stringify(rescue)
-                          );
-                        }}
-                      >
-                        {rescue.species.commonName}
-                      </Link>
+                      {rescue.species.commonName}
                     </TableCell>
                     <TableCell>
                       {rescue.situation?.name || "Situação desconhecida"}
