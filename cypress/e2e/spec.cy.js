@@ -34,7 +34,7 @@ describe("Teste de adicionar resgate", () => {
     cy.get('[data-testid="length"]').type("1.0");
     cy.get('[data-testid="width"]').type("0.4");
 
-    cy.get('[data-testid="adress"]').type("Rua Exemplo, 123");
+    cy.get('[data-testid="address"]').type("Rua Exemplo, 123");
 
     cy.get('[data-testid="occurrence"]').type(
       "Animal encontrado ferido na rua."

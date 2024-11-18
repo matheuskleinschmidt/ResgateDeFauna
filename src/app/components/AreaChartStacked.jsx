@@ -12,7 +12,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -21,6 +20,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import PropTypes from "prop-types"
 
 const COLORS = [
   "hsl(var(--chart-1))",
@@ -78,6 +78,13 @@ export default function Component({ data, propertyPath, title, description }) {
     });
     return config;
   }, [keys]);
+
+  Component.propTypes = {
+    data: PropTypes.array.isRequired,
+    propertyPath: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+  }
 
   return (
     <Card>
