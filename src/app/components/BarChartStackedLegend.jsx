@@ -7,7 +7,7 @@ import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
 import PropTypes from "prop-types"
 
 const getValueByPath = (obj, path) => {
-  return path.split('.').reduce((acc, part) => acc && acc[part], obj)
+  return path.split('.').reduce((acc, part) => acc?.[part], obj)
 }
 
 const groupRecordsByDateAndGroup = (records, propertyPath) => {

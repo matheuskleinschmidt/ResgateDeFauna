@@ -10,9 +10,10 @@ import { fromLonLat } from 'ol/proj';
 import { LineString, Point } from 'ol/geom';
 import { Fill, Stroke } from 'ol/style';
 import 'ol/ol.css';
+import PropTypes from 'prop-types';
 
 function isValidCoordinates(coords) {
-  return coords && coords.latitude != null && coords.longitude != null;
+  return coords?.latitude != null && coords?.longitude != null;
 }
 
 function getMidpoint(fromCoords, toCoords) {
@@ -120,7 +121,10 @@ function MapComponent({ rescues }) {
       <ROSM />
       <RLayerVector>{rescues.map(createFeatures)}</RLayerVector>
     </RMap>
-  );
-}
+)}
+
+MapComponent.propTypes = {
+  rescues: PropTypes.array.isRequired,
+};
 
 export default MapComponent;
