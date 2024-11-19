@@ -31,7 +31,7 @@ const COLORS = [
 ];
 
 function getNestedValue(obj, path) {
-  return path.split(".").reduce((acc, part) => acc && acc[part], obj);
+  return path.split(".").reduce((acc, part) => acc?.[part], obj);
 }
 
 export default function Component({ data, propertyPath, title, description }) {
