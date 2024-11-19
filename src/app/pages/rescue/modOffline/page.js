@@ -82,125 +82,81 @@ export default function App() {
   }, [dataResponse.id, isOptionsLoaded]);
 
   const fetchRescueData = async () => {
-    const rescueData = sessionStorage.getItem("selectedRescue");
-    if (rescueData) {
-      dataResponse = JSON.parse(rescueData);
-
-      try {
-        setValue("Species", dataResponse.species.id.toString());
-
-        setSelectedGroup(dataResponse.species.AnimalGroupId.toString());
-        setValue("AnimalGroup", dataResponse.species.AnimalGroupId.toString());
-
-        const dateString = dataResponse.fullDate.split("T")[0];
-        const dateValue = parseDate(dateString);
-        setValue("date", dateValue);
-
-        const timeString = dataResponse.fullDate.split("T")[1];
-        const timeParts = timeString.split(":");
-        const hours = parseInt(timeParts[0], 10);
-        const minutes = parseInt(timeParts[1], 10);
-        const timeValue = new Time(hours, minutes);
-        setValue("time", timeValue);
-
-        setValue(
-          "locationCoordinates",
-          `${
-            dataResponse.locationCoordinates != null
-              ? dataResponse.locationCoordinates.latitude
-              : ""
-          }, ${
-            dataResponse.locationCoordinates != null
-              ? dataResponse.locationCoordinates.longitude
-              : ""
-          }`
+    const normalizeString = (str) => str.toString().toLowerCase().trim();
+  
+    const findKeyInOptions = (optionsArray, name) => {
+      if (name && Array.isArray(optionsArray)) {
+        const item = optionsArray.find(
+          (item) => normalizeString(item.label) === normalizeString(name)
         );
-        setValue("weight", dataResponse.weight);
-        setValue("address", dataResponse.address);
-        setValue("occurrence", dataResponse.occurrence);
-        setValue("observation", dataResponse.observation);
-
-        setValue(
-          "releaseLocationCoordinates",
-          dataResponse.releaseLocationCoordinates
-            ? `${dataResponse.releaseLocationCoordinates.latitude}, ${dataResponse.releaseLocationCoordinates.longitude}`
-            : ""
-        );
-
-        setValue("height", dataResponse.measurement.height);
-        setValue("length", dataResponse.measurement.length);
-        setValue("width", dataResponse.measurement.width);
-
-        const normalizeString = (str) => str.toString().toLowerCase().trim();
-
-        const ageRangeName = dataResponse.ageRange?.name.toString() || null;
-        let ageKey = null;
-
-        if (ageRangeName && Array.isArray(options.ageRanges)) {
-          const ageItem = options.ageRanges.find(
-            (item) =>
-              normalizeString(item.label) === normalizeString(ageRangeName)
-          );
-          ageKey = ageItem ? ageItem.key.toString() : null;
-        }
-        setValue("ageRange", ageKey);
-
-        const calledByName = dataResponse.calledBy?.name || null;
-        let calledByKey = null;
-
-        if (calledByName && Array.isArray(options.calledBy)) {
-          const calledByItem = options.calledBy.find(
-            (item) =>
-              normalizeString(item.label) === normalizeString(calledByName)
-          );
-          calledByKey = calledByItem ? calledByItem.key.toString() : null;
-        }
-        setValue("calledBy", calledByKey);
-
-        const procedureByName =
-          dataResponse.procedureOrientationBy?.name || null;
-        let procedureByKey = null;
-        if (procedureByName && Array.isArray(options.procedureBy)) {
-          const procedureByItem = options.procedureBy.find(
-            (item) =>
-              normalizeString(item.label) === normalizeString(procedureByName)
-          );
-          procedureByKey = procedureByItem
-            ? procedureByItem.key.toString()
-            : null;
-        }
-        setValue("procedureBy", procedureByKey);
-
-        const situationName = dataResponse.situation?.name || null;
-        let situationKey = null;
-
-        if (situationName && Array.isArray(options.situations)) {
-          const situationItem = options.situations.find(
-            (item) =>
-              normalizeString(item.label) === normalizeString(situationName)
-          );
-          situationKey = situationItem ? situationItem.key.toString() : null;
-        }
-        setValue("situation", situationKey);
-
-        const postRescueName = dataResponse.postRescue?.name || null;
-        let postRescueKey = null;
-
-        if (postRescueName && Array.isArray(options.postRescue)) {
-          const postRescueItem = options.postRescue.find(
-            (item) =>
-              normalizeString(item.label) === normalizeString(postRescueName)
-          );
-          postRescueKey = postRescueItem ? postRescueItem.key.toString() : null;
-        }
-        setValue("postRescue", postRescueKey);
-      } catch (error) {
-        console.error("Erro ao fazer a requisição:", error);
+        return item ? item.key.toString() : null;
       }
-    } else {
+      return null;
+    };
+  
+    const rescueData = sessionStorage.getItem("selectedRescue");
+    if (!rescueData) {
       console.error("No data found in sessionStorage");
+      return;
+    }
+  
+    const dataResponse = JSON.parse(rescueData);
+  
+    try {
+      setValue("Species", dataResponse.species.id.toString());
+      setSelectedGroup(dataResponse.species.AnimalGroupId.toString());
+      setValue("AnimalGroup", dataResponse.species.AnimalGroupId.toString());
+  
+      const [dateString, timeString] = dataResponse.fullDate.split("T");
+      setValue("date", parseDate(dateString));
+  
+      const [hoursStr, minutesStr] = timeString.split(":");
+      const timeValue = new Time(parseInt(hoursStr, 10), parseInt(minutesStr, 10));
+      setValue("time", timeValue);
+  
+      const latitude = dataResponse.locationCoordinates?.latitude || "";
+      const longitude = dataResponse.locationCoordinates?.longitude || "";
+      setValue("locationCoordinates", `${latitude}, ${longitude}`);
+  
+      setValue("weight", dataResponse.weight);
+      setValue("address", dataResponse.address);
+      setValue("occurrence", dataResponse.occurrence);
+      setValue("observation", dataResponse.observation);
+  
+      const releaseCoords = dataResponse.releaseLocationCoordinates
+        ? `${dataResponse.releaseLocationCoordinates.latitude}, ${dataResponse.releaseLocationCoordinates.longitude}`
+        : "";
+      setValue("releaseLocationCoordinates", releaseCoords);
+  
+      setValue("height", dataResponse.measurement.height);
+      setValue("length", dataResponse.measurement.length);
+      setValue("width", dataResponse.measurement.width);
+  
+      setValue(
+        "ageRange",
+        findKeyInOptions(options.ageRanges, dataResponse.ageRange?.name)
+      );
+      setValue(
+        "calledBy",
+        findKeyInOptions(options.calledBy, dataResponse.calledBy?.name)
+      );
+      setValue(
+        "procedureBy",
+        findKeyInOptions(options.procedureBy, dataResponse.procedureOrientationBy?.name)
+      );
+      setValue(
+        "situation",
+        findKeyInOptions(options.situations, dataResponse.situation?.name)
+      );
+      setValue(
+        "postRescue",
+        findKeyInOptions(options.postRescue, dataResponse.postRescue?.name)
+      );
+    } catch (error) {
+      console.error("Erro ao fazer a requisição:", error);
     }
   };
+  
 
   useEffect(() => {
     if (selectedGroup) {
