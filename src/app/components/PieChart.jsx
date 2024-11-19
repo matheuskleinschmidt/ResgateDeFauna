@@ -3,11 +3,12 @@
 import { useState, useMemo } from 'react'
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import PropTypes from 'prop-types';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8']
 
 function getNestedValue(obj, path) {
-  return path.split('.').reduce((acc, part) => acc && acc[part], obj)
+  return path.split('.').reduce((acc, part) => acc?.[part], obj)
 }
 
 export default function PieChartComponent({ rescues, title, description, propertyPath }) {
@@ -52,16 +53,36 @@ export default function PieChartComponent({ rescues, title, description, propert
   }, [rescues, selectedMonth, propertyPath])
 
   const CustomTooltip = ({ active, payload }) => {
-    if (active && payload?.length) {
-      const { name, value } = payload[0].payload
+    if (active && Array.isArray(payload) && payload.length > 0 && payload[0]?.payload) {
+      const { name, value } = payload[0].payload;
       return (
         <div className="bg-white p-2 border border-gray-300 rounded shadow">
           <p>{`Propriedade: ${name}`}</p>
           <p>{`Quantidade: ${value}`}</p>
         </div>
-      )
+      );
     }
-    return null
+    return null;
+  };
+  
+
+  CustomTooltip.propTypes = {
+    active: PropTypes.bool,
+    payload: PropTypes.arrayOf(
+      PropTypes.shape({
+        payload: PropTypes.shape({
+          name: PropTypes.string.isRequired,
+          value: PropTypes.number.isRequired,
+        }),
+      })
+    ),
+  };
+
+  PieChartComponent.propTypes = {
+    rescues: PropTypes.array.isRequired,
+    propertyPath: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
   }
 
   return (
