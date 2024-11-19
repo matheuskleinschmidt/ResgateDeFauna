@@ -226,3 +226,95 @@ Análise de possíveis questões de segurança e como mitigá-las.
 | **Gerenciamento de sessões:** Caso o sistema exija autenticação, é importante estabelecer um mecanismo seguro para gerenciar sessões de usuários. Isso envolve a geração de identificadores de sessão exclusivos, a expiração automática de sessões inativas e a proteção contra ataques de sessão, como a interceptação de cookies.                                                                                                                                  |
 | **Auditoria e registros de segurança:** Implementar recursos de auditoria e registros de segurança pode ajudar a identificar atividades suspeitas e fornecer uma trilha de auditoria para investigações posteriores. Isso pode incluir o registro de eventos relevantes, como logins bem-sucedidos/fracassados, alterações de permissões e acesso a recursos críticos.                                                                                                |
 | **Testes de segurança:** É recomendável realizar testes de segurança, como testes de penetração e testes de vulnerabilidade, para identificar possíveis falhas de segurança no sistema. Esses testes podem ajudar a descobrir vulnerabilidades antes que o sistema seja implantado em produção, permitindo que sejam corrigidas adequadamente.                                                                                                                        |
+
+
+# Como contribuir
+
+## Pré-requisitos
+
+- **Node.js** (v21 ou superior)
+- **npm**
+- **PostgreSQL**
+- **Git**
+
+## Instalação
+
+1. **Clone o repositório:**
+
+    ```bash
+    git clone https://github.com/aquivaiolinkdorepo.git
+    ```
+
+2. **Acesse o diretório do projeto:**
+
+    ```bash
+    cd seu-repositorio
+    ```
+
+3. **Instale as dependências:**
+
+    ```bash
+    npm install
+    ```
+
+## Configuração
+
+1. **Crie o arquivo `.env`:**
+
+    ```bash
+    touch .env
+    ```
+
+2. **Adicione as variáveis de ambiente no `.env`:**
+
+    ### Configuração do Banco de Dados
+
+    ```env
+    DB_USERNAME=seu_usuario
+    DB_PASSWORD=sua_senha
+    DB_HOST=localhost
+    DB_NAME=nome_do_banco
+    DB_PORT=5432
+    ```
+
+    ### Configuração da Autenticação
+
+    ```env
+    AUTH_SECRET=sua_chave_secreta_autenticacao
+    NEXTAUTH_SECRET=sua_chave_secreta_nextauth
+    NEXTAUTH_URL=http://localhost:3000
+    ```
+
+## Configurando o Banco de Dados
+
+1. **Execute as migrações:**
+
+    ```bash
+    npx sequelize-cli db:migrate
+    ```
+
+2. **Execute os seeders:**
+
+    ```bash
+    npx sequelize-cli db:seed:all
+    ```
+
+## Executando o Projeto
+
+### Modo de Desenvolvimento
+
+Inicie o servidor de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+### Modo de Produção
+
+Inicie o servidor :
+
+```bash
+npm run build
+
+npm start
+```
