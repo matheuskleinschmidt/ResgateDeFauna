@@ -22,7 +22,6 @@ export default function App() {
     handleSubmit,
     setValue,
     control,
-    formState: { errors },
   } = useForm();
 
   const [options, setOptions] = useState({
@@ -93,7 +92,7 @@ export default function App() {
     const baseUrl = window.location.origin;
     const apiUrl = `${baseUrl}/api/rescue`;
     try {
-      const response = await axios.post(apiUrl, data);
+      await axios.post(apiUrl, data);
       window.alert("Registro criado com sucesso!");
       router.push("/pages/rescue");
     } catch (error) {
