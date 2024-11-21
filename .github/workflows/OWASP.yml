@@ -13,18 +13,6 @@ jobs:
       - name: Build project with Maven
         run: mvn clean install
       - name: Depcheck
-        uses: dependency-check/Dependency-Check_Action@main
-        id: Depcheck
-        with:
-          project: 'test'
-          path: '.'
-          format: 'HTML'
-          out: 'reports'
-          args: >
-            --failOnCVSS 7
-            --enableRetired
-      - name: Upload Test results
-        uses: actions/upload-artifact@master
-        with:
-           name: Depcheck report
-           path: ${{github.workspace}}/reports
+        run: npm i
+      - name: Run OWASP Dependency-Check
+        run: npm run owasp

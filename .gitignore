@@ -50,3 +50,5 @@ newrelic_agent.log
 
 .early.coverage
 
+dependency-check-bin
+dependency-check-reports

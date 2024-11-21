@@ -1,0 +1,33 @@
+name: Lighthouse
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  performance:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Build do projeto
+        run: npm run build
+
+      - name: Iniciar servidor
+        run: npm start &
+        env:
+          NODE_ENV: production
+
+      - name: Executar Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v8
+        with:
+          urls: 'http://localhost:3000'
