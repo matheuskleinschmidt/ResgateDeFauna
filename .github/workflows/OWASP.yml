@@ -1,0 +1,23 @@
+name: OWASP Dependency-Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  dependency-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Executar OWASP Dependency-Check
+        uses: dependency-check/owasp-dependency-check-action@v3
+        with:
+          project: 'ResgateDeFauna'
+          scan: './'

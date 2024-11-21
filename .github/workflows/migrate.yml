@@ -1,5 +1,3 @@
-# .github/workflows/migrate.yml
-
 name: Run Migrations on Main Push
 
 on:
