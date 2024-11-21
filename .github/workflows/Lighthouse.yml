@@ -27,9 +27,6 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Aguardar o servidor iniciar
-        run: npx wait-on https://resgate-de-fauna-navy.vercel.app/
-
       - name: Executar Lighthouse CI
         uses: treosh/lighthouse-ci-action@v8
         with:
