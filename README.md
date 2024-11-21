@@ -131,16 +131,12 @@ Visão Inicial da Arquitetura: Descrição dos componentes principais e suas int
 | **Funcionalidades:**                                                                           |
 | - Registro de novos usuários.                                                                  |
 | - Login e logout.                                                                              |
-| - Recuperação de senha.                                                                        |
 |                                                                                                |
 | **Componente de Gerenciamento de Resgates**                                                    |
-| **Responsabilidade:** Gerenciar o ciclo de vida dos Resgates.                                  |
+| **Responsabilidade:** Gerenciar os registros dos Resgates.                                  |
 | **Funcionalidades:**                                                                           |
 | - Criação de novos registros de Resgates.                                                      |
 | - Edição e atualização de registros de Resgates.                                               |
-| - Atribuição de registros de Resgates a técnicos e ou analistas.                               |
-| - Controle de status dos registros de Resgates (aberto, em andamento, resolvido, fechado).     |
-| - Priorização e categorização de registros de Resgates.                                        |
 |                                                                                                |
 | **Componente de Catálogo de Espécies de Animais**                                              |
 | **Responsabilidade:** Gerenciar a lista de espécies de animais disponíveis para classificação. |
@@ -149,29 +145,15 @@ Visão Inicial da Arquitetura: Descrição dos componentes principais e suas int
 | - Categorização das espécies.                                                                  |
 | - Pesquisa e filtragem das espécies.                                                           |
 |                                                                                                |
-| **Componente de Notificações**                                                                 |
-| **Responsabilidade:** Gerenciar a comunicação com os usuários.                                 |
-| **Funcionalidades:**                                                                           |
-| - Envio de e-mails.                                                                            |
-| - Gestão de preferências de notificação do usuário.                                            |
-| **Componente de Relatórios e Análises**                                                        |
-| **Responsabilidade:** Fornecer insights e relatórios sobre o desempenho dos resgates.          |
-| **Funcionalidades:**                                                                           |
-| - Análise de comportamento dos animais.                                                        |
-| - Monitoramento da fauna local.                                                                |
-| - Geração de relatórios.                                                                       |
-|                                                                                                |
 | **Componente de Administração**                                                                |
 | **Responsabilidade:** Ferramentas para os administradores gerenciarem a aplicação.             |
 | **Funcionalidades:**                                                                           |
 | - Painel administrativo para gerenciar usuários, e demais componentes do sistema.              |
 | - Controle de acesso administrativo.                                                           |
-| - Monitoramento de atividades.                                                                 |
 | - Configuração e ajustes do sistema.                                                           |
 
 | **Interconexões**                                                                                                                                                            |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| O **Componente de Notificações** pode ser acionado pelo **Componente de Gerenciamento de Resgates** para enviar uma notificação ao usuário quando o status do resgate mudar. |
 | O **Componente de Relatórios e Análises** pode acionar o **Componente de Gerenciamento de Resgates** para gerar diversos relatórios.                                         |
 | O **Componente de Administração** pode acionar o **Componente de Catálogo de Espécies de Animais** para fazer alguma alteração.                                              |
 
@@ -212,7 +194,7 @@ Frameworks e Bibliotecas: Frameworks e bibliotecas principais a serem utilizados
 
 No projeto de desenvolvimento do sistema, será utilizado o método Kanban em conjunto com o software Jira para gerenciar as tarefas e o progresso do projeto. O Kanban é uma abordagem ágil que utiliza um quadro visual para controlar as tarefas em diferentes estágios, enquanto o Jira é uma ferramenta de gestão de projetos amplamente utilizada que fornece recursos avançados de acompanhamento e colaboração. Essa combinação permitirá uma gestão eficiente das tarefas, facilitando a visualização, atribuição e acompanhamento do progresso do projeto.
 
-[Link para o board](https://portfoliocatolicasc.atlassian.net/jira/software/projects/KAN/boards/1)
+[Link para o board](https://github.com/users/matheuskleinschmidt/projects/1)
 
 # 3.4. Considerações de Segurança
 
@@ -224,7 +206,6 @@ Análise de possíveis questões de segurança e como mitigá-las.
 | **Proteção de dados:** Os dados do sistema podem conter informações confidenciais dos usuários ou da organização. É necessário garantir que esses dados sejam armazenados e transmitidos de forma segura. Isso pode envolver o uso de criptografia para proteger os dados em repouso e em trânsito, além de medidas adequadas de segurança para proteger o banco de dados contra acesso não autorizado.                                                               |
 | **Prevenção de ataques de injeção:** É importante mitigar a possibilidade de ataques de injeção, como injeção de SQL e injeção de código. Isso pode ser alcançado por meio do uso de consultas parametrizadas ou prepared statements, o que ajuda a evitar a execução de comandos maliciosos inseridos em campos de entrada.                                                                                                                                          |
 | **Gerenciamento de sessões:** Caso o sistema exija autenticação, é importante estabelecer um mecanismo seguro para gerenciar sessões de usuários. Isso envolve a geração de identificadores de sessão exclusivos, a expiração automática de sessões inativas e a proteção contra ataques de sessão, como a interceptação de cookies.                                                                                                                                  |
-| **Auditoria e registros de segurança:** Implementar recursos de auditoria e registros de segurança pode ajudar a identificar atividades suspeitas e fornecer uma trilha de auditoria para investigações posteriores. Isso pode incluir o registro de eventos relevantes, como logins bem-sucedidos/fracassados, alterações de permissões e acesso a recursos críticos.                                                                                                |
 | **Testes de segurança:** É recomendável realizar testes de segurança, como testes de penetração e testes de vulnerabilidade, para identificar possíveis falhas de segurança no sistema. Esses testes podem ajudar a descobrir vulnerabilidades antes que o sistema seja implantado em produção, permitindo que sejam corrigidas adequadamente.                                                                                                                        |
 
 
