@@ -27,6 +27,9 @@ jobs:
         env:
           NODE_ENV: production
 
+      - name: Aguardar o servidor iniciar
+        run: npx wait-on http://localhost:3000
+
       - name: Executar Lighthouse CI
         uses: treosh/lighthouse-ci-action@v8
         with:
