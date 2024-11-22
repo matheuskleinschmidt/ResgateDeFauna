@@ -3,6 +3,7 @@
 import React from "react";
 import Head from "next/head";
 import "ol/ol.css";
+import Image from "next/image";
 
 import { fromLonLat } from "ol/proj";
 import { Point } from "ol/geom";
@@ -187,12 +188,12 @@ export default function Home() {
         <div className="flex flex-wrap">
           {animalGroups.map((group) => (
             <div key={group.id} className="flex items-center m-2">
-              <img src={group.svg} alt={group.name} className="w-6 h-6 mr-2" />
+              <Image src={group.svg} alt={group.name} width={30} height={30} className="w-6 h-6 mr-2" />
               <span>{group.name}</span>
             </div>
           ))}
           <div className="flex items-center m-2">
-            <img src="/location.svg" alt="Outros" className="w-6 h-6 mr-2" />
+            <Image src="/location.svg" alt="Outros" width={30} height={30}   className="w-6 h-6 mr-2" />
             <span>Outros</span>
           </div>
         </div>
@@ -302,12 +303,12 @@ export default function Home() {
         <div className="flex flex-wrap">
           {animalGroups.map((group) => (
             <div key={group.id} className="flex items-center m-2">
-              <img src={group.svg} alt={group.name} className="w-6 h-6 mr-2" />
+              <Image src={group.svg} alt={group.name} width={30} height={30} className="w-6 h-6 mr-2" />
               <span>{group.name}</span>
             </div>
           ))}
           <div className="flex items-center m-2">
-            <img src="/location.svg" alt="Outros" className="w-6 h-6 mr-2" />
+            <Image src="/location.svg" alt="Outros" width={30} height={30} className="w-6 h-6 mr-2" />
             <span>Outros</span>
           </div>
         </div>
