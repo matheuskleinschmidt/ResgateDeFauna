@@ -108,7 +108,7 @@ module.exports = {
           key: "id",
         },
         allowNull: true,
-      }, 
+      },  
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
