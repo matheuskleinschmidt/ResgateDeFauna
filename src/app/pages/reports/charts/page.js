@@ -45,7 +45,7 @@ export default function Chart() {
   return (
     <div className="flex flex-wrap justify-center min-h-screen gap-4 p-4">
   
-  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[50%] min-h-[410px]">
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
     <LineChartMultiple
       title="Grupos de animais resgatados por mês"
       description="Registro de resgate de animais de grupos iguais agrupados"
@@ -54,7 +54,7 @@ export default function Chart() {
     />
   </div>
 
-  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[50%] min-h-[410px]">
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
     <LineChartMultiple
       title="Animais resgatados por mês"
       description="Registro de resgate de animais de espécies iguais agrupados"
@@ -63,7 +63,7 @@ export default function Chart() {
     />
   </div>
 
-  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[50%] min-h-[410px]">
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
     <BarChartStackedLegend
       title="Grupos de animais resgatados por mês"
       description=""
@@ -72,7 +72,7 @@ export default function Chart() {
     />
   </div>
 
-  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[50%] min-h-[410px]">
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
     <BarChartStackedLegend
       title="Animais resgatados por mês"
       description=""
@@ -126,7 +126,7 @@ export default function Chart() {
     />
   </div>
   
-  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[50%] min-h-[410px]">
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
     <AreaChartStacked
       title="Grupos de animais resgatados por mês"
       description=""
