@@ -2,7 +2,7 @@
 
 import { useMemo } from "react"
 import PropTypes from "prop-types"
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
+import { CartesianGrid, Line, LineChart, XAxis, Legend } from "recharts"
 
 import {
   Card,
@@ -90,8 +90,8 @@ export default function Component({ rescues, propertyPath, title, description })
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
+      <CardContent style={{ width: '100%', height: '100%' }}>
+        <ChartContainer config={chartConfig} style={{ width: '100%', height: '100%' }}>
           <LineChart
             accessibilityLayer
             data={chartData}
@@ -99,6 +99,8 @@ export default function Component({ rescues, propertyPath, title, description })
               left: 12,
               right: 12,
             }}
+            width="100%"
+            height="100%"
           >
             <CartesianGrid vertical={false} />
             <XAxis
@@ -112,6 +114,7 @@ export default function Component({ rescues, propertyPath, title, description })
               }}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <Legend />
             {speciesList.map((name) => (
               <Line
                 key={name}
@@ -120,29 +123,13 @@ export default function Component({ rescues, propertyPath, title, description })
                 stroke={chartConfig[name].color}
                 strokeWidth={2}
                 dot={{
-                    fill: name.color,
-                  }}
+                  fill: name.color,
+                }}
               />
-              
             ))}
           </LineChart>
         </ChartContainer>
       </CardContent>
-      {/* <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              Tendência de aumento neste mês <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              Mostrando ocorrências totais por categoria nos últimos meses
-            </div>
-          </div>
-        </div>
-        </Card>
-      )
-    }
-  */}
     </Card>
   )
 }

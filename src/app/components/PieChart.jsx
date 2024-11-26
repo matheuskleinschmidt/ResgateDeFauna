@@ -120,6 +120,8 @@ export default function PieChartComponent({ rescues, title, description, propert
                   cy="50%"
                   outerRadius={80}
                   label={({ name, value }) => `${name}: ${value}`}
+                  width="100%"
+                  height="100%"
                 >
                   {chartData.map((entry, index) => (
                     <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
