@@ -44,86 +44,96 @@ export default function Chart() {
 
   return (
     <div className="flex flex-wrap justify-center min-h-screen gap-4 p-4">
-      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[380px]">
-        <LineChartMultiple
-          title="Animais resgatados por mês"
-          description="Registro de regaste de animais de espécies iguais agrupados"
-          rescues={rescues}
-          propertyPath="species.commonName"
-        />
-      </div>
-      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[380px]">
-        <LineChartMultiple
-          title="Grupos de animais resgatados por mês"
-          description="Registro de regaste de animais de grupos iguais agrupados"
-          rescues={rescues}
-          propertyPath="species.AnimalGroup.groupName"
-        />
-      </div>
-      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[380px]">
-        <BarChartStackedLegend
-          title="Animais resgatados por mês"
-          description=""
-          rescues={rescues}
-          propertyPath="species.commonName"
-        />
-      </div>
-      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[380px]">
-        <BarChartStackedLegend
-          title="Grupos de animais resgatados por mês"
-          description=""
-          rescues={rescues}
-          propertyPath="species.AnimalGroup.groupName"
-        />
-      </div>
-      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
-        <PieChart
-          title="Registros filtrados por tipo de chamada"
-          description=""
-          propertyPath="calledBy.name"
-          rescues={rescues}
-        />
-      </div>
-      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
-        <PieChart
-          title="Registros filtrados por intervalo idade"
-          description=""
-          propertyPath="ageRange.name"
-          rescues={rescues}
-        />
-      </div>
-      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
-        <PieChart
-          title="Registros filtrados por tipo de orientação"
-          description="Tipo de orientação dado a pessoa que reportou o resgate"
-          propertyPath="procedureOrientationBy.name"
-          rescues={rescues}
-        />
-      </div>
-      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
-        <PieChart
-          title="Registros filtrados por situação dos animais"
-          description=""
-          propertyPath="situation.name"
-          rescues={rescues}
-        />
-      </div>
-      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
-        <PieChart
-          title="Registros filtrados por tipo de Pós-resgate"
-          description="O que foi feito com o animal após o resgate"
-          propertyPath="postRescue.name"
-          rescues={rescues}
-        />
-      </div>
-      <div className="w-full max-w-xl flex-1 min-w-[400px] min-h-[500px]">
-        <AreaChartStacked
-          title="Grupos de animais resgatados por mês"
-          description=""
-          data={rescues}
-          propertyPath="species.AnimalGroup.groupName"
-        />
-      </div>
-    </div>
+  
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
+    <LineChartMultiple
+      title="Grupos de animais resgatados por mês"
+      description="Registro de resgate de animais de grupos iguais agrupados"
+      rescues={rescues}
+      propertyPath="species.AnimalGroup.groupName"
+    />
+  </div>
+
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
+    <LineChartMultiple
+      title="Animais resgatados por mês"
+      description="Registro de resgate de animais de espécies iguais agrupados"
+      rescues={rescues}
+      propertyPath="species.commonName"
+    />
+  </div>
+
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
+    <BarChartStackedLegend
+      title="Grupos de animais resgatados por mês"
+      description=""
+      rescues={rescues}
+      propertyPath="species.AnimalGroup.groupName"
+    />
+  </div>
+
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
+    <BarChartStackedLegend
+      title="Animais resgatados por mês"
+      description=""
+      rescues={rescues}
+      propertyPath="species.commonName"
+    />
+  </div>
+
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[400px] min-h-[500px]">
+    <PieChart
+      title="Registros filtrados por tipo de chamada"
+      description=""
+      propertyPath="calledBy.name"
+      rescues={rescues}
+    />
+  </div>
+  
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[400px] min-h-[500px]">
+    <PieChart
+      title="Registros filtrados por intervalo idade"
+      description=""
+      propertyPath="ageRange.name"
+      rescues={rescues}
+    />
+  </div>
+  
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[400px] min-h-[500px]">
+    <PieChart
+      title="Registros filtrados por tipo de orientação"
+      description="Tipo de orientação dado a pessoa que reportou o resgate"
+      propertyPath="procedureOrientationBy.name"
+      rescues={rescues}
+    />
+  </div>
+  
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[400px] min-h-[500px]">
+    <PieChart
+      title="Registros filtrados por situação dos animais"
+      description=""
+      propertyPath="situation.name"
+      rescues={rescues}
+    />
+  </div>
+  
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[400px] min-h-[500px]">
+    <PieChart
+      title="Registros filtrados por tipo de Pós-resgate"
+      description="O que foi feito com o animal após o resgate"
+      propertyPath="postRescue.name"
+      rescues={rescues}
+    />
+  </div>
+  
+  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
+    <AreaChartStacked
+      title="Grupos de animais resgatados por mês"
+      description=""
+      data={rescues}
+      propertyPath="species.AnimalGroup.groupName"
+    />
+  </div>
+</div>
   );
 }
