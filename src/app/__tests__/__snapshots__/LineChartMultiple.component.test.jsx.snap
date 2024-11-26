@@ -21,9 +21,12 @@ exports[`AnimalRecordsChart > deve corresponder ao snapshot 1`] = `
     </div>
     <div
       data-testid="card-content"
+      style="width: 100%; height: 100%;"
     >
       <div
+        config="[object Object]"
         data-testid="chart-container"
+        style="width: 100%; height: 100%;"
       >
         <div
           data-testid="responsive-container"
@@ -31,7 +34,9 @@ exports[`AnimalRecordsChart > deve corresponder ao snapshot 1`] = `
           <div
             data="[object Object],[object Object],[object Object]"
             data-testid="line-chart"
+            height="100%"
             margin="[object Object]"
+            width="100%"
           >
             <div
               data-testid="cartesian-grid"
@@ -42,17 +47,26 @@ exports[`AnimalRecordsChart > deve corresponder ao snapshot 1`] = `
             <div
               data-key="month"
               data-testid="x-axis"
+              tickmargin="8"
             >
               XAxis
             </div>
             <div
+              content="[object Object]"
               data-testid="chart-tooltip"
             />
+            <div
+              data-testid="legend"
+            >
+              Legend
+            </div>
             <div
               data-key="Dog"
               data-stroke="hsl(var(--chart-1))"
               data-stroke-width="2"
               data-testid="line"
+              dot="[object Object]"
+              type="monotone"
             >
               Line
             </div>
@@ -61,6 +75,8 @@ exports[`AnimalRecordsChart > deve corresponder ao snapshot 1`] = `
               data-stroke="hsl(var(--chart-2))"
               data-stroke-width="2"
               data-testid="line"
+              dot="[object Object]"
+              type="monotone"
             >
               Line
             </div>
@@ -69,6 +85,8 @@ exports[`AnimalRecordsChart > deve corresponder ao snapshot 1`] = `
               data-stroke="hsl(var(--chart-3))"
               data-stroke-width="2"
               data-testid="line"
+              dot="[object Object]"
+              type="monotone"
             >
               Line
             </div>

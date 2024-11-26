@@ -1,43 +1,89 @@
 import { render, screen } from '@testing-library/react';
-import AnimalRecordsChart from '@/app/components/LineChartMultiple'
+import Component from '@/app/components/LineChartMultiple';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 vi.mock('@/components/ui/card', () => ({
-  Card: ({ children }) => <div data-testid="card">{children}</div>,
-  CardHeader: ({ children }) => <div data-testid="card-header">{children}</div>,
-  CardTitle: ({ children }) => <h2 data-testid="card-title">{children}</h2>,
-  CardDescription: ({ children }) => <p data-testid="card-description">{children}</p>,
-  CardContent: ({ children }) => <div data-testid="card-content">{children}</div>,
+  Card: ({ children, ...props }) => (
+    <div data-testid="card" {...props}>
+      {children}
+    </div>
+  ),
+  CardHeader: ({ children, ...props }) => (
+    <div data-testid="card-header" {...props}>
+      {children}
+    </div>
+  ),
+  CardTitle: ({ children, ...props }) => (
+    <h2 data-testid="card-title" {...props}>
+      {children}
+    </h2>
+  ),
+  CardDescription: ({ children, ...props }) => (
+    <p data-testid="card-description" {...props}>
+      {children}
+    </p>
+  ),
+  CardContent: ({ children, ...props }) => (
+    <div data-testid="card-content" {...props}>
+      {children}
+    </div>
+  ),
 }));
 
 vi.mock('@/components/ui/chart', () => ({
-  ChartContainer: ({ children }) => (
-    <div data-testid="chart-container">
+  ChartContainer: ({ children, ...props }) => (
+    <div data-testid="chart-container" {...props}>
       <div data-testid="responsive-container">{children}</div>
     </div>
   ),
-  ChartTooltip: ({ children }) => <div data-testid="chart-tooltip">{children}</div>,
-  ChartTooltipContent: () => <div data-testid="chart-tooltip-content"></div>,
+  ChartTooltip: ({ children, ...props }) => (
+    <div data-testid="chart-tooltip" {...props}>
+      {children}
+    </div>
+  ),
+  ChartTooltipContent: (props) => (
+    <div data-testid="chart-tooltip-content" {...props}></div>
+  ),
 }));
 
-vi.mock('recharts', () => {
-  const OriginalRecharts = vi.importActual('recharts');
+vi.mock('recharts', async () => {
+  const OriginalRecharts = await vi.importActual('recharts');
   return {
     ...OriginalRecharts,
-    LineChart: ({ children, ...props }) => <div data-testid="line-chart" {...props}>{children}</div>,
+    LineChart: ({ children, ...props }) => (
+      <div data-testid="line-chart" {...props}>
+        {children}
+      </div>
+    ),
     Line: ({ dataKey, stroke, strokeWidth, ...props }) => (
-      <div data-testid="line" data-key={dataKey} data-stroke={stroke} data-stroke-width={strokeWidth}>
+      <div
+        data-testid="line"
+        data-key={dataKey}
+        data-stroke={stroke}
+        data-stroke-width={strokeWidth}
+        {...props}
+      >
         Line
       </div>
     ),
     XAxis: ({ dataKey, tickFormatter, ...props }) => (
-      <div data-testid="x-axis" data-key={dataKey} data-tick-formatter={tickFormatter}>
+      <div
+        data-testid="x-axis"
+        data-key={dataKey}
+        data-tick-formatter={tickFormatter}
+        {...props}
+      >
         XAxis
       </div>
     ),
     CartesianGrid: ({ vertical, ...props }) => (
-      <div data-testid="cartesian-grid" data-vertical={vertical}>
+      <div data-testid="cartesian-grid" data-vertical={vertical} {...props}>
         CartesianGrid
+      </div>
+    ),
+    Legend: (props) => (
+      <div data-testid="legend" {...props}>
+        Legend
       </div>
     ),
   };
@@ -58,11 +104,12 @@ describe('AnimalRecordsChart', () => {
 
   const propertyPath = 'animal.species';
   const title = 'Relatório de Animais Resgatados';
-  const description = 'Gráfico mostrando a quantidade de animais resgatados por espécie e data.';
+  const description =
+    'Gráfico mostrando a quantidade de animais resgatados por espécie e data.';
 
   it('deve renderizar o componente com título e descrição', () => {
     render(
-      <AnimalRecordsChart
+      <Component
         rescues={mockRescues}
         propertyPath={propertyPath}
         title={title}
@@ -71,7 +118,9 @@ describe('AnimalRecordsChart', () => {
     );
 
     expect(screen.getByTestId('card-title')).toHaveTextContent(title);
-    expect(screen.getByTestId('card-description')).toHaveTextContent(description);
+    expect(screen.getByTestId('card-description')).toHaveTextContent(
+      description
+    );
 
     expect(screen.getByTestId('line-chart')).toBeInTheDocument();
     expect(screen.getByTestId('responsive-container')).toBeInTheDocument();
@@ -81,7 +130,7 @@ describe('AnimalRecordsChart', () => {
 
   it('deve processar os dados corretamente e renderizar as linhas correspondentes', () => {
     render(
-      <AnimalRecordsChart
+      <Component
         rescues={mockRescues}
         propertyPath={propertyPath}
         title={title}
@@ -90,20 +139,23 @@ describe('AnimalRecordsChart', () => {
     );
 
     const lines = screen.getAllByTestId('line');
-    expect(lines).toHaveLength(3); 
+    expect(lines).toHaveLength(3);
 
     const expectedKeys = ['Dog', 'Cat', 'Rabbit'];
     expectedKeys.forEach((key, index) => {
       const line = lines[index];
       expect(line).toHaveAttribute('data-key', key);
-      expect(line).toHaveAttribute('data-stroke', `hsl(var(--chart-${index + 1}))`);
+      expect(line).toHaveAttribute(
+        'data-stroke',
+        `hsl(var(--chart-${index + 1}))`
+      );
       expect(line).toHaveAttribute('data-stroke-width', '2');
     });
   });
 
   it('deve renderizar corretamente com dados vazios', () => {
     render(
-      <AnimalRecordsChart
+      <Component
         rescues={[]}
         propertyPath={propertyPath}
         title={title}
@@ -123,7 +175,7 @@ describe('AnimalRecordsChart', () => {
     ];
 
     render(
-      <AnimalRecordsChart
+      <Component
         rescues={dataWithNulls}
         propertyPath={propertyPath}
         title={title}
@@ -141,7 +193,7 @@ describe('AnimalRecordsChart', () => {
 
   it('deve atribuir cores corretamente às linhas do gráfico', () => {
     render(
-      <AnimalRecordsChart
+      <Component
         rescues={mockRescues}
         propertyPath={propertyPath}
         title={title}
@@ -163,7 +215,7 @@ describe('AnimalRecordsChart', () => {
 
   it('deve corresponder ao snapshot', () => {
     const { container } = render(
-      <AnimalRecordsChart
+      <Component
         rescues={mockRescues}
         propertyPath={propertyPath}
         title={title}
