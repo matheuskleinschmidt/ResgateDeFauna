@@ -14,6 +14,6 @@ export default defineConfig({
     environment: "jsdom",
     exclude: ["**/*.controller.test.js", "**/node_modules/**"],
     setupFiles: "./setupTests.js",
-    coverage: { exclude: ['database/**','**/route.js', '*.config.js','**/.next/**', '**/cypress/**', '**/*.controller.test.js','**/api/**', '**/public/**'] },
+    coverage: { exclude: ['database/**','**/route.js', '*.config.js','**/.next/**', '**/cypress/**', '**/*.controller.test.js','**/api/**', '**/public/**', '**/components/ui/**'] },
   },
 });
