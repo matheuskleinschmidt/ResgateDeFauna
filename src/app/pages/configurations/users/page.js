@@ -82,7 +82,7 @@ const UserList = () => {
 
       <Table isStriped isCompact>
         <TableHeader>
-          <TableColumn>ID</TableColumn>
+          {/* <TableColumn>ID</TableColumn> */}
           <TableColumn>Nome</TableColumn>
           <TableColumn>Email</TableColumn>
           <TableColumn>Função</TableColumn>
@@ -92,7 +92,7 @@ const UserList = () => {
           {Array.isArray(userList) && userList.length > 0
             ? userList.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell>{user.id}</TableCell>
+                  {/* <TableCell>{user.id}</TableCell> */}
                   <TableCell>{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.role}</TableCell>
