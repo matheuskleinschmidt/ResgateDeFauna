@@ -20,7 +20,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 
 const COLORS = [
   "hsl(var(--chart-1))",
@@ -84,22 +84,24 @@ export default function Component({ data, propertyPath, title, description }) {
     propertyPath: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
-  }
+  };
 
   return (
-    <Card>
+    <Card className="h-full flex flex-col overflow-hidden">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <ResponsiveContainer width="100%" height={400}>
+      <CardContent className="h-full flex-1">
+        <ChartContainer config={chartConfig} className="h-full w-full">
+          <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={chartData}
               margin={{
-                left: 12,
-                right: 12,
+                top: 10,
+                right: 10,
+                left: 0,
+                bottom: 10,
               }}
             >
               <CartesianGrid vertical={false} />
