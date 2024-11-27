@@ -11,7 +11,8 @@ const customJestConfig = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   testPathIgnorePatterns: [
-    '\\.component\\.test\\.(js|jsx)$'
+    '\\.component\\.test\\.(js|jsx)$',
+    '\\.page\\.test\\.(js|jsx)$'
   ],
 }
 
