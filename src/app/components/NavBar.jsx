@@ -3,12 +3,12 @@
 import { useState, useEffect, useCallback } from "react";
 import {
   Navbar,
-  NavbarBrand,
   NavbarMenuToggle,
   NavbarMenuItem,
   NavbarMenu,
   NavbarContent,
   Link,
+  NavbarItem,
 } from "@nextui-org/react";
 import { AcmeLogo } from "./AcmeLogo.jsx";
 import axios from "axios";
@@ -40,7 +40,9 @@ export default function App() {
       const data = response.data;
 
       const calledBys = transformArray(data.calledBys);
-      const procedureOrientationBys = transformArray(data.procedureOrientationBys);
+      const procedureOrientationBys = transformArray(
+        data.procedureOrientationBys
+      );
       const ageRanges = transformArray(data.ageRanges);
       const situations = transformArray(data.situations);
       const postRescues = transformArray(data.postRescues);
@@ -59,7 +61,7 @@ export default function App() {
     } catch (error) {
       console.error("Erro ao buscar dados utils:", error);
     }
-  }, []); 
+  }, []);
 
   const fetchSpeciesAndAnimalGroups = useCallback(async () => {
     try {
@@ -81,7 +83,9 @@ export default function App() {
       fetchUtils();
     }
 
-    const speciesAndAnimalGroups = localStorage.getItem("speciesAndAnimalGroups");
+    const speciesAndAnimalGroups = localStorage.getItem(
+      "speciesAndAnimalGroups"
+    );
     if (!speciesAndAnimalGroups) {
       fetchSpeciesAndAnimalGroups();
     }
@@ -97,22 +101,32 @@ export default function App() {
 
   return (
     <Navbar
+      position="static"
       isBordered
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
       className="mb-4"
     >
-      <NavbarContent justify="start" align="center" css={{ flex: 1 }}>
-        <NavbarMenuToggle aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"} />
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+        />
       </NavbarContent>
 
-      <NavbarContent justify="end" align="center" css={{ flex: 1 }}>
-        <NavbarBrand>
-          <AcmeLogo />
-          <Link color="foreground" href="/">
-            <p className="font-bold text-inherit">Fujama</p>
-          </Link>
-        </NavbarBrand>
+      <NavbarContent
+        className="hidden sm:flex gap-4"
+        justify="center"
+      ></NavbarContent>
+
+      <NavbarContent justify="end">
+        <Link color="foreground" href="/">
+          <NavbarItem>
+            <AcmeLogo />
+          </NavbarItem>
+          <NavbarItem>
+            <p className="font-bold text-inherit -ml-2">Fujama</p>
+          </NavbarItem>
+        </Link>
       </NavbarContent>
 
       <NavbarMenu>
