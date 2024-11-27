@@ -101,6 +101,7 @@ export default function App() {
 
   return (
     <Navbar
+      position="static"
       isBordered
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
