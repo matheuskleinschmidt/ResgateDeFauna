@@ -229,7 +229,8 @@ export default function App() {
         defaultValue={null}
         render={({ field }) => (
           <TimeInput
-            label="Hora do evento"
+            label="Hora da ocorrência"
+            hourCycle={24}
             className="w-full max-w-xs mb-4"
             value={field.value}
             onChange={field.onChange}

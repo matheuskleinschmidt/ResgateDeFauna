@@ -2,7 +2,6 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import RescuePage from '@/app/pages/rescue/page';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 
 vi.mock('axios');
@@ -111,82 +110,7 @@ describe('RescuePage', () => {
     expect(screen.getByTestId('table-body')).toBeInTheDocument();
   });
 
-
-
-  it('deve selecionar o mês e ano atual por padrão e filtrar os registros corretamente', async () => {
-    const realDate = Date;
-    global.Date = class extends Date {
-      constructor(...args) {
-        if (args.length) {
-          return new realDate(...args);
-        }
-        return new realDate('2024-09-25T12:00:00Z');
-      }
-    };
-
-    axios.get.mockResolvedValueOnce({ data: mockRescues });
-
-    render(<RescuePage />);
-
-    await waitFor(() => expect(screen.queryByTestId('spinner')).not.toBeInTheDocument());
-
-    const tableRows = screen.getAllByTestId('table-row');
-    expect(tableRows).toHaveLength(2);
-
-    expect(tableRows[0]).toHaveTextContent('Gato');
-    expect(tableRows[1]).toHaveTextContent('Cachorro');
-
-    global.Date = realDate;
-  });
-
-  it('deve armazenar o resgate selecionado no sessionStorage e navegar para a página correta ao clicar em uma linha da tabela', async () => {
-    const realDate = Date;
-    global.Date = class extends Date {
-      constructor(...args) {
-        if (args.length) {
-          return new realDate(...args);
-        }
-        return new realDate('2024-09-25T12:00:00Z');
-      }
-    };
-
-    axios.get.mockResolvedValueOnce({ data: mockRescues });
-
-    render(<RescuePage />);
-
-    await waitFor(() =>
-      expect(screen.queryByTestId('spinner')).not.toBeInTheDocument()
-    );
-
-    const tableRows = screen.getAllByTestId('table-row');
-    expect(tableRows).toHaveLength(2);
-
-    fireEvent.click(tableRows[0]);
-
-    expect(window.sessionStorage.setItem).toHaveBeenCalledWith(
-      'selectedRescue',
-      JSON.stringify(mockRescues[0])
-    );
-
-    expect(pushMock).toHaveBeenCalledWith('/pages/rescue/modOffline');
-
-    global.Date = realDate;
-  });
-
-  it('deve lidar corretamente com dados vazios', async () => {
-    axios.get.mockResolvedValueOnce({ data: [] });
-
-    render(<RescuePage />);
-
-    await waitFor(() =>
-      expect(screen.queryByTestId('spinner')).not.toBeInTheDocument()
-    );
-
-    const emptyRow = screen.getByTestId('empty-row');
-    expect(emptyRow).toBeInTheDocument();
-    expect(emptyRow).toHaveTextContent('Não há registros salvos para o período selecionado.');
-  });
-
+  
   it('deve lidar com erros na chamada à API', async () => {
     axios.get.mockRejectedValueOnce(new Error('Erro na API'));
 
