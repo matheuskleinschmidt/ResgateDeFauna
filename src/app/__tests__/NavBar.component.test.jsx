@@ -17,6 +17,7 @@ vi.mock('@nextui-org/react', () => ({
   NavbarMenu: ({ children }) => <div data-testid="navbar-menu">{children}</div>,
   NavbarContent: ({ children, justify, align, css }) => <div data-testid="navbar-content" data-justify={justify} data-align={align} style={css}>{children}</div>,
   Link: ({ children, href, className, size }) => <a data-testid="link" href={href} className={className} data-size={size}>{children}</a>,
+  NavbarItem: ({ children }) => <div data-testid="navbar-item">{children}</div>,
 }));
 
 vi.mock('./AcmeLogo.jsx', () => ({

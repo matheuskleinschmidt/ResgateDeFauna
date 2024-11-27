@@ -5,12 +5,10 @@ exports[`App Component > deve corresponder ao snapshot 1`] = `
   <div
     class="mb-4"
     data-testid="navbar"
+    position="static"
   >
     <div
-      data-align="center"
-      data-justify="start"
       data-testid="navbar-content"
-      style="flex: 1;"
     >
       <button
         aria-label="Abrir menu"
@@ -18,46 +16,52 @@ exports[`App Component > deve corresponder ao snapshot 1`] = `
       />
     </div>
     <div
-      data-align="center"
+      data-justify="center"
+      data-testid="navbar-content"
+    />
+    <div
       data-justify="end"
       data-testid="navbar-content"
-      style="flex: 1;"
     >
-      <div
-        data-testid="navbar-brand"
+      <a
+        data-testid="link"
+        href="/"
       >
-        <svg
-          height="36"
-          preserveAspectRatio="xMidYMid meet"
-          version="1.0"
-          viewBox="0 0 192.000000 192.000000"
-          width="36"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          data-testid="navbar-item"
         >
-          <g
-            fill="#000000"
-            stroke="none"
-            transform="translate(0.000000,192.000000) scale(0.100000,-0.100000)"
+          <svg
+            height="36"
+            preserveAspectRatio="xMidYMid meet"
+            version="1.0"
+            viewBox="0 0 192.000000 192.000000"
+            width="36"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              d="M700 1751 c-81 -61 -135 -142 -166 -249 -3 -10 -15 -7 -46 12 -99 56 -260 146 -263 146 -6 0 -44 -106 -56 -153 -18 -73 -7 -239 21 -312 44 -115 128 -222 220 -280 29 -18 39 -30 32 -38 -5 -7 -105 -196 -222 -421 -167 -321 -210 -410 -199 -417 56 -36 221 -37 301 -2 25 12 68 41 93 64 48 44 105 131 105 160 0 13 17 17 103 22 286 16 537 160 687 395 l50 77 -57 7 c-204 27 -361 232 -338 440 18 160 164 319 315 343 79 13 80 14 80 46 l0 30 -72 -7 c-103 -9 -210 -38 -301 -81 -42 -20 -79 -34 -81 -32 -2 2 -32 68 -67 147 -34 78 -68 142 -75 142 -7 0 -35 -18 -64 -39z m-333 -1447 c-3 -3 -12 -4 -19 -1 -8 3 -5 6 6 6 11 1 17 -2 13 -5z m106 -21 c-7 -2 -21 -2 -30 0 -10 3 -4 5 12 5 17 0 24 -2 18 -5z"
-            />
-            <path
-              d="M1192 1234 c-24 -16 -30 -61 -12 -94 19 -35 88 -33 112 4 14 21 8 66 -12 86 -24 24 -57 26 -88 4z"
-            />
-          </g>
-        </svg>
-        <a
-          data-testid="link"
-          href="/"
+            <g
+              fill="#000000"
+              stroke="none"
+              transform="translate(0.000000,192.000000) scale(0.100000,-0.100000)"
+            >
+              <path
+                d="M700 1751 c-81 -61 -135 -142 -166 -249 -3 -10 -15 -7 -46 12 -99 56 -260 146 -263 146 -6 0 -44 -106 -56 -153 -18 -73 -7 -239 21 -312 44 -115 128 -222 220 -280 29 -18 39 -30 32 -38 -5 -7 -105 -196 -222 -421 -167 -321 -210 -410 -199 -417 56 -36 221 -37 301 -2 25 12 68 41 93 64 48 44 105 131 105 160 0 13 17 17 103 22 286 16 537 160 687 395 l50 77 -57 7 c-204 27 -361 232 -338 440 18 160 164 319 315 343 79 13 80 14 80 46 l0 30 -72 -7 c-103 -9 -210 -38 -301 -81 -42 -20 -79 -34 -81 -32 -2 2 -32 68 -67 147 -34 78 -68 142 -75 142 -7 0 -35 -18 -64 -39z m-333 -1447 c-3 -3 -12 -4 -19 -1 -8 3 -5 6 6 6 11 1 17 -2 13 -5z m106 -21 c-7 -2 -21 -2 -30 0 -10 3 -4 5 12 5 17 0 24 -2 18 -5z"
+              />
+              <path
+                d="M1192 1234 c-24 -16 -30 -61 -12 -94 19 -35 88 -33 112 4 14 21 8 66 -12 86 -24 24 -57 26 -88 4z"
+              />
+            </g>
+          </svg>
+        </div>
+        <div
+          data-testid="navbar-item"
         >
           <p
-            class="font-bold text-inherit"
+            class="font-bold text-inherit -ml-2"
           >
             Fujama
           </p>
-        </a>
-      </div>
+        </div>
+      </a>
     </div>
     <div
       data-testid="navbar-menu"
