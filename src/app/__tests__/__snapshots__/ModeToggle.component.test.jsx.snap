@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ModeToggle Component > deve corresponder ao snapshot 1`] = `
+<div>
+  <div
+    data-testid="dropdown-menu"
+  >
+    <div
+      data-testid="dropdown-menu-trigger"
+    >
+      <button
+        data-testid="button"
+        variant="outline"
+      >
+         
+        <svg
+          class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+          data-testid="sun-icon"
+        />
+        <svg
+          class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+          data-testid="moon-icon"
+        />
+        <span
+          class="sr-only"
+        >
+          Toggle theme
+        </span>
+         
+      </button>
+    </div>
+    <div
+      data-testid="dropdown-menu-content"
+    >
+      <div
+        data-testid="dropdown-menu-item"
+      >
+         
+        Light
+         
+      </div>
+      <div
+        data-testid="dropdown-menu-item"
+      >
+         
+        Dark
+         
+      </div>
+      <div
+        data-testid="dropdown-menu-item"
+      >
+         
+        System
+         
+      </div>
+    </div>
+  </div>
+</div>
+`;
