@@ -13,6 +13,7 @@ import {
 import { AcmeLogo } from "./AcmeLogo.jsx";
 import axios from "axios";
 import { signOut } from "next-auth/react";
+import {ModeToggle} from "./ModeToggle";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -141,6 +142,9 @@ export default function App() {
           <Link className="w-full" size="lg">
             <button onClick={handleRefresh}>Renovar cache</button>
           </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <ModeToggle />
         </NavbarMenuItem>
         <NavbarMenuItem>
           <Link className="w-full" size="lg">

@@ -1,0 +1,85 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LoginForm Component > deve corresponder ao snapshot 1`] = `
+<div>
+  <div
+    class="mx-auto max-w-sm"
+    data-testid="card"
+  >
+    <form>
+      <div
+        data-testid="card-header"
+      >
+        <h1
+          class="text-2xl"
+          data-testid="card-title"
+        >
+          Login
+        </h1>
+        <div
+          data-testid="card-description"
+        >
+          Entre com seu email e senha para acessar sua conta
+        </div>
+      </div>
+      <div
+        data-testid="card-content"
+      >
+        <div
+          class="grid gap-4"
+        >
+          <div
+            class="grid gap-2"
+          >
+            <label
+              for="email"
+            >
+              Email
+            </label>
+            <input
+              data-testid="input"
+              id="email"
+              name="email"
+              placeholder="m@example.com"
+              required=""
+              type="email"
+            />
+          </div>
+          <div
+            class="grid gap-2"
+          >
+            <div
+              class="flex items-center"
+            >
+              <label
+                for="password"
+              >
+                Password
+              </label>
+              <a
+                class="ml-auto inline-block text-sm underline"
+                href="#"
+              >
+                Esqueceu sua senha?
+              </a>
+            </div>
+            <input
+              data-testid="input"
+              id="password"
+              name="password"
+              required=""
+              type="password"
+            />
+          </div>
+          <button
+            class="w-full"
+            type="submit"
+          >
+            Login
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;
