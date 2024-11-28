@@ -1,18 +1,21 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
+import React from 'react';
 import App from '@/app/Provider';
 
-vi.mock('next-auth/react', () => ({
-  SessionProvider: ({ children }) => (
-    <div data-testid="session-provider">{children}</div>
-  ),
-}));
+vi.mock('next-auth/react', () => {
+  return {
+    SessionProvider: ({ children }) =>
+      React.createElement('div', { 'data-testid': 'session-provider' }, children),
+  };
+});
 
-vi.mock('@nextui-org/react', () => ({
-  NextUIProvider: ({ children }) => (
-    <div data-testid="nextui-provider">{children}</div>
-  ),
-}));
+vi.mock('@nextui-org/react', () => {
+  return {
+    NextUIProvider: ({ children }) =>
+      React.createElement('div', { 'data-testid': 'nextui-provider' }, children),
+  };
+});
 
 describe('App Component', () => {
   it('deve renderizar o componente App com children', () => {
