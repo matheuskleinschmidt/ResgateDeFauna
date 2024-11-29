@@ -48,13 +48,24 @@ export default function Home() {
       try {
         const baseUrl = window.location.origin;
         const apiUrl = `${baseUrl}/api/rescue`;
-        const response = await axios.get(apiUrl);
-        setRescues(response.data);
+      
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          cache: 'force-cache',
+        });
+      
+        if (!response.ok) {
+          throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
+        }
+      
+        const data = await response.json(); 
+        setRescues(data);                   
       } catch (error) {
         console.error("Erro ao fazer a requisição:", error);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); 
       }
+      
     };
 
     fetchRescueData();
