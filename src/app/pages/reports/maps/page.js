@@ -52,6 +52,9 @@ export default function Home() {
         const response = await fetch(apiUrl, {
           method: 'GET',
           cache: 'force-cache',
+          headers: {
+            'Cache-Control': 'max-age=600',
+          },
         });
       
         if (!response.ok) {
