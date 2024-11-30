@@ -28,6 +28,8 @@ describe('App Component', () => {
     ];
 
     expectedLinks.forEach(({ text, href }) => {
+      console.log('text', text);
+      console.log('href', href);
       const linkElement = screen.getByText(text);
       expect(linkElement).toBeInTheDocument();
       expect(linkElement.closest('a')).toHaveAttribute('href', href);
@@ -43,7 +45,8 @@ describe('App Component', () => {
     const expectedLinks = [
       { text: 'Adicionar resgate', href: '/pages/rescue/addRescue' },
       { text: 'Listar resgates', href: '/pages/rescue' },
-      { text: 'Relatórios', href: '/pages/reports' },
+      { text: 'Mapas', href: '/pages/reports/maps' },
+      { text: 'Gráficos', href: '/pages/reports/charts' },
       { text: 'Configurações', href: '/pages/configurations' },
     ];
 
