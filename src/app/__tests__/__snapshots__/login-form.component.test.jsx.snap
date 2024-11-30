@@ -54,14 +54,8 @@ exports[`LoginForm Component > deve corresponder ao snapshot 1`] = `
               <label
                 for="password"
               >
-                Password
+                Senha
               </label>
-              <a
-                class="ml-auto inline-block text-sm underline"
-                href="#"
-              >
-                Esqueceu sua senha?
-              </a>
             </div>
             <input
               data-testid="input"
