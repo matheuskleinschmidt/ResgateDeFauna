@@ -76,7 +76,7 @@ const AnimalGroupList = () => {
   return (
     <div>
     <div className="flex justify-end">
-      <Button className="flex-end ax-w-xs m-2" onClick={handleCreate}>Criar Novo Grupo</Button>
+      <Button className="flex-end ax-w-xs m-2" color="success" variant="ghost" onClick={handleCreate}>Criar Novo Grupo</Button>
     </div>
       
 
@@ -93,16 +93,19 @@ const AnimalGroupList = () => {
                   <TableCell>{group.id}</TableCell>
                   <TableCell>{group.groupName}</TableCell>
                   <TableCell>
-                    <Button size="sm" onClick={() => handleEdit(group)}>
+                  <div className=" sm:flex gap-4">
+                    <Button size="sm" color="warning" variant="ghost" onClick={() => handleEdit(group)}>
                       Editar
                     </Button>
                     <Button
                       size="sm"
-                      color="error"
+                      color="danger"
+                      variant="bordered"
                       onClick={() => handleDelete(group.id)}
                     >
                       Deletar
                     </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))
@@ -172,7 +175,7 @@ const AnimalGroupForm = ({ group, onSubmit, onClose }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmitForm)}>
-      <Input {...register('groupName')} label="Nome do Grupo" placeholder="Nome do Grupo" />
+      <Input className="mb-4" required {...register('groupName')} label="Nome do Grupo" placeholder="Nome do Grupo" />
       <Button type="submit">Salvar</Button>
     </form>
   );
