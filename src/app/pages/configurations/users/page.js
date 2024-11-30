@@ -77,7 +77,7 @@ const UserList = () => {
   return (
     <div>
       <div className="flex justify-end">
-        <Button className="flex-end max-w-xs m-2" onClick={handleCreate}>Criar Usuário</Button>
+        <Button className="flex-end max-w-xs m-2" color="success" variant="ghost" onClick={handleCreate}>Criar Usuário</Button>
       </div>
 
       <Table isStriped isCompact>
@@ -97,16 +97,19 @@ const UserList = () => {
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.role}</TableCell>
                   <TableCell>
-                    <Button size="sm" onClick={() => handleEdit(user)}>
+                  <div className=" sm:flex gap-4">
+                    <Button size="sm" color="warning" variant="ghost" onClick={() => handleEdit(user)}>
                       Editar
                     </Button>
                     <Button
                       size="sm"
-                      color="error"
+                      color="danger"
+                      variant="bordered"
                       onClick={() => handleDelete(user.id)}
                     >
                       Deletar
                     </Button>
+                  </div>
                   </TableCell>
                 </TableRow>
               ))
