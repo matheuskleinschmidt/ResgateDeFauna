@@ -19,7 +19,7 @@ export default function ConfigurationsPage() {
         <Card className="w-full max-w-xs mb-4">
           <CardBody>
             <Link href="/pages/configurations/animalgroups">
-              <p>Grupo de Animais(Species)</p>
+              <p>Grupo de Animais</p>
             </Link>
           </CardBody>
         </Card>
@@ -27,7 +27,7 @@ export default function ConfigurationsPage() {
           <Card className="w-full max-w-xs mb-4">
             <CardBody>
               <Link href="/pages/configurations/users">
-                <p>Usuarios</p>
+                <p>Usuários</p>
               </Link>
             </CardBody>
           </Card>
