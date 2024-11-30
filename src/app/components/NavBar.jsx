@@ -19,8 +19,8 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
-    { label: "Resgates", href: "/pages/rescue" },
     { label: "Adicionar Resgate", href: "/pages/rescue/addRescue" },
+    { label: "Listar resgates", href: "/pages/rescue" },
     { label: "Mapas", href: "/pages/reports/maps" },
     { label: "Gráficos", href: "/pages/reports/charts" },
     { label: "Configurações", href: "/pages/configurations" },
@@ -112,6 +112,7 @@ export default function App() {
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
         />
+        <ModeToggle />
       </NavbarContent>
 
       <NavbarContent
@@ -142,9 +143,6 @@ export default function App() {
           <Link className="w-full" size="lg">
             <button onClick={handleRefresh}>Renovar cache</button>
           </Link>
-        </NavbarMenuItem>
-        <NavbarMenuItem>
-          <ModeToggle />
         </NavbarMenuItem>
         <NavbarMenuItem>
           <Link className="w-full" size="lg">
