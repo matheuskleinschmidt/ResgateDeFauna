@@ -73,17 +73,20 @@ const SpeciesList = () => {
     await fetchSpecies();
   };
 
-  if (loading) return (
-    <div className="flex h-screen w-full items-center justify-center px-4">
-    <Spinner size="lg" />
-  </div>
-  );
+  if (loading)
+    return (
+      <div className="flex h-screen w-full items-center justify-center px-4">
+        <Spinner size="lg" />
+      </div>
+    );
 
   return (
     <div>
-          <div className="flex justify-end">
-      <Button className="flex-end ax-w-xs m-2" onClick={handleCreate}>Criar Novo Espécie</Button>
-    </div>
+      <div className="flex justify-end">
+        <Button className="flex-end ax-w-xs m-2" color="success" variant="ghost" onClick={handleCreate}>
+          Criar Novo Espécie
+        </Button>
+      </div>
       <Table isStriped isCompact>
         <TableHeader>
           <TableColumn>ID</TableColumn>
@@ -101,16 +104,24 @@ const SpeciesList = () => {
                   <TableCell>{species.commonName}</TableCell>
                   <TableCell>{species.AnimalGroup.groupName}</TableCell>
                   <TableCell>
-                    <Button size="sm" onClick={() => handleEdit(species)}>
+                    <div className=" sm:flex gap-4">
+                    <Button
+                      color="warning"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleEdit(species)}
+                    >
                       Editar
                     </Button>
                     <Button
                       size="sm"
-                      color="error"
+                      color="danger"
+                      variant="bordered"
                       onClick={() => handleDelete(species.id)}
                     >
                       Deletar
                     </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))
@@ -210,15 +221,19 @@ const SpeciesForm = ({ species, onSubmit }) => {
   return (
     <form onSubmit={handleSubmit(onSubmitForm)}>
       <Input
+        className="mb-4"
         {...register("scientificName", { required: true })}
         label="Nome Científico"
         placeholder="Nome Científico"
+        required
       />
       {errors.scientificName && <span>Este campo é obrigatório</span>}
       <Input
+        className="mb-4"
         {...register("commonName", { required: true })}
         label="Nome Comum"
         placeholder="Nome Comum"
+        required
       />
       {errors.commonName && <span>Este campo é obrigatório</span>}
       <div>
@@ -227,6 +242,8 @@ const SpeciesForm = ({ species, onSubmit }) => {
           control={control}
           render={({ field }) => (
             <Select
+              required
+              className="mb-4"
               label="Qual o grupo do animal?"
               placeholder="Selecione um grupo"
               selectedKeys={field.value ? [String(field.value)] : []}
