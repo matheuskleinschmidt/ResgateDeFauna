@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -62,17 +61,11 @@ export function LoginForm() {
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-                <Link
-                  href="#"
-                  className="ml-auto inline-block text-sm underline"
-                >
-                  Esqueceu sua senha?
-                </Link>
+                <Label htmlFor="password">Senha</Label>
               </div>
               <Input id="password" name="password" type="password" required />
             </div>
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-sm">{error == "CredentialsSignin" ? "Email e/ou senha incorretos" : error}</p>}
             <Button type="submit" className="w-full">
               Login
             </Button>

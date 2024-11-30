@@ -31,8 +31,8 @@ describe('App Component', () => {
   });
 
   const mockMenuItems = [
-    { label: "Resgates", href: "/pages/rescue" },
     { label: "Adicionar Resgate", href: "/pages/rescue/addRescue" },
+    { label: "Listar resgates", href: "/pages/rescue" },  
     { label: "Mapas", href: "/pages/reports/maps" },
     { label: "Gráficos", href: "/pages/reports/charts" },
     { label: "Configurações", href: "/pages/configurations" },
