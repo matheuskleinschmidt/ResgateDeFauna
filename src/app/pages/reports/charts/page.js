@@ -65,7 +65,7 @@ export default function Chart() {
 
   <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
     <BarChartStackedLegend
-      title="Grupos de animais resgatados por mês"
+      title="Grupos de animais resgatados por dia"
       description=""
       rescues={rescues}
       propertyPath="species.AnimalGroup.groupName"
@@ -74,7 +74,7 @@ export default function Chart() {
 
   <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
     <BarChartStackedLegend
-      title="Animais resgatados por mês"
+      title="Animais resgatados por dia"
       description=""
       rescues={rescues}
       propertyPath="species.commonName"
@@ -126,14 +126,14 @@ export default function Chart() {
     />
   </div>
   
-  <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
+  {/* <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[45%] min-h-[410px]">
     <AreaChartStacked
       title="Grupos de animais resgatados por mês"
       description=""
       data={rescues}
       propertyPath="species.AnimalGroup.groupName"
     />
-  </div>
+  </div> */}
 </div>
   );
 }
