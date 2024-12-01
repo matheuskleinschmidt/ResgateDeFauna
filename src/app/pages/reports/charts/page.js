@@ -84,7 +84,7 @@ export default function Chart() {
   <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[400px] min-h-[500px]">
     <PieChart
       title="Registros filtrados por tipo de chamada"
-      description=""
+      description="Meios foram utilizados para comunicar uma solicitação de resgate"
       propertyPath="calledBy.name"
       rescues={rescues}
     />
@@ -93,7 +93,7 @@ export default function Chart() {
   <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[400px] min-h-[500px]">
     <PieChart
       title="Registros filtrados por intervalo idade"
-      description=""
+      description="Qual a faixa etária dos animais resgatados"
       propertyPath="ageRange.name"
       rescues={rescues}
     />
@@ -111,7 +111,7 @@ export default function Chart() {
   <div className="w-full max-w-xl flex-1 min-w-full sm:min-w-[400px] min-h-[500px]">
     <PieChart
       title="Registros filtrados por situação dos animais"
-      description=""
+      description="Situação em que os animais foram encontrados"
       propertyPath="situation.name"
       rescues={rescues}
     />
