@@ -347,7 +347,6 @@ export default function App() {
       />
 
       <h3>Medidas</h3>
-      <h4>Em metros</h4>
       <Controller
         name="height"
         control={control}
@@ -356,7 +355,7 @@ export default function App() {
           <Input
             type="number"
             placeholder="0.00"
-            label="Altura do animal"
+            label="Altura do animal(m)"
             className="w-full max-w-xs mb-4"
             value={field.value || ""}
             onChange={field.onChange}
@@ -371,7 +370,7 @@ export default function App() {
           <Input
             type="number"
             placeholder="0.00"
-            label="Comprimento do animal"
+            label="Comprimento do animal(m)"
             className="w-full max-w-xs mb-4"
             value={field.value || ""}
             onChange={field.onChange}
@@ -386,14 +385,14 @@ export default function App() {
           <Input
             type="number"
             placeholder="0.00"
-            label="Largura do animal"
+            label="Largura do animal(m)"
             className="w-full max-w-xs mb-4"
             value={field.value || ""}
             onChange={field.onChange}
           />
         )}
       />
-
+      <br></br>
       <Controller
         name="address"
         control={control}
